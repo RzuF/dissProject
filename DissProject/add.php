@@ -46,7 +46,7 @@ if($_SESSION['logged'])
     $text .= 
         "<form action='add.php' method='post' id='add'>
         Tytu≥: <input type=text name=dissName id=dissName></br>
-        Tekst: <input type=text name=dissText id=dissText></br>
+        Tekst: <textarea type=text name=dissText id=dissText></textarea></br>
         èrÛd≥o (opcjonalnie): <input type=text name=dissSource id=dissSource></br>";
     
     if($_SESSION['active'] != 1)
