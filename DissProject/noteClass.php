@@ -47,3 +47,5 @@ class note
 		// Gonna be thare sth soon!
 	}
 }
+
+?>
