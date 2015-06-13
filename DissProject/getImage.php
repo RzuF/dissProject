@@ -2,25 +2,38 @@
 
 header('Content-Type: image/png');
 include_once('functions.php');
+include_once('config.php');
 
-/*
- * Code for getting text from given ID in GET request to $description variable
- */
+session_start();
 
-$description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer non nunc lectus. Curabitur hendrerit bibendum enim dignissim tempus. Suspendisse non ipsum auctor metus consectetur eleifend. Fusce cursus ullamcorper sem nec ultricies. Aliquam erat volutpat. Vivamus massa justo, pharetra et sodales quis, rhoncus in ligula. Integer dolor velit, ultrices in iaculis nec, viverra ut nunc.\n\n";
+$sqlcon = mysql_connect(HOST, USER, PASS);
+if(!$sqlcon) echo 'Error: '.mysql_error();
+
+$blad = mysql_select_db(DB);
+if(!$blad) echo 'Error: '.mysql_error();
+
+$description = "Diss o podanym ID nie istnieje!\n\nThere is no diss with given ID!";
+
+$idreq = mysql_query("SELECT `title`, `text`, `author` FROM `".PREFIX."_notes` WHERE `id` = '".$_GET['id']."'"); // Zapytanie o dane obrazka o otrzymanym ID
+if(!$idreq) echo "Error: ".mysql_error();
+else
+{
+	if($req = mysql_fetch_assoc($idreq))
+	{
+		$description = $req['title'] . "\n\n" . $req['text'];
+	}
+}
 
 $font = CFG_IMG_FONT;
 $fontSize = CFG_IMG_FONT_SIZE;
 
 $wrappedText = wrap($fontSize, 0, $font, $description, CFG_IMG_WIDTH - CFG_IMG_MARGIN*2);
-//echo $wrappedText;
 
 $testBox = imagettfbbox($fontSize, 0, $font, $wrappedText);
 
 $height = $testBox[1] - $testBox[7] + CFG_IMG_MARGIN * 2;
-//$wrappedText .= ($testBox[1] - $testBox[7]);
 
-$image = imagecreate(CFG_IMG_WIDTH ,$height);
+$image = imagecreate(CFG_IMG_WIDTH, $height);
 $bg = imagecolorallocate($image, 255, 255, 255);
 $textColor = imagecolorallocate($image, CFG_IMG_COLOR_TEXT_R, CFG_IMG_COLOR_TEXT_G, CFG_IMG_COLOR_TEXT_B);
 
