@@ -10,9 +10,7 @@ if(!$sqlcon) echo 'Error: '.mysql_error();
 $blad = mysql_select_db(DB);
 if(!$blad) echo 'Error: '.mysql_error();
 
-$_SESSION['page'] = "login.php";
-
-if($_GET['out'] == 1) //logout
+if($_GET['out'] == 1) // logout
 {	
 	$_SESSION['logged'] = 0;
 	$idreq = mysql_query('SELECT `login`, `md5rem` FROM `'.PREFIX.'_users` WHERE `md5rem` LIKE \'%'.$_COOKIE['logged'].'%\''); // removing md5rem string from DB (for 'remember me' function) 
