@@ -14,8 +14,6 @@ define('CFG_IMG_COLOR_TEXT_R', '0');
 define('CFG_IMG_COLOR_TEXT_G', '0');
 define('CFG_IMG_COLOR_TEXT_B', '0');
 
-// Test v2
-
 /*define('HOST', '');
 define('USER', '');
 define('PASS', '');
