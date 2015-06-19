@@ -30,7 +30,7 @@ class note
 					$req2 = mysql_fetch_assoc($idreq2);
 					$this->author = $req2['login'];
 				}*/
-				$this->author = $req['login'];
+				if($req['login'] != NULL) $this->author = $req['login'];
 		
 				$this->plus = explode(";", $req['plus']); // Smashing string into array, previusly joined by ";" symbol
 				$this->minus = explode(";", $req['minus']); // -||- -||- -||- -||- -||- -||- -||- -||- -||-
