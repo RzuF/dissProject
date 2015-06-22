@@ -39,12 +39,12 @@ if($_GET['active'])  // Check if user want to activate account
 			{
 				$idreq = mysql_query("UPDATE `".PREFIX."_users` SET `state` ='0', `aid` = NULL WHERE `aid` = '".$_GET['active']."'");
 				if(!$idreq) echo "Error: ".mysql_error();
-				else echo '<span id=\'activeSuccess\'>' . 'Twoje konto zosta≥o aktywowane pomyúlnie.' . '</span>';
+				else echo '<span id=\'activeSuccess\'>' . 'Twoje konto zosta‚â•o aktywowane pomy√∫lnie.' . '</span>';
 			}
 			elseif($req['active']==0) {echo '<script language="javascript"> setTimeout(\'location.href="index.php"\',5); </script>';}
-			//else echo '<span id=\'error\'>' . 'Twoje konto zosta≥o dezaktywowane.' . '</span>';
+			//else echo '<span id=\'error\'>' . 'Twoje konto zosta‚â•o dezaktywowane.' . '</span>';
 		}
-		else echo '<span id=\'error\'>' . 'B≥Ídny kod aktywacyjny.' . '</span>';
+		else echo '<span id=\'error\'>' . 'B‚â•√çdny kod aktywacyjny.' . '</span>';
 	}
 }
 
@@ -74,9 +74,9 @@ elseif($_POST['go'] == 1) // Check if sb requested logging procedure
 
 				include_once('index.php');
 			}
-			else echo '<span id=\'error\'>' . 'Nieprawid≥owe has≥o!' . '</span>';
+			else echo '<span id=\'error\'>' . 'Nieprawid‚â•owe has‚â•o!' . '</span>';
 		}
-		else echo '<span id=\'error\'>' . 'Nieprawid≥owy login!' . '</span>';
+		else echo '<span id=\'error\'>' . 'Nieprawid‚â•owy login!' . '</span>';
 	}
 }
 
@@ -89,12 +89,12 @@ elseif($_SESSION['login'] && $_GET['amail']==1) // check if logged user want to 
 	'<html><head><title>Aktywacja konta</title></head>
             <body>
             <p>Witaj '.$_SESSION['login'].'!</p>
-            <h3><a href="'.ADRES.'/login.php?active='.$req['aid'].'">Kliknij tutaj</a> aby aktywowaƒá swoje konto.</h3>
+            <h3><a href="'.ADRES.'/login.php?active='.$req['aid'].'">Kliknij tutaj</a> aby aktywowa∆í√° swoje konto.</h3>
             </body></html>';
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
 	mail($req['email'], 'Aktywacja Konta', $tresc, $headers);
-	echo '<span id=\'sendSuccess\'>' . 'Link zosta≥ wys≥any ponownie, sprawdü swÛj email aby aktywowaÊ konto.' . '</span>';
+	echo '<span id=\'sendSuccess\'>' . 'Link zosta‚â• wys‚â•any ponownie, sprawd√º sw√õj email aby aktywowa√ä konto.' . '</span>';
 
 
 }
@@ -104,19 +104,19 @@ else
 	include_once('index.php');
 }
 
-if(!$_SESSION['logged'])
+/* if(!$_SESSION['logged'])
 {
 	echo
 	 "<div id=\"login_form\">
 	 <form action=\"login.php\" method=\"post\">
 	 <span id=\'login\'>Login:</span> <input type=\"text\" name=\"login\" id=\"login\">
-	 <span id=\'psswd\'>Has≥o:</span> <input type=\"password\" name=\"psswd\" id=\"psswd\">
-	 <input type=\"checkbox\" name=\"rem\" id=\"rem\" value=1> ZapamiÍtaj mnie
+	 <span id=\'psswd\'>Has‚â•o:</span> <input type=\"password\" name=\"psswd\" id=\"psswd\">
+	 <input type=\"checkbox\" name=\"rem\" id=\"rem\" value=1> Zapami√çtaj mnie
 	 <input type=\"hidden\" name=\"go\" value=\"1\">
 	 <input type=\"submit\" name=\"sumbit\" id=\"submit\" value=\"Zaloguj\">
 	 </form>
 	 </div>";
-}
+} */
 
 //include_once("index.php");
 
