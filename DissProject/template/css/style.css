@@ -1,0 +1,156 @@
+body {
+    /*background-color: black;*/
+    /*background-image: url('../bg.jpg'); */
+    /*color: #00C3FF;*/
+    /*
+    	#222930
+		#4EB1BA
+		#E9E9E9 
+	*/
+	padding-top: 60px;
+    color: #222930;
+    background-color: #E9E9E9;
+    font-family: "Open Sans", Arial, Helvetica, sans-serif;
+}
+
+.add-note {
+	margin-left: 20px;
+	margin-right: 20px;
+	padding-top: 10px;
+	padding-bottom: 30px;
+	padding-right: 10px;
+	padding-left: 10px;
+	background-color: white;
+	border-radius: 5px;
+    border-bottom: 4px solid #4EB1BA;
+
+}
+
+.add-note:hover {
+	border-bottom: 3px solid #4EB1BA;
+}
+
+.navbar-inverse {
+    background-color: #222930;
+}
+.pagination>li>a, .pagination>li>span { border-radius: 50% !important;margin: 0 3px;}
+
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+    background-color: #222930;
+}
+.navbar-inverse .navbar-toggle .icon-bar {
+    background-color: #CCC;
+}
+
+img {
+	box-shadow: 0 4px 4px -2px #888888;
+    -moz-box-shadow: 0 4px 4px -2px #888888;
+    -webkit-box-shadow: 0 4px 4px -2px #888888;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.note {
+	padding-top: 10px;
+	padding-bottom: 30px;
+	padding-right: 10px;
+	padding-left: 10px;
+	background-color: white;
+	border-radius: 5px;
+    border-bottom: 4px solid #4EB1BA;
+}
+
+.note:hover {
+	border-bottom: 3px solid #4EB1BA;
+}
+
+.space {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.note-size {
+	max-width:730px;
+	border-radius: 10px;
+}
+
+.note-title-title {	text-align: left; }
+
+.note-title-comments { text-align: right; }
+
+.note-title {
+	padding-bottom: 0px;
+	font-size: 24px;
+}
+
+.note-rank {
+	padding-top: 10px;
+	font-size: 24px;
+	text-align: center;
+	max-width: 150px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.note-copright {
+	font-size: 12px;
+	margin-left: 10px;
+}
+
+.note-date {
+	font-size: 12px;
+	text-align: right;
+}
+
+.notes-pagination {
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.note-best-comments {
+
+}
+
+/*
+Code snippet by maridlcrmn for Bootsnipp.com
+Follow me on Twitter @maridlcrmn
+*/
+.navbar-brand { position: relative; z-index: 2; }
+
+.navbar-nav.navbar-right .btn { position: relative; z-index: 2; padding: 4px 20px; margin: 10px auto; }
+
+.navbar .navbar-collapse { position: relative; }
+.navbar .navbar-collapse .navbar-right > li:last-child { padding-left: 22px; }
+
+.navbar .nav-collapse { position: absolute; z-index: 1; top: 0; left: 0; right: 0; bottom: 0; margin: 0; padding-right: 120px; padding-left: 80px; width: 100%; }
+.navbar.navbar-default .nav-collapse { background-color: #f8f8f8; }
+.navbar.navbar-inverse .nav-collapse { background-color: #222; }
+.navbar .nav-collapse .navbar-form { border-width: 0; box-shadow: none; }
+.nav-collapse>li { float: right; }
+
+.btn.btn-circle { border-radius: 50px; }
+.btn.btn-outline { background-color: transparent; }
+
+@media screen and (max-width: 767px) {
+    .navbar .navbar-collapse .navbar-right > li:last-child { padding-left: 15px; padding-right: 15px; } 
+    
+    .navbar .nav-collapse { margin: 7.5px auto; padding: 0; }
+    .navbar .nav-collapse .navbar-form { margin: 0; }
+    .nav-collapse>li { float: none; }
+}
+
+/* Comments */
+.widget .panel-body { padding:0px; }
+.widget .list-group { margin-bottom: 0; }
+.widget .panel-title { display:inline }
+.widget .label-info { float: right; }
+.widget li.list-group-item {border-radius: 0;border: 0;border-top: 1px solid #ddd;}
+.widget li.list-group-item:hover { background-color: rgba(86,61,124,.1); }
+.widget .mic-info { color: #666666;font-size: 11px; }
+.widget .action { margin-top:5px; }
+.widget .comment-text { font-size: 12px; }
+.widget .btn-block { border-top-left-radius:0px;border-top-right-radius:0px; }
