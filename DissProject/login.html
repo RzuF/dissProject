@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>DissProject</title>
+    <link rel="stylesheet" type="text/css" href="template/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="template/css/style.css">
+</head>
+<body>
+    <!-- Second navbar for profile settings -->
+    <nav class="navbar navbar-inverse">
+        <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-4">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">dissProject</a>
+        </div>
+    
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbar-collapse-4">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Oczekujące</a></li>
+                <li><a href="#">Top</a></li>
+                <li><a href="#">Losuj</a></li>
+                <li><a href="#">Dodaj</a></li>
+                <li>
+                    <!-- <a class="btn btn-default btn-outline btn-circle"  data-toggle="collapse" href="#nav-collapse4" aria-expanded="false" aria-controls="nav-collapse4">Zaloguj <i class=""></i> </a> -->
+                    <a href="" class="btn btn-default btn-outline btn-circle" >Zaloguj <i class=""></i></a>
+                </li>
+            </ul>
+            <ul class="collapse nav navbar-nav nav-collapse" role="search" id="nav-collapse4">
+                <li><a href="#">Support</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img class="img-circle" src="https://pbs.twimg.com/profile_images/588909533428322304/Gxuyp46N.jpg" alt="maridlcrmn" width="20" /> Maridlcrmn <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                <li><a href="#">My profile</a></li>
+                <li><a href="#">Favorited</a></li>
+                <li><a href="#">Settings</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Logout</a></li>
+                </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-login">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a href="#" class="active" id="login-form-link">Logowanie</a>
+                            </div>
+                            <div class="col-xs-6">
+                                <a href="#" id="register-form-link">Zarejestruj się</a>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <form id="login-form" action="#" method="post" role="form" style="display: block;">
+                                <div class="form-group">
+                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Login" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="password" id="passsword" tabindex="2" class="form-control" placeholder="Hasło">
+                                </div>
+                                <div class="form-group text-center">
+                                    <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                                    <label for="remember"> Zapamiętaj mnie</label>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Zaloguj">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="text-center">
+                                                <a href="#" tabindex="5" class="forgot-password">Zapomniałeś hasła?</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- Zmiana wyglądu i walidacja danych w JS -->
+                            <form id="register-form" action="#" method="post" role="form" style="display: none;">
+                                <div class="form-group">
+                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Nazwa użytkownika" value="">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email" value="">
+                                </div>
+                                <div class="form-group">
+                                    <!-- <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Hasło"> -->
+                                    <input type="password" class="form-control" name="password" id="password" tabindex="2" placeholder="Hasło" required data-toggle="popover" title="Siła hasła" data-content="Wprowadź hasło...">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Powtórz hasło">
+                                </div>
+                  <div class="form-group">
+                    <div class="row">
+                      <div class="col-sm-6 col-sm-offset-3">
+                        <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Rejesracja">
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="template/js/angular.min.js"></script>
+    <script src="template/js/bootstrap.min.js"></script>
+    <script src="template/js/script.js"></script>
+    <script src="template/js/password.js"></script>
+</body>
+</html
