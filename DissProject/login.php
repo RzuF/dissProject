@@ -25,6 +25,7 @@ if($_GET['out'] == 1) // logout
 	$_COOKIE['logged'] = 'not logged'; // changing cookie
 	setcookie('logged','not logged', time()*2);
 	session_destroy();  // destroying session
+	echo '<script language="javascript"> setTimeout(\'location.href="index.php"\',5); </script>';
 }
 
 if($_GET['active'])  // Check if user want to activate account
@@ -72,7 +73,7 @@ elseif($_POST['go'] == 1) // Check if sb requested logging procedure
 					setcookie('logged',$md5, time()*2);
 				}
 
-				include_once('index.php');
+				echo '<script language="javascript"> setTimeout(\'location.href="index.php"\',5); </script>';
 			}
 			else echo '<span id=\'error\'>' . 'Nieprawid≥owe has≥o!' . '</span>';
 		}

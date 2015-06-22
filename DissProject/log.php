@@ -1,3 +1,8 @@
+<?php
+session_start();
+include_once('config.php');
+?>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -8,6 +13,7 @@
     <title>DissProject</title>
     <link rel="stylesheet" type="text/css" href="template/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="template/css/style.css">
+    <link rel="stylesheet" type="text/css" href="template/css/password-validation.css">
 </head>
 <body>
     <?php include("nav.html"); ?>
@@ -90,10 +96,8 @@
     </div>
   </div>
 
-    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="template/js/angular.min.js"></script>
-    <script src="template/js/bootstrap.min.js"></script>
+    <?php include_once("resources.html"); ?>
     <script src="template/js/script.js"></script>
     <script src="template/js/password.js"></script>
 </body>
-</html
+</html>

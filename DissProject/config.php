@@ -4,7 +4,7 @@ ob_start();
 define('CFG_IMG_FONT', 'BuxtonSketch.ttf');
 define('CFG_IMG_FONT_SIZE', '15');
 
-define('CFG_IMG_WIDTH', '400');
+define('CFG_IMG_WIDTH', '700');
 define('CFG_IMG_MARGIN', '10');
 
 define('CFG_IMG_COLOR_START', '#FFFFFF');
@@ -17,11 +17,15 @@ define('CFG_IMG_COLOR_TEXT_B', '0');
 /*define('HOST', '');
 define('USER', '');
 define('PASS', '');
-define('DB', '');*/
-define('HOST', 'localhost');
+define('DB', '');
 define('USER', 'rzufzxym_diss');
 define('PASS', 'lol123**');
 define('DB', 'rzufzxym_diss');
+*/
+define('HOST', 'localhost');
+define('USER', 'root');
+define('PASS', 'qw3rty');
+define('DB', 'dissProject');
 define('ADRES', ''); // Like http://your.site.adress
 define('PREFIX', 'diss');
 

@@ -1,3 +1,8 @@
+<?php
+session_start();
+include_once('config.php');
+?>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -8,30 +13,121 @@
 	<title>DissProject</title>
 	<link rel="stylesheet" type="text/css" href="template/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="template/css/style.css">
+	<link rel="stylesheet" href="template/css/buttons.css">
 </head>
 <body>
-    <?php include("nav.html"); ?>
-    <div class="container">
-      <?php if($_SESSION['logged']) 
-			echo "hej";
-			
-			else
-			{
-				echo
-				 "<div id=\"login_form\">
-				 <form action=\"login.php\" method=\"post\">
-				 <span id=\'login\'>Login:</span> <input type=\"text\" name=\"login\" id=\"login\">
-				 <span id=\'psswd\'>Has≥o:</span> <input type=\"password\" name=\"psswd\" id=\"psswd\">
-				 <input type=\"checkbox\" name=\"rem\" id=\"rem\" value=1> ZapamiÍtaj mnie
-				 <input type=\"hidden\" name=\"go\" value=\"1\">
-				 <input type=\"submit\" name=\"sumbit\" id=\"submit\" value=\"Zaloguj\">
-				 </form>
-				 </div>";
-			} ?>
+    <?php include_once("nav.html"); ?>
+    <div class="container note-size">
+    	<div class="space"></div>
+
+    	<div class="note">
+			<div class="row note-title">
+				<div class="col-lg-8">
+					<div class="note-title-title">Testowy tytuł</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="note-title-comments">65</div>
+				</div>
+			</div>
+			<div class="note-copright">Marcin Konieczny</div>
+			<img src="getImage.php?id=3" class="img-responsive img-rounded">
+			<div class="note-rank">
+				<button class="button button-primary button-circle button-small button-longshadow"><i class="fa fa-plus"></i></button>
+				<button class="button button-3d button-box button-small button-jumbo"><i class="fa fa-plus"></i></button>
+				<button class="button button-circle button-tiny"><i class="fa fa-plus"></i></button>
+				 564 
+				<button class="button button-primary button-circle button-small button-longshadow"><i class="fa fa-minus"></i></button>
+				<button class="button button-3d button-box button-small button-jumbo"><i class="fa fa-minus"></i></button>
+				<button class="button button-circle button-tiny"><i class="fa fa-minus"></i></button>
+			</div>
+
+		</div> <!-- END NOTE -->
+
+		<div class="space"></div>
+
+		<div class="note">
+			<div class="row note-title">
+				<div class="col-lg-8">
+					<div class="note-title-title">Testowy tytuł</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="note-title-comments">65</div>
+				</div>
+			</div>
+			<div class="note-copright">Marcin Konieczny</div>
+			<img src="getImage.php?id=1" class="img-responsive img-rounded">
+			<div class="note-rank">
+				<button type="button" class="btn btn-default">+</button>
+				564
+				<button type="button" class="btn btn-default">-</button>
+			</div>
+		</div> <!-- END NOTE -->
+
+		<div class="space"></div>
+
+		<div class="note">
+			<div class="row note-title">
+				<div class="col-lg-8">
+					<div class="note-title-title">Testowy tytuł</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="note-title-comments">65</div>
+				</div>
+			</div>
+			<div class="note-copright">Marcin Konieczny</div>
+			<img src="getImage.php?id=1" class="img-responsive img-rounded">
+			<div class="note-rank">
+				<button type="button" class="btn btn-default">+</button>
+				564
+				<button type="button" class="btn btn-default">-</button>
+			</div>
+		</div> <!-- END NOTE -->
+
+		<div class="space"></div>
+
+		<div class="note">
+			<div class="row note-title">
+				<div class="col-lg-8">
+					<div class="note-title-title">Testowy tytuł</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="note-title-comments">65</div>
+				</div>
+			</div>
+			<div class="note-copright">Marcin Konieczny</div>
+			<img src="getImage.php?id=1" class="img-responsive img-rounded">
+			<div class="note-rank">
+				<button type="button" class="btn btn-default">+</button>
+				564
+				<button type="button" class="btn btn-default">-</button>
+			</div>
+		</div> <!-- END NOTE -->
+
+		<div class="space"></div>
+
+		<div style="notes-pagination">
+			<nav>
+	  			<ul class="pagination">
+	    			<li>
+	      				<a href="#" aria-label="Previous">
+	        				<span aria-hidden="true">&laquo;</span>
+	      				</a>
+	    			</li>
+				    <li><a href="#">1</a></li>
+				    <li><a href="#">2</a></li>
+				    <li><a href="#">3</a></li>
+				    <li><a href="#">4</a></li>
+				    <li><a href="#">5</a></li>
+	    			<li>
+				     	<a href="#" aria-label="Next">
+				        	<span aria-hidden="true">&raquo;</span>
+				     	</a>
+				    </li>
+	 			</ul>
+			</nav>
+		</div>
     </div>
-    <link href="template/font-awesome/font-awesome.min.css" rel="stylesheet" type="text/css">
-	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-	<script src="template/js/angular.min.js"></script>
-	<script src="template/js/bootstrap.min.js"></script>
+
+    <?php include_once("resources.html"); ?>
 </body>
 </html>

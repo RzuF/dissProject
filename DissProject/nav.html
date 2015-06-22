@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
     <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -17,24 +17,28 @@
             	<li><a href="#">Oczekujące</a></li>
             	<li><a href="#">Top</a></li>
             	<li><a href="#">Losuj</a></li>
-            	<li><a href="#">Dodaj</a></li>
+            	<li><a href="dodaj-dissa.php">Dodaj</a></li>
            		<li>
+                <?php if($_SESSION['logged']) 
+                echo "<a class=\"btn btn-default btn-outline btn-circle\"  data-toggle=\"collapse\" href=\"#nav-collapse4\" aria-expanded=\"false\" aria-controls=\"nav-collapse4\">Profil&nbsp;<i class=\"fa fa-user\"></i></a>";
+                
+                else
+                {
+                    echo
+                     "<a href=\"log.php\" class=\"btn btn-default btn-outline btn-circle\" >Zaloguj&nbsp;<i class=\"fa fa-user\"></i></a>";
+                } ?>
               		<!-- <a class="btn btn-default btn-outline btn-circle"  data-toggle="collapse" href="#nav-collapse4" aria-expanded="false" aria-controls="nav-collapse4">Zaloguj <i class=""></i> </a> -->
-              		<a href="log.php" class="btn btn-default btn-outline btn-circle" >Zaloguj <i class="fa fa-fw fa-user"></i></a>
+              		<!-- <a href="log.php" class="btn btn-default btn-outline btn-circle" >Zaloguj <i class="fa fa-user"></i></a> -->
             	</li>
           	</ul>
-          	<ul class="collapse nav navbar-nav nav-collapse" role="search" id="nav-collapse4">
-           	 	<li><a href="#">Support</a></li>
-            	<li class="dropdown">
-              		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><img class="img-circle" src="https://pbs.twimg.com/profile_images/588909533428322304/Gxuyp46N.jpg" alt="maridlcrmn" width="20" /> Maridlcrmn <span class="caret"></span></a>
-             	<ul class="dropdown-menu" role="menu">
-                <li><a href="#">My profile</a></li>
-                <li><a href="#">Favorited</a></li>
-                <li><a href="#">Settings</a></li>
-                <li class="divider"></li>
-                <li><a href="#">Logout</a></li>
-             	</ul>
-            	</li>
+          	<ul class="collapse nav navbar-nav nav-collapse" role="search" id="nav-collapse4" style="background-color: #222930;">
+                <li><a href="login.php?out=1">Wyloguj</a></li>
+                <li><a href="#">Powiadomienia <span class="badge badge-success">42</span></a></li>
+                <li><a href="#">Ustawienia</a></li>
+                <li><a href="#">Mój profil</a></li>
+                <li>
+              		<a href="#"><img class="img-circle" src="https://pbs.twimg.com/profile_images/588909533428322304/Gxuyp46N.jpg" alt="maridlcrmn" width="20" />Witaj,&nbsp;<?php echo $_SESSION['login']?></a>
+                </li>
           	</ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container -->
