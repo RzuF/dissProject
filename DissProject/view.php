@@ -21,8 +21,9 @@ if(isset($_GET['id']))
 	else
 	{
 		$req = mysql_fetch_assoc($idreq);
-		$arr[] = $row; 
+		$arr[] = $req; 
 		echo $json_response = json_encode($arr);
+		//echo $json_response;
 	}
 }
 

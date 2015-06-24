@@ -37,10 +37,13 @@ include_once('config.php');
                     <div class="row">
                         <div class="col-lg-12">
                             <form id="login-form" action="login.php" method="post" role="form" style="display: block;">
-                                <div class="form-group">
+                                <div style="margin-bottom: 10px" class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                     <input type="text" name="login" id="username" tabindex="1" class="form-control" placeholder="Login" value="">
                                 </div>
-                                <div class="form-group">
+
+                                <div style="margin-bottom: 10px" class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
                                     <input type="password" name="psswd" id="passsword" tabindex="2" class="form-control" placeholder="Hasło">
                                 </div>
                                 <div class="form-group text-center">
@@ -67,17 +70,21 @@ include_once('config.php');
                             </form>
                             <!-- Zmiana wyglądu i walidacja danych w JS -->
                             <form id="register-form" action="#" method="post" role="form" style="display: none;">
-                                <div class="form-group">
+                                <div style="margin-bottom: 10px" class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                     <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Nazwa użytkownika" value="">
                                 </div>
-                                <div class="form-group">
+                                <div style="margin-bottom: 10px" class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
                                     <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email" value="">
                                 </div>
-                                <div class="form-group">
+                                <div style="margin-bottom: 10px" class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
                                     <!-- <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Hasło"> -->
                                     <input type="password" class="form-control" name="password" id="password" tabindex="2" placeholder="Hasło" required data-toggle="popover" title="Siła hasła" data-content="Wprowadź hasło...">
                                 </div>
-                                <div class="form-group">
+                                <div style="margin-bottom: 10px" class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-repeat"></i></span>
                                     <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Powtórz hasło">
                                 </div>
                   <div class="form-group">

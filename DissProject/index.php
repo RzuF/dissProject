@@ -11,6 +11,7 @@ include_once('config.php');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
 	<title>DissProject</title>
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:700italic,400' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="template/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="template/css/style.css">
 </head>
@@ -19,87 +20,69 @@ include_once('config.php');
     <div class="container note-size">
     	<div class="space"></div>
 
-    	<div class="note">
+    	<div class="box13">
     		<!-- Note description -->
-			<div class="row note-title">
-				<div class="col-lg-8">
-					<div class="note-title-title">Testowy tytuł</div>
+    		<div class="note-informations">
+				<div class="row note-title">
+					<div class="col-lg-8 col-xs-8">
+						<div class="note-title-title">Testowy tytuł</div>
+					</div>
+					<div class="col-lg-4 col-xs-4">
+						<div class="note-title-comments"><a href="#"><i class="fa fa-comments"></i> 65</a></div>
+					</div>
 				</div>
-				<div class="col-lg-4">
-					<div class="note-title-comments"><a href="#"><i class="fa fa-comments"></i> 65</a></div>
+
+				<div class="row">
+					<div class="col-lg-8 col-xs-8">
+						<div class="note-copright"><i class="fa fa-user"></i> Marcin Konieczny</div>
+					</div>
+					<div class="col-lg-4 col-xs-4">
+						<div class="note-date"> <i class="fa fa-calendar"></i> 25.06.2015</div>
+					</div>
 				</div>
 			</div>
-
-			<div class="row">
-				<div class="col-lg-8">
-					<div class="note-copright"><i class="fa fa-user"></i> Marcin Konieczny</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="note-date"> <i class="fa fa-calendar"></i> 25.06.2015</div>
-				</div>
-			</div>
-
 			<!-- Note image -->
 			<img src="getImage.php?id=1" class="img-responsive img-rounded">
 
 			<!-- Note rank -->
 			<div class="note-rank">
-				<div class="input-group">
-         			<span class="input-group-btn">
-              			<button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]">
-                			<span class="fa fa-minus"></span>
-              			</button>
-          			</span>
-          			<input type="text" name="quant[2]" class="form-control input-number" value="0" min="0" max="100" disabled>
-          			<span class="input-group-btn">
-              			<button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
-                  	<span class="fa fa-plus"></span>
-              			</button>
-          			</span>
-      			</div>
+					<a href="#" class="action-button shadow animate green"><i class="fa fa-plus"></i></a>
+  					<a href="#" class="action-button shadow animate red"><i class="fa fa-minus"></i></a>
+  					<div class="note-rank-rank">+43</div>
 			</div>
 		</div> <!-- END NOTE -->
 
 		<div class="space"></div>
 
-		<div class="note">
+		<div class="box14">
     		<!-- Note description -->
-			<div class="row note-title">
-				<div class="col-lg-8">
-					<div class="note-title-title">Testowy tytuł</div>
+    		<div class="note-informations">
+				<div class="row note-title">
+					<div class="col-lg-8 col-xs-8">
+						<div class="note-title-title">Testowy tytuł</div>
+					</div>
+					<div class="col-lg-4 col-xs-4">
+						<div class="note-title-comments"><a href="#"><i class="fa fa-comments"></i> 65</a></div>
+					</div>
 				</div>
-				<div class="col-lg-4">
-					<div class="note-title-comments"><a href="#"><i class="fa fa-comments"></i> 65</a></div>
+
+				<div class="row">
+					<div class="col-lg-8 col-xs-8">
+						<div class="note-copright"><i class="fa fa-user"></i> Marcin Konieczny</div>
+					</div>
+					<div class="col-lg-4 col-xs-4">
+						<div class="note-date"> <i class="fa fa-calendar"></i> 25.06.2015</div>
+					</div>
 				</div>
 			</div>
-
-			<div class="row">
-				<div class="col-lg-8">
-					<div class="note-copright"><i class="fa fa-user"></i> Marcin Konieczny</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="note-date"> <i class="fa fa-calendar"></i> 25.06.2015</div>
-				</div>
-			</div>
-
 			<!-- Note image -->
-			<img src="getImage.php?id=2" class="img-responsive img-rounded">
+			<img src="getImage.php?id=1" class="img-responsive img-rounded">
 
 			<!-- Note rank -->
 			<div class="note-rank">
-				<div class="input-group">
-         			<span class="input-group-btn">
-              			<button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]">
-                			<span class="fa fa-minus"></span>
-              			</button>
-          			</span>
-          			<input type="text" name="quant[2]" class="form-control input-number" value="0" min="0" max="100" disabled>
-          			<span class="input-group-btn">
-              			<button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
-                  	<span class="fa fa-plus"></span>
-              			</button>
-          			</span>
-      			</div>
+					<a href="#" class="action-button shadow animate green"><i class="fa fa-plus"></i></a>
+  					<a href="#" class="action-button shadow animate red"><i class="fa fa-minus"></i></a>
+  					<div class="note-rank-rank">+43</div>
 			</div>
 		</div> <!-- END NOTE -->
 
@@ -107,42 +90,33 @@ include_once('config.php');
 
 		<div class="note">
     		<!-- Note description -->
-			<div class="row note-title">
-				<div class="col-lg-8">
-					<div class="note-title-title">Testowy tytuł</div>
+    		<div class="note-informations">
+				<div class="row note-title">
+					<div class="col-lg-8 col-xs-8">
+						<div class="note-title-title">Testowy tytuł</div>
+					</div>
+					<div class="col-lg-4 col-xs-4">
+						<div class="note-title-comments"><a href="#"><i class="fa fa-comments"></i> 65</a></div>
+					</div>
 				</div>
-				<div class="col-lg-4">
-					<div class="note-title-comments"><a href="#"><i class="fa fa-comments"></i> 65</a></div>
+
+				<div class="row">
+					<div class="col-lg-8 col-xs-8">
+						<div class="note-copright"><i class="fa fa-user"></i> Marcin Konieczny</div>
+					</div>
+					<div class="col-lg-4 col-xs-4">
+						<div class="note-date"> <i class="fa fa-calendar"></i> 25.06.2015</div>
+					</div>
 				</div>
 			</div>
-
-			<div class="row">
-				<div class="col-lg-8">
-					<div class="note-copright"><i class="fa fa-user"></i> Marcin Konieczny</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="note-date"> <i class="fa fa-calendar"></i> 25.06.2015</div>
-				</div>
-			</div>
-
 			<!-- Note image -->
 			<img src="getImage.php?id=3" class="img-responsive img-rounded">
 
 			<!-- Note rank -->
 			<div class="note-rank">
-				<div class="input-group">
-         			<span class="input-group-btn">
-              			<button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="quant[2]">
-                			<span class="fa fa-minus"></span>
-              			</button>
-          			</span>
-          			<input type="text" name="quant[2]" class="form-control input-number" value="0" min="0" max="100" disabled>
-          			<span class="input-group-btn">
-              			<button type="button" class="btn btn-success btn-number" data-type="plus" data-field="quant[2]">
-                  	<span class="fa fa-plus"></span>
-              			</button>
-          			</span>
-      			</div>
+					<a href="#" class="action-button shadow animate green"><i class="fa fa-plus"></i></a>
+  					<a href="#" class="action-button shadow animate red"><i class="fa fa-minus"></i></a>
+  					<div class="note-rank-rank">+43</div>
 			</div>
 		</div> <!-- END NOTE -->
 
