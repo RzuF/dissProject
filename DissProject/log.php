@@ -16,15 +16,18 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <form id="login-form" action="login.php" method="post" role="form" style="display: block;">
+                            <form id="login-form" style="display: block;" ng-controller="sign-up" role="form">
+                                <div class="alert alert-danger" role="alert" ng-show="!ok">
+                                    <strong>Błąd:</strong>{{ somethingwentwrong }} 
+                                </div>
                                 <div style="margin-bottom: 10px" class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                    <input type="text" name="login" id="username" tabindex="1" class="form-control" placeholder="Login" value="">
+                                    <input type="text" tabindex="1" class="form-control" placeholder="Login" value="" ng-model="login">
                                 </div>
 
                                 <div style="margin-bottom: 10px" class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                    <input type="password" name="psswd" id="passsword" tabindex="2" class="form-control" placeholder="Hasło">
+                                    <input type="password" tabindex="2" class="form-control" placeholder="Hasło" ng-model="password">
                                 </div>
                                 <div class="form-group text-center">
                                     <input type="checkbox" tabindex="3" class="" name="rem" id="remember">
@@ -34,7 +37,7 @@
                                 <div class="form-group">
                                     <div class="row">
                                         <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="Zaloguj">
+                                            <input type="submit" ng-click="check_credentials()" tabindex="4" class="form-control btn btn-login" value="Zaloguj">
                                         </div>
                                     </div>
                                 </div>

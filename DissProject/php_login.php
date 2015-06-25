@@ -39,9 +39,9 @@ if($request->request == "login")
 
 				echo 'OK';
 			}
-			else echo 'ERROR: Password not valid!';
+			else echo ' Hasło nie prawidłowe!';
 		}
-		else echo 'ERROR: There is no such a login i DB!';
+		else echo ' Nie ma takiego użytkownika.';
 	}
 }
 

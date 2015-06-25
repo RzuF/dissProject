@@ -15,13 +15,6 @@ app.config(function($routeProvider){
           });
 });
 
-app.controller('cfgController',function($scope){
-
-    /*      
-    Here you can handle controller for specific route as well.
-    */
-});
-
 app.controller('PasswordCtrl', function($scope) {
 
   function isLongEnough( pwd ) {
@@ -62,6 +55,39 @@ app.controller('dbCtrl', ['$scope', '$http', function ($scope, $http) {
                 alert("Błąd w przekazywaniu danych.");
             });
 }]);
+
+app.controller('sign-up', function ($scope, $http) {
+  /*
+  * This method will be called on click event of button.
+  * Here we will read the email and password value and call our PHP file.
+  */
+    $scope.somethingwentwrong = "NOPE";
+    $scope.ok = true;
+
+    $scope.check_credentials = function () {
+        var request = $http({
+        method: "post",
+        url: 'http://localhost:8888/dissProject/DissProject/php_login.php',
+        data: {
+            request: 'login',
+            password: $scope.password,
+            login: $scope.login
+        },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+
+    /* Check whether the HTTP Request is successful or not. */
+    request.success(function (data) {
+        if( data == "OK") {
+            window.location.replace("/dissProject/DissProject/");
+        }
+        else {
+        $scope.ok = false;
+        $scope.somethingwentwrong = data;
+    }
+    });
+  }
+});
 
 
 

@@ -27,7 +27,7 @@
             <div class="note-rank">
                 <a href="#" class="action-button shadow animate green"><i class="fa fa-plus"></i></a>
                 <a href="#" class="action-button shadow animate red"><i class="fa fa-minus"></i></a>
-                <div class="note-rank-rank">{{ 1 * note.plus - note.minus * 1 }}, id: {{ note.id }}</div>
+                <div class="note-rank-rank">{{ 1 * note.plus - note.minus * 1 }}</div>
             </div>
 
         </div> <!-- END NOTE -->
