@@ -2,16 +2,13 @@ var app=angular.module('dissApp',['ngRoute']);
 app.config(function($routeProvider){
       $routeProvider
           .when('/',{
-                templateUrl: 'home.html'
+                templateUrl: 'all.html'
           })
           .when('/logowanie',{
-                templateUrl: 'log.php'
+                templateUrl: 'log.html'
           })
           .when('/dodaj-dissa',{
                 templateUrl: 'dodaj-dissa.php'
-          })
-          .when('/all',{
-                templateUrl: 'all.php'
           });
 });
 
