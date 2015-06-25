@@ -14,13 +14,13 @@ if(!$blad) echo 'Error: '.mysql_error();
 
 $description = "Diss o podanym ID nie istnieje!\n\nThere is no diss with given ID!";
 
-$idreq = mysql_query("SELECT `title`, `text`, `author` FROM `".PREFIX."_notes` WHERE `id` = '".$_GET['id']."'"); // Zapytanie o dane obrazka o otrzymanym ID
+$idreq = mysql_query("SELECT `text`, `author` FROM `".PREFIX."_notes` WHERE `id` = '".$_GET['id']."'"); // Zapytanie o dane obrazka o otrzymanym ID
 if(!$idreq) echo "Error: ".mysql_error();
 else
 {
 	if($req = mysql_fetch_assoc($idreq))
 	{
-		$description = $req['title'] . "\n\n" . $req['text'];
+		$description = $req['text'];
 	}
 }
 
