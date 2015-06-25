@@ -71,7 +71,7 @@ else
     $text .= "<span id='error'>";
     $text .= "Tylko zalogowani uøytkownicy mogπ dodawaÊ dissy.";
     $text .= "</span>";
-    include_once('login.php');
+    //include_once('login.php');
 }
 
 mysql_close($sqlcon);
