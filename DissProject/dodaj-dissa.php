@@ -21,7 +21,14 @@ include_once('config.php');
     	<div class="page-header">
         <h1>Dodaj dissa:</h1>
     	</div>
-    	<div class="alert alert-info" role="alert">Gdy dodajesz dissa będąc zajerestrowanym masz możliwość podlądu jego ocen i komentarzy. Te kilka z wielu możliwości zajerestrowanych użytkowników. Jeśli chcesz dowiedzieć się więcej <b><a href="#" class="alert-link">kliknij.</a></b></div>
+    	<?php if(!$_SESSION['logged'])
+    	 echo '<div class="alert alert-info" role="alert">Gdy dodajesz dissa będąc zajerestrowanym masz możliwość podlądu jego ocen i komentarzy.
+    	 To tylko diwe z wielu przywilejów zajerestrowanych użytkowników. Jeśli chcesz dowiedzieć się więcej <b><a href="#" class="alert-link">kliknij.</a></b></div>';
+
+    	 else { echo '<div class="alert alert-info" role="alert">Po dodaniu dissa będziesz otrzymywał powiadomienia o nowych komentarzach i ocenach twojego dissa.
+    	 Będą one widoczne w menu po kliknięciu przycisku profil.</a></b></div>'; }
+
+    	 ?>
 
     	<form action='add.php' method='post' id='add'>
     		<div class="form-group">
@@ -48,7 +55,7 @@ include_once('config.php');
     		<!-- Note description -->
 			<div class="row note-title">
 				<div class="col-lg-8 col-xs-8">
-					<div class="note-title-title">{{dissName}}</div>
+					<div class="note-title-title">{{dissName || "Tytuł dissa"}}</div>
 				</div>
 				<div class="col-lg-4 col-xs-4">
 					<div class="note-title-comments"><a href="#"><i class="fa fa-comments"></i> 123</a></div>
