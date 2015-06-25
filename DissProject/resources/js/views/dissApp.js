@@ -48,3 +48,20 @@ app.controller('PasswordCtrl', function($scope) {
     $scope.showReqs = $scope.reqs.length;
   });
 });
+
+app.controller('dbCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.view;
+        $http.get('http://localhost:8888/dissProject/DissProject/getAll.php?id=1')
+            .success(function(data){
+                $scope.data = data;
+                $scope.view = angular.fromJson($scope.data);
+                //alert(angular.fromJson());
+            })
+            .error(function() {
+                $scope.data = "error in fetching data";
+                alert("Błąd w przekazywaniu danych.");
+            });
+}]);
+
+
+

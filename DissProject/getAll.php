@@ -23,6 +23,7 @@ if(isset($_GET['id']))
 			$arr[] = $req; 			
 		}
 		
+		//echo $arr;
 		echo $json_response = json_encode($arr);
 	}
 }
