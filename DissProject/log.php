@@ -4,7 +4,7 @@ include_once('config.php');
 ?>
 
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" ng-app="app">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,7 +18,7 @@ include_once('config.php');
 <body>
     <?php include("nav.html"); ?>
     
-    <div class="container">
+    <div style="padding-top: 30px;" class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-login">
@@ -68,8 +68,8 @@ include_once('config.php');
                                     </div>
                                 </div>
                             </form>
-                            <!-- Zmiana wyglądu i walidacja danych w JS -->
-                            <form id="register-form" action="#" method="post" role="form" style="display: none;">
+                            <!-- Dodanie walidacji nicku, maila i powtórzonego hasła, blokada buttona gdy warunki nie spełnione, obsługa komunikatów php -->
+                            <form id="register-form" action="#" method="post" role="form" style="display: none;" ng-controller="PasswordCtrl">
                                 <div style="margin-bottom: 10px" class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
                                     <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Nazwa użytkownika" value="">
@@ -81,7 +81,12 @@ include_once('config.php');
                                 <div style="margin-bottom: 10px" class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
                                     <!-- <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Hasło"> -->
-                                    <input type="password" class="form-control" name="password" id="password" tabindex="2" placeholder="Hasło" required data-toggle="popover" title="Siła hasła" data-content="Wprowadź hasło...">
+                                    <input ng-model="user.password" type="password" class="form-control" name="password" id="password" tabindex="2" placeholder="Hasło" required data-toggle="popover" title="Siła hasła" data-content="Wprowadź hasło...">
+                                </div>
+                                <div class="alert alert-danger" role="alert" ng-show="showReqs">
+                                    <ul>
+                                        <li ng-repeat="req in reqs">{{ req }}</li>
+                                    </ul>
                                 </div>
                                 <div style="margin-bottom: 10px" class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-repeat"></i></span>
@@ -90,7 +95,7 @@ include_once('config.php');
                   <div class="form-group">
                     <div class="row">
                       <div class="col-sm-6 col-sm-offset-3">
-                        <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-register" value="Rejesracja">
+                        <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-login" value="Rejesracja">
                       </div>
                     </div>
                   </div>
@@ -106,5 +111,6 @@ include_once('config.php');
     <?php include_once("resources.html"); ?>
     <script src="template/js/script.js"></script>
     <script src="template/js/password.js"></script>
+    <script src="template/js/controllers/loginCtrl.js"></script>
 </body>
 </html>
