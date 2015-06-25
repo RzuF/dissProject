@@ -25,5 +25,4 @@ function PasswordCtrl ($scope) {
 	});
 }
 
-angular.module('app', [])
-	.controller('PasswordCtrl', PasswordCtrl);
+app.controller('PasswordCtrl', PasswordCtrl);

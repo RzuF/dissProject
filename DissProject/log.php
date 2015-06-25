@@ -1,38 +1,18 @@
-<?php
-session_start();
-include_once('config.php');
-?>
-
-<!DOCTYPE html>
-<html lang="pl" ng-app="app">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <title>DissProject</title>
-    <link rel="stylesheet" type="text/css" href="template/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="template/css/style.css">
-    <link rel="stylesheet" type="text/css" href="template/css/password-validation.css">
-</head>
-<body>
-    <?php include("nav.html"); ?>
-    
-    <div style="padding-top: 30px;" class="container">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="panel panel-login">
-                    <div class="panel-heading">
-                        <div class="row">
-                            <div class="col-xs-6">
-                                <a href="#" class="active" id="login-form-link">Logowanie</a>
-                            </div>
-                            <div class="col-xs-6">
-                                <a href="#" id="register-form-link">Zarejestruj się</a>
-                            </div>
+<div style="padding-top: 30px;" class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="panel panel-login">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a href="#" class="active" id="login-form-link">Logowanie</a>
                         </div>
-                        <hr>
+                        <div class="col-xs-6">
+                            <a href="#" id="register-form-link">Zarejestruj się</a>
+                        </div>
                     </div>
+                    <hr>
+                </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
@@ -92,25 +72,23 @@ include_once('config.php');
                                     <span class="input-group-addon"><i class="fa fa-repeat"></i></span>
                                     <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Powtórz hasło">
                                 </div>
-                  <div class="form-group">
-                    <div class="row">
-                      <div class="col-sm-6 col-sm-offset-3">
-                        <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-login" value="Rejesracja">
-                      </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-6 col-sm-offset-3">
+                                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-login" value="Rejesracja">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                  </div>
-                </form>
-              </div>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 
-    <?php include_once("resources.html"); ?>
-    <script src="template/js/script.js"></script>
-    <script src="template/js/password.js"></script>
-    <script src="template/js/controllers/loginCtrl.js"></script>
-</body>
-</html>
+<script src="resources/js/password-pop.js"></script> <!-- style.css -->
+<script src="resources/js/password-check.js"></script> <!-- Password Pop -->
+
+

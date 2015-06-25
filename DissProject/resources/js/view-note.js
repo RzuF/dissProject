@@ -2,7 +2,7 @@ var fetch = angular.module('fetch', []);
 
 fetch.controller('dbCtrl', ['$scope', '$http', function ($scope, $http) {
 	$scope.view;
-    $http.get('http://localhost:8888/dissProject/DissProject/view.php?id=1')
+    $http.get('http://localhost:8888/dissProject/DissProject/getAll.php')
                 .success(function(data){
                     $scope.data = data;
                     $scope.view = angular.fromJson($scope.data);

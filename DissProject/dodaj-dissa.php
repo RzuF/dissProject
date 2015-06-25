@@ -1,21 +1,3 @@
-<?php
-session_start();
-include_once('config.php');
-?>
-
-<!DOCTYPE html>
-<html lang="pl">
-<head>
-	<meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-	<title>DissProject</title>
-	<link rel="stylesheet" type="text/css" href="template/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="template/css/style.css">
-</head>
-<body>
-    <?php include_once("nav.html"); ?>
 
     <div class="add-note" ng-app="addDiss">
     	<div class="page-header">
@@ -93,7 +75,5 @@ include_once('config.php');
 		</div> <!-- END NOTE -->
 		</div>
 	</div>
-    <?php include_once("resources.html"); ?>
-    <script src="template/js/addDiss.js"></script>
-</body>
-</html>
+
+<script src="resources/js/addDiss.js"></script>
