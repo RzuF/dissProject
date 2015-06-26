@@ -175,6 +175,7 @@ if($request->request == "rate")
 					if(!$idreq) $text .= "Error: ".mysql_error();
 					else echo "OK";
 				}
+				else echo "ERROR#1";
 			}
 			else
 			{				
