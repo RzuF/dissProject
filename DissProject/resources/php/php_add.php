@@ -155,22 +155,27 @@ if($request->request == "rate")
 	if(!$idreq) echo "Error: ".mysql_error();
 	else
 	{
+		echo "debug#1";
 		if($req = mysql_fetch_assoc($idreq))
 		{
+			echo "debug#2";
 			$userAdded = FALSE;
 			foreach(explode(";", $req['plus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
 			foreach(explode(";", $req['minus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
 	
 			if(!$userAdded)
 			{
+				echo "debug#3";
 				if($request->type == "plus")
 				{
+					echo "debug#4a";
 					$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `plus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` + 1 WHERE `id` = '".$request->id."'");
 					if(!$idreq) $text .= "Error: ".mysql_error();
 					else echo "OK";
 				}
 				elseif($request->type == "minus")
 				{
+					echo "debug#4b";
 					$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `minus` = '".implode(";",array($req['minus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` - 1 WHERE `id` = '".$request->id."'");
 					if(!$idreq) $text .= "Error: ".mysql_error();
 					else echo "OK";
