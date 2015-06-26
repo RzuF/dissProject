@@ -1,0 +1,154 @@
+<?php
+
+include_once('config.php');
+
+session_start();
+
+$sqlcon = mysql_connect(HOST, USER, PASS);
+if(!$sqlcon) echo 'Error: '.mysql_error();
+
+$blad = mysql_select_db(DB);
+if(!$blad) echo 'Error: '.mysql_error();
+
+$postdata = file_get_contents("php://input");
+$request = json_decode($postdata);
+
+
+if($request->request == "add")
+{
+	$uploadOk = true;
+	
+	if($request->dissName == "")
+	{
+		echo "ERROR: Pole tytu³ nie mo¿e byæ puste\n";
+		$uploadOk = false;
+	}
+	
+	if($request->dissText == "")
+	{
+		echo "ERROR: Pole tekst nie mo¿e byæ puste\n";
+		$uploadOk = false;
+	}
+	
+	if ($uploadOk)
+	{
+		$idreq = mysql_query("INSERT INTO `".PREFIX."_notes`(`id`, `title`, `text`, `author`, `date`, `state`, `tags`) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '0', '".$request->dissTags."')"); // Put 'diss' into DB
+		$l_id = mysql_insert_id();
+		if(!$idreq) echo 'Error!'.mysql_error();
+		else echo "OK: $l_id";		
+	}		
+}
+
+/*
+ * What you have to send in data:
+ *
+ * $request = 'add';
+ * $dissName;
+ * $dissText;
+ * $dissTags;
+ *
+ * What I send back:
+ *
+ * 'OK: ID' if was successful & ID inserted item
+ * 'ERROR:' if was not
+ * 		+ error description
+ */
+
+if($request->request == "delete")
+{
+	if($_SESSION['active'] > 2)
+	{
+		$idreq = mysql_query("DELETE FROM `".PREFIX."_posts` WHERE `id` = '".$request->id."'");
+		if(!$idreq) echo 'Error!'.mysql_error();
+		else echo "OK";
+	}
+	else echo "ERROR: Nie masz takich uprawnieñ";
+}
+
+/*
+ * What you have to send in data:
+ *
+ * $request = 'delete';
+ * $id;
+ *
+ * What I send back:
+ *
+ * 'OK' if was successful
+ * 'ERROR:' if was not
+ * 		+ error description
+ */
+
+if($request->request == "move2main")
+{
+	if($_SESSION['active'] > 2)
+	{
+		$idreq = mysql_query("UPDATE `".PREFIX."_posts` SET `main` = '3' WHERE `id` = '".$request->id."'");
+		if(!$idreq) echo 'Error!'.mysql_error();
+		else echo "OK";
+	}
+	else echo "ERROR: Nie masz takich uprawnieñ";
+}
+
+/*
+ * What you have to send in data:
+ *
+ * $request = 'move2main';
+ * $id;
+ *
+ * What I send back:
+ *
+ * 'OK' if was successful
+ * 'ERROR:' if was not
+ * 		+ error description
+ */
+
+if($request->request == "move2mainFAST")
+{
+	if($_SESSION['active'] > 2)
+	{
+		$idreq = mysql_query("UPDATE `".PREFIX."_posts` SET `main` = '1' WHERE `id` = '".$request->id."'");
+		if(!$idreq) echo 'Error!'.mysql_error();
+		else echo "OK";
+	}
+	else echo "ERROR: Nie masz takich uprawnieñ";
+}
+
+/*
+ * What you have to send in data:
+ *
+ * $request = 'move2mainFAST';
+ * $id;
+ *
+ * What I send back:
+ *
+ * 'OK' if was successful
+ * 'ERROR:' if was not
+ * 		+ error description
+ */
+
+if($request->request == "show")
+{
+	$idreq = mysql_query("SELECT a.title, a.plus, a.minus, a.date, b.login, a.tags FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id);
+	if(!$idreq) echo "Error: ".mysql_error();
+	else
+	{
+		$req = mysql_fetch_assoc($idreq);
+		$arr[] = $req;
+		echo $json_response = json_encode($arr);
+	}
+}
+
+/*
+ * What you have to send in data:
+ *
+ * $request = 'show';
+ * $id;
+ *
+ * What I send back:
+ *
+ * JSON encoded data
+ */
+
+mysql_close($sqlcon);
+
+?>
