@@ -12,7 +12,7 @@ if(!$blad) echo 'Error: '.mysql_error();
 
 if(isset($_GET['id']))
 {
-	$idreq = mysql_query("SELECT a.id, a.title, a.plus, a.minus, a.date, b.login, a.tags FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id");
+	$idreq = mysql_query("SELECT a.id, a.title, a.difference, a.date, b.login, a.tags FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.main = 1");
 	if(!$idreq) echo "Error: ".mysql_error();
 	else
 	{

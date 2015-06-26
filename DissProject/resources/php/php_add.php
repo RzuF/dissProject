@@ -128,7 +128,7 @@ if($request->request == "move2mainFAST")
 
 if($request->request == "show")
 {
-	$idreq = mysql_query("SELECT a.title, a.plus, a.minus, a.date, b.login, a.tags FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id);
+	$idreq = mysql_query("SELECT a.title, a.difference, a.date, b.login, a.tags FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id);
 	if(!$idreq) echo "Error: ".mysql_error();
 	else
 	{
