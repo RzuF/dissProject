@@ -149,6 +149,59 @@ if($request->request == "show")
  * JSON encoded data
  */
 
+if($request->request == "rate")
+{
+	$idreq = mysql_query("SELECT `plus`, `minus` FROM `".PREFIX."_posts` WHERE `id` = '".$request->id."'");
+	if(!$idreq) echo "Error: ".mysql_error();
+	else
+	{
+		if($req = mysql_fetch_assoc($idreq))
+		{
+			$userAdded = FALSE;
+			foreach(explode(";", $req['plus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
+			foreach(explode(";", $req['minus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
+	
+			if(!$userAdded)
+			{
+				if($request->type == "plus")
+				{
+					$idreq = mysql_query("UPDATE `".PREFIX."_posts` SET `plus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `top` = `top` + 1 WHERE `id` = '".$request->id."'");
+					if(!$idreq) $text .= "Error: ".mysql_error();
+					else echo "OK";
+				}
+				elseif($request->type == "minus")
+				{
+					$idreq = mysql_query("UPDATE `".PREFIX."_posts` SET `minus` = '".implode(";",array($req['minus'],$_SERVER['REMOTE_ADDR']))."' , `top` = `top` - 1 WHERE `id` = '".$request->id."'");
+					if(!$idreq) $text .= "Error: ".mysql_error();
+					else echo "OK";
+				}
+			}
+			else
+			{				
+				echo "ERROR: Ju¿ oceni³eœ ten diss";
+			}
+		}
+		else
+		{
+			echo "ERROR: Brak dissa o takim ID";
+		}
+	}
+	die();
+}
+
+/*
+ * What you have to send in data:
+ *
+ * $request = 'rate';
+ * $id;
+ *
+ * What I send back:
+ *
+ * 'OK' if was successful
+ * 'ERROR:' if was not
+ * 		+ error description
+ */
+
 mysql_close($sqlcon);
 
 ?>
