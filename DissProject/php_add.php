@@ -58,7 +58,7 @@ if($request->request == "delete")
 {
 	if($_SESSION['active'] > 2)
 	{
-		$idreq = mysql_query("DELETE FROM `".PREFIX."_posts` WHERE `id` = '".$request->id."'");
+		$idreq = mysql_query("DELETE FROM `".PREFIX."_notes` WHERE `id` = '".$request->id."'");
 		if(!$idreq) echo 'Error!'.mysql_error();
 		else echo "OK";
 	}
@@ -82,7 +82,7 @@ if($request->request == "move2main")
 {
 	if($_SESSION['active'] > 2)
 	{
-		$idreq = mysql_query("UPDATE `".PREFIX."_posts` SET `main` = '3' WHERE `id` = '".$request->id."'");
+		$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `main` = '3' WHERE `id` = '".$request->id."'");
 		if(!$idreq) echo 'Error!'.mysql_error();
 		else echo "OK";
 	}
@@ -106,7 +106,7 @@ if($request->request == "move2mainFAST")
 {
 	if($_SESSION['active'] > 2)
 	{
-		$idreq = mysql_query("UPDATE `".PREFIX."_posts` SET `main` = '1' WHERE `id` = '".$request->id."'");
+		$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `main` = '1' WHERE `id` = '".$request->id."'");
 		if(!$idreq) echo 'Error!'.mysql_error();
 		else echo "OK";
 	}
@@ -151,7 +151,7 @@ if($request->request == "show")
 
 if($request->request == "rate")
 {
-	$idreq = mysql_query("SELECT `plus`, `minus` FROM `".PREFIX."_posts` WHERE `id` = '".$request->id."'");
+	$idreq = mysql_query("SELECT `plus`, `minus` FROM `".PREFIX."_notes` WHERE `id` = '".$request->id."'");
 	if(!$idreq) echo "Error: ".mysql_error();
 	else
 	{
@@ -165,13 +165,13 @@ if($request->request == "rate")
 			{
 				if($request->type == "plus")
 				{
-					$idreq = mysql_query("UPDATE `".PREFIX."_posts` SET `plus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `top` = `top` + 1 WHERE `id` = '".$request->id."'");
+					$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `plus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `top` = `top` + 1 WHERE `id` = '".$request->id."'");
 					if(!$idreq) $text .= "Error: ".mysql_error();
 					else echo "OK";
 				}
 				elseif($request->type == "minus")
 				{
-					$idreq = mysql_query("UPDATE `".PREFIX."_posts` SET `minus` = '".implode(";",array($req['minus'],$_SERVER['REMOTE_ADDR']))."' , `top` = `top` - 1 WHERE `id` = '".$request->id."'");
+					$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `minus` = '".implode(";",array($req['minus'],$_SERVER['REMOTE_ADDR']))."' , `top` = `top` - 1 WHERE `id` = '".$request->id."'");
 					if(!$idreq) $text .= "Error: ".mysql_error();
 					else echo "OK";
 				}
