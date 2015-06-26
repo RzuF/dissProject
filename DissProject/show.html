@@ -8,10 +8,7 @@
                     <div class="note-title-title"> {{ note.title }} </div>
                 </div>
                 <div class="col-lg-4 col-xs-4">
-                    <div class="note-title-comments" ng-controller="deleteCtrl">
-                        <button ng-click="delete(note.id)" type="button" class="btn btn-danger btn-sm">Delete</button>
-                        <a href="#"><i class="fa fa-comments"></i> 65</a>
-                    </div>
+                    <div class="note-title-comments"><a href="#"><i class="fa fa-comments"></i> 65</a></div>
                 </div>
             </div>
 
@@ -25,7 +22,7 @@
             </div>
 
             <!-- Note image -->
-            <img src='resources/php/getImage.php?id= + {{ note.id }}' class="img-responsive img-rounded">
+            <img src="resources/php/getImage.php?id=1" class="img-responsive img-rounded">
             
             <div class="note-rank" ng-controller="rate">
                 <a ng-click='rate(note.id, "plus")'  class="action-button shadow animate green"><i class="fa fa-plus"></i></a>

@@ -12,21 +12,24 @@
 
     	 ?>
 
-    	<form action='add.php' method='post' id='add'>
+    	<form ng-controller="add-diss" role="form">
+    		<div class="alert alert-danger" role="alert" ng-show="!ok">
+                                    <strong>Błąd:</strong>{{ somethingwentwrong }} 
+                                </div>
     		<div class="form-group">
             	<label for="word" class="control-label">Tytuł:</label>
-            	<input type="text" id="word" class="form-control" name="dissName" id="dissName" ng-model="dissName">
+            	<input type="text" class="form-control" ng-model="dissName">
             </div>
             <div class="form-group">
 	            <label for="word" class="control-label">Tagi:</label>
-	            <input type="text" class="form-control">
+	            <input type="text" class="form-control" ng-model="dissTags">
 	        </div>
 	        <div class="form-group">
-	            <label for="mainText" class="control-label" name="dissText" id="dissText">Tekst:</label>
-	            <textarea class="form-control"></textarea>
+	            <label for="mainText" class="control-label">Tekst:</label>
+	            <textarea ng-model="dissText" class="form-control"></textarea>
 	        </div>
 	        <div class="form-group">
-	        	<button type="submit" name"submit" id="submit" class="form-control btn btn-default">Dodaj</button>
+	        	<button ng-click="add()" type="submit" class="form-control btn btn-default">Dodaj</button>
 	        </div>
         </form>
 
