@@ -41,7 +41,7 @@ app.controller('PasswordCtrl', function($scope) {
 
 app.controller('dbCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.view;
-        $http.get('http://localhost:8888/dissProject/DissProject/getAll.php?id=1')
+        $http.get('http://localhost:8888/dissProject/DissProject/resources/php/getAll.php?id=1')
             .success(function(data){
                 $scope.data = data;
                 $scope.view = angular.fromJson($scope.data);
@@ -64,7 +64,7 @@ app.controller('sign-up', function ($scope, $http) {
     $scope.check_credentials = function () {
         var request = $http({
         method: "post",
-        url: 'http://localhost:8888/dissProject/DissProject/php_login.php',
+        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_login.php',
         data: {
             request: 'login',
             password: $scope.password,
