@@ -20,13 +20,13 @@ if($request->request == "add")
 	
 	if($request->commentText == "")
 	{
-		echo "ERROR: Pole tekst nie mo¿e byæ puste\n";
+		echo "ERROR: Pole tekst nie moï¿½e byï¿½ puste\n";
 		$uploadOk = false;
 	}
 	
 	if ($uploadOk)
 	{
-		$idreq = mysql_query("INSERT INTO `".PREFIX."_comments`(`id`, `text`, `author`, `date`, `note`, `id`) VALUES ('', '".htmlentities($request->dissText)."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '".$request->id."', '".$_SERVER['REMOTE_ADDR']."')");
+		$idreq = mysql_query("INSERT INTO `".PREFIX."_comments`(`id`, `text`, `author`, `date`, `note`, `author_ip`) VALUES ('', '".htmlentities($request->dissText)."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '".$request->id."', '".$_SERVER['REMOTE_ADDR']."')");
 		$l_id = mysql_insert_id();
 		if(!$idreq) echo 'Error!'.mysql_error();
 		else echo "OK: $l_id";		
@@ -72,7 +72,7 @@ if($request->request == "delete")
 		if(!$idreq) echo 'Error!'.mysql_error();
 		else echo "OK";
 	}
-	else echo "ERROR: Nie masz takich uprawnieñ";
+	else echo "ERROR: Nie masz takich uprawnieï¿½";
 }
 
 /*
@@ -87,3 +87,62 @@ if($request->request == "delete")
  * 'ERROR:' if was not
  * 		+ error description
  */
+
+if($request->request == "rate")
+{
+	$idreq = mysql_query("SELECT `plus`, `minus` FROM `".PREFIX."_notes` WHERE `id` = '".$request->id."'");
+	if(!$idreq) echo "Error: ".mysql_error();
+	else
+	{
+		if($req = mysql_fetch_assoc($idreq))
+		{
+			$userAdded = FALSE;
+			foreach(explode(";", $req['plus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
+			foreach(explode(";", $req['minus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
+
+			if(!$userAdded)
+			{
+				if($request->type == "plus")
+				{
+					$idreq = mysql_query("UPDATE `".PREFIX."_comments` SET `plus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` + 1 WHERE `id` = '".$request->id."'");
+					if(!$idreq) $text .= "Error: ".mysql_error();
+					else echo "OK";
+				}
+				elseif($request->type == "minus")
+				{
+					$idreq = mysql_query("UPDATE `".PREFIX."_comments` SET `minus` = '".implode(";",array($req['minus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` - 1 WHERE `id` = '".$request->id."'");
+					if(!$idreq) $text .= "Error: ".mysql_error();
+					else echo "OK";
+				}
+			}
+			else
+			{
+				echo "ERROR: Juï¿½ oceniï¿½eï¿½ ten diss";
+			}
+		}
+		else
+		{
+			echo "ERROR: Brak dissa o takim ID";
+		}
+	}
+	die();
+}
+
+/*
+ * What you have to send in data:
+ *
+ * $request = 'rate';
+ * $id;
+ * $type = 'plus' || $type = 'minus'
+ *
+ * What I send back:
+ *
+ * 'OK' if was successful
+ * 'ERROR:' if was not
+ * 		+ error description
+ */
+
+
+mysql_close($sqlcon);
+
+?>

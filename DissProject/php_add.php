@@ -20,13 +20,13 @@ if($request->request == "add")
 	
 	if($request->dissName == "")
 	{
-		echo "ERROR: Pole tytu³ nie mo¿e byæ puste\n";
+		echo "ERROR: Pole tytuï¿½ nie moï¿½e byï¿½ puste\n";
 		$uploadOk = false;
 	}
 	
 	if($request->dissText == "")
 	{
-		echo "ERROR: Pole tekst nie mo¿e byæ puste\n";
+		echo "ERROR: Pole tekst nie moï¿½e byï¿½ puste\n";
 		$uploadOk = false;
 	}
 	
@@ -62,7 +62,7 @@ if($request->request == "delete")
 		if(!$idreq) echo 'Error!'.mysql_error();
 		else echo "OK";
 	}
-	else echo "ERROR: Nie masz takich uprawnieñ";
+	else echo "ERROR: Nie masz takich uprawnieï¿½";
 }
 
 /*
@@ -82,11 +82,11 @@ if($request->request == "move2main")
 {
 	if($_SESSION['active'] > 2)
 	{
-		$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `main` = '3' WHERE `id` = '".$request->id."'");
+		$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `state` = '3' WHERE `id` = '".$request->id."'");
 		if(!$idreq) echo 'Error!'.mysql_error();
 		else echo "OK";
 	}
-	else echo "ERROR: Nie masz takich uprawnieñ";
+	else echo "ERROR: Nie masz takich uprawnieï¿½";
 }
 
 /*
@@ -106,11 +106,11 @@ if($request->request == "move2mainFAST")
 {
 	if($_SESSION['active'] > 2)
 	{
-		$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `main` = '1' WHERE `id` = '".$request->id."'");
+		$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `state` = '1' WHERE `id` = '".$request->id."'");
 		if(!$idreq) echo 'Error!'.mysql_error();
 		else echo "OK";
 	}
-	else echo "ERROR: Nie masz takich uprawnieñ";
+	else echo "ERROR: Nie masz takich uprawnieï¿½";
 }
 
 /*
@@ -165,20 +165,20 @@ if($request->request == "rate")
 			{
 				if($request->type == "plus")
 				{
-					$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `plus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `top` = `top` + 1 WHERE `id` = '".$request->id."'");
+					$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `plus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` + 1 WHERE `id` = '".$request->id."'");
 					if(!$idreq) $text .= "Error: ".mysql_error();
 					else echo "OK";
 				}
 				elseif($request->type == "minus")
 				{
-					$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `minus` = '".implode(";",array($req['minus'],$_SERVER['REMOTE_ADDR']))."' , `top` = `top` - 1 WHERE `id` = '".$request->id."'");
+					$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `minus` = '".implode(";",array($req['minus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` - 1 WHERE `id` = '".$request->id."'");
 					if(!$idreq) $text .= "Error: ".mysql_error();
 					else echo "OK";
 				}
 			}
 			else
 			{				
-				echo "ERROR: Ju¿ oceni³eœ ten diss";
+				echo "ERROR: Juï¿½ oceniï¿½eï¿½ ten diss";
 			}
 		}
 		else
@@ -194,6 +194,7 @@ if($request->request == "rate")
  *
  * $request = 'rate';
  * $id;
+ * $type = 'plus' || $type = 'minus'
  *
  * What I send back:
  *
