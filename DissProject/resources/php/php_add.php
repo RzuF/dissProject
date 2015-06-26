@@ -187,7 +187,7 @@ if($request->request == "rate")
 			echo "ERROR: Brak dissa o takim ID";
 		}
 	}
-	die();
+	//die();
 }
 
 /*
