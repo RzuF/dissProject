@@ -230,101 +230,6 @@ Follow me on Twitter @maridlcrmn
 	color: #fff;
 }
 
-
-.box13{
-    margin: 20px auto;
-    padding: 10px;
-    position:relative;
-    background: -webkit-gradient(linear, 0% 20%, 0% 92%, from(#fff), to(#f3f3f3), color-stop(.1,#fff));
-    border-top: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    border-left: 1px solid #ccc;
-    -webkit-border-top-left-radius: 60px 5px;
-    -webkit-border-top-right-radius: 60px 5px;
-    -webkit-border-bottom-right-radius: 60px 60px ;
-    -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.3) ;
-    
-}
-.box13:before{
-    content:'';    
-    width: 25px;
-    height: 20px;
-    position: absolute;
-    bottom:0;
-    right:0;
-    -webkit-border-bottom-right-radius: 30px;
-    -webkit-box-shadow: -2px -2px 5px rgba(0, 0, 0, 0.3);
-    -webkit-transform:
-    rotate(-20deg)
-    skew(-40deg,-3deg)
-    translate(-13px,-13px);
-}
-.box13:after{
-    content: '';
-    z-index: -10;
-    width: 100px;
-    height: 100px;
-    position:absolute;
-    bottom:0;
-    right:0;
-    background: rgba(0, 0, 0, 0.2);
-    display: inline-block;
-    -webkit-box-shadow: 20px 20px 8px rgba(0, 0, 0, 0.2);
-    -webkit-transform: rotate(0deg)
-                        translate(-45px,-20px)
-                           skew(20deg);
-}
-.box13_corner_lf{
-    width: 100px;
-    height: 100px;
-    top:0; left:0;
-    position:absolute;
-    z-index:-6;
-    display: inline-block;
-    -webkit-box-shadow: -10px -10px 10px rgba(0, 0, 0, 0.2);
-    -webkit-transform: rotate(2deg)
-                        translate(20px,25px)
-                           skew(20deg);
-}
-
-.box13_corner_rt{
-    content: '';
-    width: 50px;
-    height: 50px;
-    top:0; right:0;
-    position:absolute;
-    display: inline-block;
-    z-index:-6;
-    -webkit-box-shadow: 10px -10px 8px rgba(0, 0, 0, 0.2);
-    -webkit-transform: rotate(2deg)
-                        translate(-14px,20px)
-                           skew(-20deg);
-}
-.box13_ribbon:before{
-    content: '';
-    position:absolute;
-    top:0; left: 0;
-    width: 130px;
-    height: 40px;
-    background: -webkit-gradient(linear, 555% 20%, 0% 92%, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.0)), color-stop(.1,rgba(0, 0, 0, 0.2)));
-    border-left: 1px dashed rgba(0, 0, 0, 0.1);
-    border-right: 1px dashed rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
-    -webkit-transform: rotate(90deg) skew(0,0) translate(100px,65px);
-}
-.box13_ribbon:after{
-    content: '';
-    position:absolute;
-    top:0; right: 0;
-    width: 130px;
-    height: 40px;
-    background: -webkit-gradient(linear, 555% 20%, 0% 92%, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.0)), color-stop(.1,rgba(0, 0, 0, 0.2)));
-    border-left: 1px dashed rgba(0, 0, 0, 0.1);
-    border-right: 1px dashed rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
-    -webkit-transform: rotate(90deg) skew(0,0) translate(100px,-65px);
-}
-
 .box14{
     margin: 40px auto;
     padding: 10px;
@@ -375,4 +280,92 @@ Follow me on Twitter @maridlcrmn
     -webkit-transform: rotate(6deg) skew(0,0) translate(-60%,-5px);
 }
 
+.button {        
+    display: inline-block;
+    white-space: nowrap;
+    background-color: #ccc;
+    background-image: linear-gradient(top, #eee, #ccc);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#eeeeee', EndColorStr='#cccccc');
+    border: 1px solid #777;
+    padding: 0 1.5em;
+    margin: 0.5em;
+    font: bold 1em/2em Arial, Helvetica;
+    text-decoration: none;
+    color: #333;
+    text-shadow: 0 1px 0 rgba(255,255,255,.8);
+    border-radius: .2em;
+    box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+}
 
+.button:hover {
+    background-color: #ddd;        
+    background-image: linear-gradient(top, #fafafa, #ddd);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#fafafa', EndColorStr='#dddddd');        
+}
+
+.button:active {
+    box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+    position: relative;
+    top: 1px;
+}
+
+.button:focus {
+    outline: 0;
+    background: #fafafa;
+}    
+
+.button:before {
+    background: #ccc;
+    background: rgba(0,0,0,.1);
+    float: left;        
+    width: 1em;
+    text-align: center;
+    font-size: 1.5em;
+    margin: 0 1em 0 -1em;
+    padding: 0 .2em;
+    box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
+    border-radius: .15em 0 0 .15em;
+    pointer-events: none;        
+}
+
+/* Hexadecimal entities for the icons */
+
+.add:before {
+    content: "\271A";
+}
+
+.edit:before {
+    content: "\270E";        
+}
+
+.delete:before {
+    content: "\2718";        
+}
+
+.save:before {
+    content: "\2714";        
+}
+
+.email:before {
+    content: "\2709";        
+}
+
+.like:before {
+    content: "\2764";        
+}
+
+.next:before {
+    content: "\279C";
+}
+
+.star:before {
+    content: "\2605";
+}
+
+.spark:before {
+    content: "\2737";
+}
+
+.play:before {
+    content: "\25B6";
+}

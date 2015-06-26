@@ -76,5 +76,6 @@ else
 
 mysql_close($sqlcon);
 
-include_once('template.php');
+// include_once('template.php');
+echo $text;
 ?>

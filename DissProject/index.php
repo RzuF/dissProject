@@ -24,8 +24,6 @@ include_once('config.php');
   	</div>
 
     <?php include_once("resources.html"); ?>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script> 
-    <script src="resources/js/rank.js"></script>
     <script src="resources/js/views/dissApp.js"></script>
 </body>
 </html>
