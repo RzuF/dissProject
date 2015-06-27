@@ -20,13 +20,13 @@ if($request->request == "add")
 	
 	if($request->dissName == "")
 	{
-		echo "ERROR: Pole tytu� nie mo�e by� puste\n";
+		echo "ERROR: Pole tytuł nie może być puste";
 		$uploadOk = false;
 	}
 	
 	if($request->dissText == "")
 	{
-		echo "ERROR: Pole tekst nie mo�e by� puste\n";
+		echo "ERROR: Pole tekst nie może być puste";
 		$uploadOk = false;
 	}
 	
@@ -62,7 +62,7 @@ if($request->request == "delete")
 		if(!$idreq) echo 'Error!'.mysql_error();
 		else echo "OK";
 	}
-	else echo "ERROR: Nie masz takich uprawnie�";
+	else echo "ERROR: Nie masz takich uprawnień";
 }
 
 /*
@@ -86,7 +86,7 @@ if($request->request == "move2main")
 		if(!$idreq) echo 'Error!'.mysql_error();
 		else echo "OK";
 	}
-	else echo "ERROR: Nie masz takich uprawnie�";
+	else echo "ERROR: Nie masz takich uprawnień";
 }
 
 /*
@@ -171,20 +171,20 @@ if($request->request == "rate")
 					//echo "debug#4a";
 					$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `plus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` + 1 WHERE `id` = '".$request->id."'");
 					if(!$idreq) echo "Error: ".mysql_error();
-					else echo "OK";
+					else echo "plus";
 				}
 				elseif($request->type == "minus")
 				{
 					//echo "debug#4b";
 					$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `minus` = '".implode(";",array($req['minus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` - 1 WHERE `id` = '".$request->id."'");
 					if(!$idreq) echo "Error: ".mysql_error();
-					else echo "OK";
+					else echo "minus";
 				}
 				else echo "ERROR#1";
 			}
 			else
 			{				
-				echo "ERROR: Ju� oceni�e� ten diss";
+				echo "ERROR: Już oceniłeś ten diss";
 			}
 		}
 		else

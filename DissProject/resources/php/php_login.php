@@ -39,9 +39,9 @@ if($request->request == "login")
 
 				echo 'OK';
 			}
-			else echo 'ERROR: Has�o nieprawid�owe';
+			else echo 'ERROR: Hasło nieprawidłowe.';
 		}
-		else echo 'ERROR: Brak takiego loginu w bazie';
+		else echo 'ERROR: Brak takiego loginu w bazie.';
 	}
 }
 
@@ -102,9 +102,9 @@ if($request->request == "active")
 				if(!$idreq) echo "Error: ".mysql_error();
 				else echo "OK";
 			}
-			elseif($req['active'] == 0) {echo "ERROR: Konto juz zosta�o aktywowane";}
+			elseif($req['active'] == 0) {echo "ERROR: Konto juz zosta³o aktywowane";}
 		}
-		else echo "ERROR: B��dny kod aktywacyjny";
+		else echo "ERROR: B³êdny kod aktywacyjny";
 	}
 }
 
@@ -130,7 +130,7 @@ if($request->request == "resend")
 	'<html><head><title>Aktywacja konta</title></head>
             <body>
             <p>Witaj '.$_SESSION['login'].'!</p>
-            <h3><a href="'.ADRES.'/login.php?active='.$req['aid'].'">Kliknij tutaj</a> aby aktywowaƒá swoje konto.</h3>
+            <h3><a href="'.ADRES.'/login.php?active='.$req['aid'].'">Kliknij tutaj</a> aby aktywowaÆ’Ã¡ swoje konto.</h3>
             </body></html>';
 	$headers  = 'MIME-Version: 1.0' . "\r\n";
 	$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
