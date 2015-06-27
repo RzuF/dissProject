@@ -4,14 +4,24 @@ app.config(function($routeProvider){
           .when('/',{
                 templateUrl: 'all.html'
           })
+          .when('/poczekalnia',{
+                templateUrl: 'poczekalnia.html'
+          })
           .when('/logowanie',{
                 templateUrl: 'log.html'
           })
           .when('/dodaj-dissa',{
                 templateUrl: 'dodaj-dissa.php'
           })
+          .when('/notes/:noteID', {
+                templateUrl: 'show.html',
+                controller: 'showNoteCtrl'
+          })
           .when('/pokaz',{
                 templateUrl: 'show.html'
+          })
+          .otherwise({
+            redirectTo: '/'
           });
 });
 
@@ -43,9 +53,18 @@ app.controller('PasswordCtrl', function($scope) {
   });
 });
 
+/* Reqister, mail validator */
+/* 
+===========
+===========
+===========
+===========
+*/
+
 /* Main site */
-app.controller('dbCtrl', ['$scope', '$http', function ($scope, $http) {
+app.controller('mainPageCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.view;
+    $scope.session;
         $http.get('http://localhost:8888/dissProject/DissProject/resources/php/getAll.php?id=1')
             .success(function(data){
                 $scope.data = data;
@@ -56,6 +75,61 @@ app.controller('dbCtrl', ['$scope', '$http', function ($scope, $http) {
                 $scope.data = "error in fetching data";
                 alert("Błąd w przekazywaniu danych.");
             });
+
+    var request = $http({
+        method: "post",
+        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_login.php',
+        data: {
+            request: 'session',
+        },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+
+    /* Check whether the HTTP Request is successful or not. */
+    request.success(function (data) {
+        $scope.data = data;
+        $scope.session = angular.fromJson($scope.data);
+    });
+
+    request.error(function (data) {
+        $scope.data = "error in fetching data";
+                alert("Błąd w przekazywaniu danych.");
+    });
+}]);
+
+app.controller('poczekalniaPageCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.view;
+    $scope.session;
+        $http.get('http://localhost:8888/dissProject/DissProject/resources/php/getAll_poczekalnia.php?id=1')
+            .success(function(data){
+                $scope.data = data;
+                $scope.view = angular.fromJson($scope.data);
+                //alert(angular.fromJson());
+            })
+            .error(function() {
+                $scope.data = "error in fetching data";
+                alert("Błąd w przekazywaniu danych.");
+            });
+
+    var request = $http({
+        method: "post",
+        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_login.php',
+        data: {
+            request: 'session',
+        },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+
+    /* Check whether the HTTP Request is successful or not. */
+    request.success(function (data) {
+        $scope.data = data;
+        $scope.session = angular.fromJson($scope.data);
+    });
+
+    request.error(function (data) {
+        $scope.data = "error in fetching data";
+                alert("Błąd w przekazywaniu danych.");
+    });
 }]);
 
 /* Sing up */
@@ -152,6 +226,7 @@ app.controller('rate', function ($scope, $http) {
 app.controller('add-diss', function ($scope, $http) {
     $scope.somethingwentwrong = "NOPE";
     $scope.ok = true;
+    $scope.errorMessage = false;
 
     $scope.add = function () {
         var request = $http({
@@ -170,12 +245,19 @@ app.controller('add-diss', function ($scope, $http) {
     request.success(function (data) {
         if( data == "ERROR: Pole tekst nie może być puste" || data == "ERROR: Pole tytuł nie może być puste") {
             $scope.ok = false;
+            $scope.errorMessage = true;
+            $scope.myClass = "alert-danger"
             data = data.replace("ERROR:", "");
             $scope.somethingwentwrong = data;
         }
         else {
-            alert("Wsio ok!");
-        }
+            $scope.ok = false;
+            $scope.errorMessage = false;
+            $scope.myClass = "alert-success"
+            $scope.somethingwentwrong = " Diss został dodany pomyślnie! Możesz go zobaczyć w poczekalni. Zaraz nastąpi przekierowanie.";
+            setTimeout(function()
+                { window.location.replace("/dissProject/DissProject/#/poczekalnia"); }, 3000);
+          }
     });
   }
 });
@@ -195,10 +277,8 @@ app.controller('deleteCtrl', function ($scope, $http) {
 
     /* Check whether the HTTP Request is successful or not. */
     request.success(function (data) {
-        if( data == "OK") {
-            alert("Diss został usunięty.");
-            $route.reload();
-        }
+        if( data == "OK")
+            alert("Diss został usunięty. Po odświerzeniu okna nie będzie widoczny.");
         else {
             alert(data);
         }
@@ -206,4 +286,79 @@ app.controller('deleteCtrl', function ($scope, $http) {
   }
 });
 
+/* Move to main (queue)*/
+app.controller('moveToMainCtrl', function ($scope, $http) {
+    $scope.moveToMain = function (id) {
+        var request = $http({
+        method: "post",
+        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_add.php',
+        data: {
+            request: 'move2main',
+            id: id
+        },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+
+    /* Check whether the HTTP Request is successful or not. */
+    request.success(function (data) {
+        if( data == "OK")
+            alert("Diss wysłany do poczekalni na główna.");
+        else {
+            alert(data);
+        }
+    });
+  }
+});
+
+/* Move to main (direct) */
+app.controller('moveToMainFastCtrl', function ($scope, $http) {
+    $scope.moveToMainFast = function (id) {
+        var request = $http({
+        method: "post",
+        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_add.php',
+        data: {
+            request: 'move2mainFAST',
+            id: id
+        },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+
+    /* Check whether the HTTP Request is successful or not. */
+    request.success(function (data) {
+        if( data == "OK")
+            alert("Diss wysłany na główna.");
+        else {
+            alert(data);
+        }
+    });
+  }
+});
+
+/* Showing notes */
+app.controller('showNoteCtrl', function($scope, $routeParams, $http) {
+    $scope.noteID = $routeParams.noteID;
+    $scope.view;
+
+    var request = $http({
+        method: "post",
+        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_add.php',
+        data: {
+            request: 'show',
+            id: $scope.noteID
+        },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+
+    /* Check whether the HTTP Request is successful or not. */
+    request.success(function (data) {
+        $scope.data = data;
+        $scope.view = angular.fromJson($scope.data);
+    });
+
+    request.error(function (data) {
+        $scope.data = "error in fetching data";
+                alert("Błąd w przekazywaniu danych.");
+    });
+
+})
 

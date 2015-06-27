@@ -1,4 +1,5 @@
-<div class="container note-size" ng-controller="mainPageCtrl">
+<div class="container note-size" ng-controller="poczekalniaPageCtrl">
+
     <div ng-repeat="note in view">
         <div class="box14">
             <!-- Note description -->
@@ -8,7 +9,6 @@
                 </div>
                 <div class="col-lg-4 col-xs-4">
                     <div class="note-title-comments">
-                    <button ng-show="session.state > 2" ng-controller="deleteCtrl" ng-click="delete(note.id)" type="button" class="btn btn-danger btn-sm">Delete</button>
                         <a href="#"><i class="fa fa-comments"></i> 65</a>
                     </div>
                 </div>
@@ -17,6 +17,9 @@
             <div class="row">
                 <div class="col-lg-8 col-xs-8">
                     <div class="note-copright"><i class="fa fa-user"></i> {{ note.login }} </div>
+                    <button ng-show="session.state > 2" ng-controller="moveToMainFastCtrl" ng-click="moveToMainFast(note.id)" type="button" class="btn btn-info btn-sm"><b>m2mFAST</b></button>
+                    <button ng-show="session.state > 2" ng-controller="moveToMainCtrl" ng-click="moveToMain(note.id)" type="button" class="btn btn-info btn-sm"><b>move2main</b></button>
+                    <button ng-show="session.state > 2" ng-controller="deleteCtrl" ng-click="delete(note.id)" type="button" class="btn btn-danger btn-sm"><b>Delete</b></button>
                 </div>
                 <div class="col-lg-4 col-xs-4">
                     <div class="note-date"> <i class="fa fa-calendar"></i> {{ note.date }} </div>

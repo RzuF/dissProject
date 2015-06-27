@@ -18,7 +18,6 @@ include_once('config.php');
 </head>
 <body ng-app="dissApp">
     <?php include_once("nav.html"); ?>
-
     <div ng-view>
   		<!-- This DIV loads templates depending upon route. -->
   	</div>

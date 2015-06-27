@@ -55,11 +55,11 @@
                             <form id="register-form" action="#" method="post" role="form" style="display: none;" ng-controller="PasswordCtrl">
                                 <div style="margin-bottom: 10px" class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                    <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Nazwa użytkownika" value="">
+                                    <input type="text" maxlength="25" name="username" id="username" tabindex="1" class="form-control" placeholder="Nazwa użytkownika" value="">
                                 </div>
                                 <div style="margin-bottom: 10px" class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email" value="">
+                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email">
                                 </div>
                                 <div style="margin-bottom: 10px" class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-key"></i></span>
@@ -93,5 +93,12 @@
 
 <script src="resources/js/password-pop.js"></script> <!-- style.css -->
 <script src="resources/js/password-check.js"></script> <!-- Password Pop -->
+<script src="resources/js/bootstrap-maxlength.min.js"></script> <!-- Password Pop -->
+<script>
+    $(document).ready(function () {
+        $('input#username').maxlength({
+            threshold: 20
+        });});
+</script>
 
 
