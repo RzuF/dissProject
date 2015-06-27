@@ -7,7 +7,7 @@
                 </div>
                 <div class="col-lg-4 col-xs-4">
                     <div class="note-title-comments">
-                    <button ng-controller="deleteCtrl" ng-click="delete(note.id)" type="button" class="btn btn-danger btn-sm">Delete</button>
+                    <button ng-show="session.state > 2" ng-controller="deleteCtrl" ng-click="delete(note.id)" type="button" class="btn btn-danger btn-sm">Delete</button>
                         <i class="fa fa-comments"></i> 65
                     </div>
                 </div>
@@ -32,9 +32,94 @@
                 <div ng-if="rateinfo() == 0" class="note-rank-rank">{{ view[0].difference * 1}}</div>
                 <div ng-if="rateinfo() == -1" class="note-rank-rank">{{ view[0].difference * 1 - 1 * 1}}</div>
             </div>
-
         </div> <!-- END NOTE -->
-</div>
 
+    <!-- Contenedor Principal -->
+    <div class="comments-container">
+        <h1>Komentarze:</h1>
+    <ul id="comments-list" class="comments-list">
+        <li>
+            <div class="comment-main-level">
+            <!-- Avatar -->
+                <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
+                <!-- Contenedor del Comentario -->
+                <div class="comment-box">
+                    <div class="comment-head">
+                        <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Stosiu</a></h6>
+                        <span>dodany 20 minut temu</span>
+                        <i class="fa fa-minus"></i>
+                        <i style="top: 7px;">+24</i>
+                        <i class="fa fa-plus"></i>
+                        <i class="fa fa-reply"></i>
+                    </div>
+                    <div class="comment-content">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                    </div>
+                </div>
+            </div>
+            <!-- Respuestas de los comentarios -->
+            <ul class="comments-list reply-list">
+                <li>
+                <!-- Avatar -->
+                    <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
+                    <!-- Contenedor del Comentario -->
+                    <div class="comment-box">
+                        <div class="comment-head">
+                            <h6 class="comment-name"><a href="http://creaticode.com/blog">Rzuf</a></h6>
+                            <span>dodany 10 minut temu</span>
+                            <i class="fa fa-minus"></i>
+                            <i style="top: 7px;">+3</i>
+                            <i class="fa fa-plus"></i>
+                            <i class="fa fa-reply"></i>
+                        </div>
+                        <div class="comment-content">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                        </div>
+                    </div>
+                </li>
 
+                <li>
+                    <!-- Avatar -->
+                    <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt=""></div>
+                    <!-- Contenedor del Comentario -->
+                    <div class="comment-box">
+                        <div class="comment-head">
+                            <h6 class="comment-name by-author"><a href="http://creaticode.com/blog">Stosiu</a></h6>
+                            <span>dodany 5 minut temu</span>
+                            <i class="fa fa-minus"></i>
+                            <i style="top: 7px;">-5</i>
+                            <i class="fa fa-plus"></i>
+                            <i class="fa fa-reply"></i>
+                        </div>
+                        <div class="comment-content">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <div class="comment-main-level">
+            <!-- Avatar -->
+                <div class="comment-avatar"><img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt=""></div>
+        <!-- Contenedor del Comentario -->
+                <div class="comment-box">
+                    <div class="comment-head">
+                        <h6 class="comment-name"><a href="http://creaticode.com/blog">Rzuf</a></h6>
+                        <span>dodany 20 minut temu</span>
+                        <i class="fa fa-minus"></i>
+                        <i style="top: 7px;">-693</i>
+                        <i class="fa fa-plus"></i>
+                        <i class="fa fa-reply"></i>
+                    </div>
+                    <div class="comment-content">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit omnis animi et iure laudantium vitae, praesentium optio, sapiente distinctio illo?
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    </div>
 <!-- Dodać dymek do obsługi błędów po powtórnym dodaniu plusa-->
+</div>

@@ -59,6 +59,10 @@ app.controller('PasswordCtrl', function($scope) {
 ===========
 ===========
 ===========
+function validateEmail(email) {
+    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    return re.test(email);
+}
 */
 
 /* Main site */
@@ -356,6 +360,26 @@ app.controller('showNoteCtrl', function($scope, $routeParams, $http) {
     });
 
     request.error(function (data) {
+        $scope.data = "error in fetching data";
+                alert("Błąd w przekazywaniu danych.");
+    });
+
+    var ses = $http({
+        method: "post",
+        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_login.php',
+        data: {
+            request: 'session',
+        },
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+    });
+
+    /* Check whether the HTTP Request is successful or not. */
+    ses.success(function (data) {
+        $scope.data = data;
+        $scope.session = angular.fromJson($scope.data);
+    });
+
+    ses.error(function (data) {
         $scope.data = "error in fetching data";
                 alert("Błąd w przekazywaniu danych.");
     });
