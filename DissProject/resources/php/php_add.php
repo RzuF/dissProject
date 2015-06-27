@@ -56,7 +56,7 @@ if($request->request == "add")
 
 if($request->request == "delete")
 {
-	if($_SESSION['active'] > 2)
+	if($_SESSION['state'] > 2)
 	{
 		$idreq = mysql_query("DELETE FROM `".PREFIX."_notes` WHERE `id` = '".$request->id."'");
 		if(!$idreq) echo 'Error!'.mysql_error();
@@ -80,7 +80,7 @@ if($request->request == "delete")
 
 if($request->request == "move2main")
 {
-	if($_SESSION['active'] > 2)
+	if($_SESSION['state'] > 2)
 	{
 		$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `state` = '3' WHERE `id` = '".$request->id."'");
 		if(!$idreq) echo 'Error!'.mysql_error();
@@ -104,7 +104,7 @@ if($request->request == "move2main")
 
 if($request->request == "move2mainFAST")
 {
-	if($_SESSION['active'] > 2)
+	if($_SESSION['state'] > 2)
 	{
 		$idreq = mysql_query("UPDATE `".PREFIX."_notes` SET `state` = '1' WHERE `id` = '".$request->id."'");
 		if(!$idreq) echo 'Error!'.mysql_error();

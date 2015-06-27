@@ -66,7 +66,7 @@ if($request->request == "addAnon")
 
 if($request->request == "delete")
 {
-	if($_SESSION['active'] > 2)
+	if($_SESSION['state'] > 2)
 	{
 		$idreq = mysql_query("DELETE FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'");
 		if(!$idreq) echo 'Error!'.mysql_error();
