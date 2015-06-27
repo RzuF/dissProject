@@ -12,7 +12,7 @@ if(!$blad) echo 'Error: '.mysql_error();
 
 if(isset($_GET['id']))
 {
-	$idreq = mysql_query("SELECT a.id, a.title, a.difference, a.date, b.login, a.tags FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.state = 1");
+	$idreq = mysql_query("SELECT a.id, a.title, a.difference, a.date, b.login, a.tags, a.state FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.state = 0 OR a.state = 3");
 	if(!$idreq) echo "Error: ".mysql_error();
 	else
 	{
@@ -24,7 +24,6 @@ if(isset($_GET['id']))
 			$arr[] = $req; 			
 		}
 		
-		//echo $arr;
 		echo $json_response = json_encode($arr);
 	}
 }
