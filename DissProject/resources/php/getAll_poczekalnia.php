@@ -17,7 +17,6 @@ if(isset($_GET['id']))
 	else
 	{
 		$arr = array();
-		$arr[] = $_SESSION;
 		
 		while($req = mysql_fetch_assoc($idreq))
 		{

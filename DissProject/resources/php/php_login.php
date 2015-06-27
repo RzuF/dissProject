@@ -148,6 +148,19 @@ if($request->request == "resend")
  * 'OK' if was successful
  */
 
+if($request->request == "session")
+	echo $json_response = json_encode($_SESSION);
+
+/*
+ * What you have to send in data:
+ *
+ * $request = 'session';
+ *
+ * What I send back:
+ *
+ * JSON encoded array
+ */
+
 mysql_close($sqlcon);
 
 ?>
