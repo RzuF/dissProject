@@ -4,7 +4,7 @@ include_once('config.php');
 ?>
 
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" ng-app="dissApp">
 <head>
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,7 +16,7 @@ include_once('config.php');
 	<link rel="stylesheet" type="text/css" href="resources/css/style.css">
 	<link rel="stylesheet" type="text/css" href="resources/css/password-validation.css">
 </head>
-<body ng-app="dissApp">
+<body ng-controller="sessionCtrl">
     <?php include_once("nav.html"); ?>
     <div ng-view>
   		<!-- This DIV loads templates depending upon route. -->

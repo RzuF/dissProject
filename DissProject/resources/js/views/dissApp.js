@@ -20,6 +20,9 @@ app.config(function($routeProvider){
           .when('/pokaz',{
                 templateUrl: 'show.html'
           })
+          .when('/profil',{
+                templateUrl: 'profile.html'
+          })
           .otherwise({
             redirectTo: '/'
           });
@@ -68,7 +71,6 @@ function validateEmail(email) {
 /* Main site */
 app.controller('mainPageCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.view;
-    $scope.session;
         $http.get('http://localhost:8888/dissProject/DissProject/resources/php/getAll.php?id=1')
             .success(function(data){
                 $scope.data = data;
@@ -79,7 +81,11 @@ app.controller('mainPageCtrl', ['$scope', '$http', function ($scope, $http) {
                 $scope.data = "error in fetching data";
                 alert("Błąd w przekazywaniu danych.");
             });
+}]);
 
+/* Session */
+app.controller('sessionCtrl', ['$scope', '$http', function ($scope, $http) {
+    $scope.session;
     var request = $http({
         method: "post",
         url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_login.php',
@@ -103,7 +109,6 @@ app.controller('mainPageCtrl', ['$scope', '$http', function ($scope, $http) {
 
 app.controller('poczekalniaPageCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.view;
-    $scope.session;
         $http.get('http://localhost:8888/dissProject/DissProject/resources/php/getAll_poczekalnia.php?id=1')
             .success(function(data){
                 $scope.data = data;
@@ -114,26 +119,6 @@ app.controller('poczekalniaPageCtrl', ['$scope', '$http', function ($scope, $htt
                 $scope.data = "error in fetching data";
                 alert("Błąd w przekazywaniu danych.");
             });
-
-    var request = $http({
-        method: "post",
-        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_login.php',
-        data: {
-            request: 'session',
-        },
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    });
-
-    /* Check whether the HTTP Request is successful or not. */
-    request.success(function (data) {
-        $scope.data = data;
-        $scope.session = angular.fromJson($scope.data);
-    });
-
-    request.error(function (data) {
-        $scope.data = "error in fetching data";
-                alert("Błąd w przekazywaniu danych.");
-    });
 }]);
 
 /* Sing up */
@@ -360,26 +345,6 @@ app.controller('showNoteCtrl', function($scope, $routeParams, $http) {
     });
 
     request.error(function (data) {
-        $scope.data = "error in fetching data";
-                alert("Błąd w przekazywaniu danych.");
-    });
-
-    var ses = $http({
-        method: "post",
-        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_login.php',
-        data: {
-            request: 'session',
-        },
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    });
-
-    /* Check whether the HTTP Request is successful or not. */
-    ses.success(function (data) {
-        $scope.data = data;
-        $scope.session = angular.fromJson($scope.data);
-    });
-
-    ses.error(function (data) {
         $scope.data = "error in fetching data";
                 alert("Błąd w przekazywaniu danych.");
     });

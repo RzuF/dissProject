@@ -9,7 +9,15 @@
                 </div>
                 <div class="col-lg-4 col-xs-4">
                     <div class="note-title-comments">
-                        <a href="#"><i class="fa fa-comments"></i> 65</a>
+                        <div class="dropdown">
+                            <button ng-show="session.state > 2" class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span></button> <span><a href="#"><i class="fa fa-comments"></i> 5</a></span>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <li><a ng-controller="deleteCtrl" ng-click="delete(note.id)">Delete</a></li>
+                                <li><a ng-controller="moveToMainFastCtrl" ng-click="moveToMainFast(note.id)">moveToMainFast</a></li>
+                                <li><a ng-controller="moveToMainCtrl" ng-click="moveToMain(note.id)">moveToMain</a></li>
+                                <li><a>Zbanuj usera (to implement)</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -17,9 +25,7 @@
             <div class="row">
                 <div class="col-lg-8 col-xs-8">
                     <div class="note-copright"><i class="fa fa-user"></i> {{ note.login }} </div>
-                    <button ng-show="session.state > 2" ng-controller="moveToMainFastCtrl" ng-click="moveToMainFast(note.id)" type="button" class="btn btn-info btn-sm"><b>m2mFAST</b></button>
-                    <button ng-show="session.state > 2" ng-controller="moveToMainCtrl" ng-click="moveToMain(note.id)" type="button" class="btn btn-info btn-sm"><b>move2main</b></button>
-                    <button ng-show="session.state > 2" ng-controller="deleteCtrl" ng-click="delete(note.id)" type="button" class="btn btn-danger btn-sm"><b>Delete</b></button>
+                
                 </div>
                 <div class="col-lg-4 col-xs-4">
                     <div class="note-date"> <i class="fa fa-calendar"></i> {{ note.date }} </div>
