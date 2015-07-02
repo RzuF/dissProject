@@ -30,6 +30,34 @@ if($request->request == "add")
 		$uploadOk = false;
 	}
 	
+	$idreq = mysql_query("SELECT id FROM ".PREFIX."_notes WHERE text = '".$request->dissText."'");
+	if(!$idreq) echo 'Error!'.mysql_error();
+	else
+	{
+		if($req = mysql_fetch_assoc($idreq))
+		{
+			echo "ERROR: Taki diss juz istnieje";
+			$uploadOk = false;
+		}
+	}
+	
+	$idreq = mysql_query("SELECT last_action FROM ".PREFIX."_users WHERE id = ".$_SESSION['id']);
+	if(!$idreq) echo 'Error!'.mysql_error();
+	else
+	{
+		if($req = mysql_fetch_assoc($idreq))
+		{
+			$format = 'Y-m-d H:i:s';
+			$date = DateTime::createFromFormat($format, $req['last_action']);
+			$dateNow = new DateTime();
+			if($date->diff($dateNow)->format("%i") < 1)
+			{
+				echo "ERROR: Musisz poczekać ".$date->diff($dateNow)->format("%s")." sekund zanim będziesz mógł dodac kolejnego dissa";
+				$uploadOk = false;
+			}
+		}
+	}
+	
 	if ($uploadOk)
 	{
 		$idreq = mysql_query("INSERT INTO `".PREFIX."_notes`(`id`, `title`, `text`, `author`, `date`, `state`, `tags`) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '0', '".$request->dissTags."')"); // Put 'diss' into DB
