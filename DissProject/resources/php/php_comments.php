@@ -213,7 +213,7 @@ if($request->request == "show")
 	{
 		$arr = array();
 		
-		foreach ($sqlcon->query("SELECT a.id, a.difference, a.date, b.login, a.text, (SELECT COUNT(*) FROM ".PREFIX."_commentsReply c WHERE c.note = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.note = "  . $request->id) as $req)
+		foreach ($sqlcon->query("SELECT a.id, a.difference, a.date, b.login, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.note = "  . $request->id) as $req)
 		{
 			$arr[] = $req;
 		}
@@ -232,6 +232,36 @@ if($request->request == "show")
  *
  * $request = 'show';
  * $id -> note id for which you request comments
+ *
+ * What I send back:
+ *
+ * JSON encoded data
+ */
+
+if($request->request == "best")
+{
+	try
+	{
+		$arr = array();
+	
+		foreach ($sqlcon->query("SELECT TOP 1 a.id, a.difference, a.date, b.login, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE difference > 0 ORDER BY difference DESC") as $req)
+		{
+			$arr[] = $req;
+		}
+	
+		echo $json_response = json_encode($arr);
+	}
+	catch (PDOException $e)
+	{
+		print "Error!: " . $e->getMessage() . "<br/>";
+		die();
+	}
+}
+
+/*
+ * What you have to send in data:
+ *
+ * $request = 'show';
  *
  * What I send back:
  *
