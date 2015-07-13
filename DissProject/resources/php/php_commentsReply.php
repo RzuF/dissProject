@@ -6,7 +6,7 @@ session_start();
 
 try 
 {
-	$sqlcon = new PDO(DSN.':host='.HOST.';dbname='.DB, USER, PASS);
+	$sqlcon = new PDO(DSN, USER, PASS);
 
 } 
 catch (PDOException $e) 
