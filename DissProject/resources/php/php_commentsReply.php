@@ -33,7 +33,7 @@ if($request->request == "add")
 	{
 		try
 		{
-			$sqlcon->query("INSERT INTO `".PREFIX."_comments`(`id`, `text`, `author`, `date`, `note`, `author_ip`) VALUES ('', '".htmlentities($request->dissText)."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '".$request->id."', '".$_SERVER['REMOTE_ADDR']."')");
+			$sqlcon->query("INSERT INTO `".PREFIX."_commentsReply`(`id`, `text`, `author`, `date`, `comment`, `author_ip`) VALUES ('', '".htmlentities($request->dissText)."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '".$request->id."', '".$_SERVER['REMOTE_ADDR']."')");
 			$l_id = $sqlcon->lastInsertId();
 				
 			echo "OK: $l_id";
@@ -50,7 +50,7 @@ if($request->request == "add")
  * What you have to send in data:
  *
  * $request = 'add';
- * $id; (note ID)
+ * $id; (comment ID)
  *
  * What I send back:
  *
@@ -78,7 +78,7 @@ $uploadOk = true;
 	{
 		try
 		{
-			$sqlcon->query("INSERT INTO `".PREFIX."_comments`(`id`, `text`, `author`, `date`, `note`, `author_ip`) VALUES ('', '".htmlentities($request->dissText)."', '1337', '".date('Y-m-d H:i:s')."', '".$request->id."', '".$_SERVER['REMOTE_ADDR']."')");
+			$sqlcon->query("INSERT INTO `".PREFIX."_commentsReply`(`id`, `text`, `author`, `date`, `comment`, `author_ip`) VALUES ('', '".htmlentities($request->dissText)."', '1337', '".date('Y-m-d H:i:s')."', '".$request->id."', '".$_SERVER['REMOTE_ADDR']."')");
 			$l_id = $sqlcon->lastInsertId();
 				
 			echo "OK: $l_id";
@@ -95,7 +95,7 @@ $uploadOk = true;
  * What you have to send in data:
  *
  * $request = 'addAnon';
- * $id; (note ID)
+ * $id; (comment ID)
  *
  * What I send back:
  *
@@ -110,7 +110,7 @@ if($request->request == "delete")
 	{
 		try
 		{
-			$sqlcon->query("DELETE FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'");
+			$sqlcon->query("DELETE FROM `".PREFIX."_commentsReply` WHERE `id` = '".$request->id."'");
 		
 			echo "OK:";
 		}
@@ -140,7 +140,7 @@ if($request->request == "rate")
 {
 	try
 	{
-		if($req = $sqlcon->query("SELECT `plus`, `minus` FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'"))
+		if($req = $sqlcon->query("SELECT `plus`, `minus` FROM `".PREFIX."_commentsReply` WHERE `id` = '".$request->id."'"))
 		{
 			$userAdded = FALSE;
 			foreach(explode(";", $req['plus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
@@ -152,7 +152,7 @@ if($request->request == "rate")
 				{
 					try
 					{
-						$sqlcon->query("UPDATE `".PREFIX."_comments` SET `plus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` + 1 WHERE `id` = '".$request->id."'");
+						$sqlcon->query("UPDATE `".PREFIX."_commentsReply` SET `plus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` + 1 WHERE `id` = '".$request->id."'");
 						echo "plus";
 					}
 					catch (PDOException $e)
@@ -165,7 +165,7 @@ if($request->request == "rate")
 				{
 					try
 					{
-						$sqlcon->query("UPDATE `".PREFIX."_comments` SET `minus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` - 1 WHERE `id` = '".$request->id."'");
+						$sqlcon->query("UPDATE `".PREFIX."_commentsReply` SET `minus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` - 1 WHERE `id` = '".$request->id."'");
 						echo "minus";
 					}
 					catch (PDOException $e)
@@ -213,7 +213,7 @@ if($request->request == "show")
 	{
 		$arr = array();
 		
-		foreach ($sqlcon->query("SELECT a.id, a.difference, a.date, b.login, a.text, (SELECT COUNT(*) FROM ".PREFIX."_commentsReply c WHERE c.note = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.note = "  . $request->id) as $req)
+		foreach ($sqlcon->query("SELECT a.id, a.difference, a.date, b.login, a.text FROM ".PREFIX."_commentsReply a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.note = "  . $request->id) as $req)
 		{
 			$arr[] = $req;
 		}
