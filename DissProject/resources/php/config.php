@@ -22,7 +22,8 @@ define('USER', 'rzufzxym_diss');
 define('PASS', 'lol123**');
 define('DB', 'rzufzxym_diss');
 */
-define('DSN', 'mysql');
+define('DSN', 'mysql:host=localhost;dbname=dissProject'); // like URI:host=HOST;port=PORT;dbname=DB
+// For MySQL -> URI=mysql | For PostgreSQL -> URI=pgsql
 define('HOST', 'localhost');
 define('USER', 'root');
 define('PASS', 'qw3rty');
