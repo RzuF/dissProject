@@ -115,7 +115,7 @@ if($request->request == "delete")
 		{
 			$sqlcon->query("DELETE FROM `".PREFIX."_notes` WHERE `id` = '".$request->id."'");
 				
-			echo "OK:";
+			echo "OK";
 		}
 		catch (PDOException $e)
 		{
@@ -147,7 +147,7 @@ if($request->request == "move2main")
 		{
 			$sqlcon->query("UPDATE `".PREFIX."_notes` SET `state` = '3' WHERE `id` = '".$request->id."'");
 		
-			echo "OK:";
+			echo "OK";
 		}
 		catch (PDOException $e)
 		{
@@ -179,7 +179,7 @@ if($request->request == "move2mainFAST")
 		{
 			$sqlcon->query("UPDATE `".PREFIX."_notes` SET `state` = '1' WHERE `id` = '".$request->id."'");
 		
-			echo "OK:";
+			echo "OK";
 		}
 		catch (PDOException $e)
 		{

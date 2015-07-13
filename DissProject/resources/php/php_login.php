@@ -388,6 +388,70 @@ if($request->request == "changeData")
 		}
 }
 
+/*
+ * What you have to send in data:
+ *
+ * $request = 'changeData';
+ * $name;
+ * $age;
+ * $city;
+ * $description;
+ * $sex;
+ * All above previously pulled via request userInfo (DO NOT SEND BLANK DATA!) - unless it was blank previously
+ * 
+ * $password;
+ * $newPassword;
+ * $newPassword2;
+ * 3 above if user wants to also change its password, if not do not send password
+ *
+ * What I send back:
+ *
+ * 'OK' if was successful
+ * 'ERROR:' if was not
+ * 		+ error description
+ */
+
+if($request->request == "giveBan")
+{
+	if($_SESSION['state'] > 2)
+	{
+		try
+		{
+			$dateNow = new DateTime();
+			$dateNow->add(new DateInterval("PT".$request->minutes."M"));
+			$sqlcon->query("INSERT INTO ".PREFIX."_bans (id, date, time, description, author, user, category) 
+					VALUES ('', '".date('Y-m-d H:i:s')."', '".$dateNow->format('Y-m-d H:i:s')."', '".$request->description."', '".$_SESSION['id']."', '".$request->id."', '".$request->category."'");
+			$l_id = $sqlcon->lastInsertId();
+			
+			$sqlcon->query("UPDATE ".PREFIX."_users SET ban = $l_id WHERE id = ". $request->id);
+
+			echo "OK";
+		}
+		catch (PDOException $e)
+		{
+			print "Error!: " . $e->getMessage() . "<br/>";
+			die();
+		}
+	}
+	else echo "ERROR: Nie masz takich uprawnień";
+}
+
+/*
+ * What you have to send in data:
+ *
+ * $request = 'giveBan';
+ * $id;
+ * $minutes;
+ * $category;
+ * $description;
+ *
+ * What I send back:
+ *
+ * 'OK' if was successful
+ * 'ERROR:' if was not
+ * 		+ error description
+ */
+
 $sqlcon = null;
 
 ?>

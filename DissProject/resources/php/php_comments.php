@@ -112,7 +112,7 @@ if($request->request == "delete")
 		{
 			$sqlcon->query("DELETE FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'");
 		
-			echo "OK:";
+			echo "OK";
 		}
 		catch (PDOException $e)
 		{
