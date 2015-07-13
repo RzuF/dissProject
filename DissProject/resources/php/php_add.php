@@ -207,7 +207,7 @@ if($request->request == "show")
 {
 	try
 	{
-		$req = $sqlcon->query("SELECT a.title, a.difference, a.date, b.login, a.tags,  FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id);
+		$req = $sqlcon->query("SELECT a.title, a.difference, a.date, b.login, a.tags, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments  FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id);
 	
 		$arr = array();
 		
@@ -303,6 +303,6 @@ if($request->request == "rate")
  * 		+ error description
  */
 
-mysql_close($sqlcon);
+$sqlcon = null;
 
 ?>

@@ -388,6 +388,6 @@ if($request->request == "changeData")
 		}
 }
 
-mysql_close($sqlcon);
+$sqlcon = null;
 
 ?>

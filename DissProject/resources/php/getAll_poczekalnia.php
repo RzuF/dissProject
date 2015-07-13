@@ -35,4 +35,6 @@ if(isset($_GET['id']))
 	}	
 }
 
+$sqlcon = null;
+
 ?>

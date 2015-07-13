@@ -180,7 +180,38 @@ if($request->request == "rate")
  * 		+ error description
  */
 
+if($request->request == "show")
+{
+	try
+	{
+		$arr = array();
+		
+		foreach ($sqlcon->query("SELECT a.id, a.difference, a.date, b.login, a.text, (SELECT COUNT(*) FROM ".PREFIX."_commentsReply c WHERE c.note = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.note = "  . $request->id) as $req)
+		{
+			$arr[] = $req;
+		}
+		
+		echo $json_response = json_encode($arr);
+	}
+	catch (PDOException $e)
+	{
+		print "Error!: " . $e->getMessage() . "<br/>";
+		die();
+	}
+}
 
-mysql_close($sqlcon);
+/*
+ * What you have to send in data:
+ *
+ * $request = 'show';
+ * $id -> note id for which you request comments
+ *
+ * What I send back:
+ *
+ * JSON encoded data
+ */
+
+
+$sqlcon = null;
 
 ?>
