@@ -4,27 +4,35 @@ include_once('config.php');
 
 session_start();
 
-$sqlcon = mysql_connect(HOST, USER, PASS);
-if(!$sqlcon) echo 'Error: '.mysql_error();
+try 
+{
+	$sqlcon = new PDO(DSN.':host='.HOST.';dbname='.DB, USER, PASS);
 
-$blad = mysql_select_db(DB);
-if(!$blad) echo 'Error: '.mysql_error();
+} 
+catch (PDOException $e) 
+{
+	print "Connection Error!: " . $e->getMessage() . "<br/>";
+	die();
+}
 
 if(isset($_GET['id']))
 {
-	$idreq = mysql_query("SELECT a.id, a.title, a.difference, a.date, b.login, a.tags, a.state FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.state = 0 OR a.state = 3");
-	if(!$idreq) echo "Error: ".mysql_error();
-	else
+	try
 	{
 		$arr = array();
 		
-		while($req = mysql_fetch_assoc($idreq))
+		foreach ($sqlcon->query("SELECT a.id, a.title, a.difference, a.date, b.login, a.tags, a.state FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.state = 0 OR a.state = 3") as $req)
 		{
-			$arr[] = $req; 			
+			$arr[] = $req;
 		}
 		
-		echo $json_response = json_encode($arr);
+		echo $json_response = json_encode($arr);			
 	}
+	catch (PDOException $e)
+	{
+		print "Error!: " . $e->getMessage() . "<br/>";
+		die();
+	}	
 }
 
 ?>

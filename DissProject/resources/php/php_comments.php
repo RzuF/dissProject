@@ -4,11 +4,16 @@ include_once('config.php');
 
 session_start();
 
-$sqlcon = mysql_connect(HOST, USER, PASS);
-if(!$sqlcon) echo 'Error: '.mysql_error();
+try 
+{
+	$sqlcon = new PDO(DSN.':host='.HOST.';dbname='.DB, USER, PASS);
 
-$blad = mysql_select_db(DB);
-if(!$blad) echo 'Error: '.mysql_error();
+} 
+catch (PDOException $e) 
+{
+	print "Connection Error!: " . $e->getMessage() . "<br/>";
+	die();
+}
 
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
@@ -26,10 +31,18 @@ if($request->request == "add")
 	
 	if ($uploadOk)
 	{
-		$idreq = mysql_query("INSERT INTO `".PREFIX."_comments`(`id`, `text`, `author`, `date`, `note`, `author_ip`) VALUES ('', '".htmlentities($request->dissText)."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '".$request->id."', '".$_SERVER['REMOTE_ADDR']."')");
-		$l_id = mysql_insert_id();
-		if(!$idreq) echo 'Error!'.mysql_error();
-		else echo "OK: $l_id";		
+		try
+		{
+			$sqlcon->query("INSERT INTO `".PREFIX."_comments`(`id`, `text`, `author`, `date`, `note`, `author_ip`) VALUES ('', '".htmlentities($request->dissText)."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '".$request->id."', '".$_SERVER['REMOTE_ADDR']."')");
+			$l_id = $sqlcon->lastInsertId();
+				
+			echo "OK: $l_id";
+		}
+		catch (PDOException $e)
+		{
+			print "Error!: " . $e->getMessage() . "<br/>";
+			die();
+		}
 	}		
 }
 
@@ -68,9 +81,17 @@ if($request->request == "delete")
 {
 	if($_SESSION['state'] > 2)
 	{
-		$idreq = mysql_query("DELETE FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'");
-		if(!$idreq) echo 'Error!'.mysql_error();
-		else echo "OK";
+		try
+		{
+			$sqlcon->query("DELETE FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'");
+		
+			echo "OK:";
+		}
+		catch (PDOException $e)
+		{
+			print "Error!: " . $e->getMessage() . "<br/>";
+			die();
+		}
 	}
 	else echo "ERROR: Nie masz takich uprawnie�";
 }
@@ -90,34 +111,47 @@ if($request->request == "delete")
 
 if($request->request == "rate")
 {
-	$idreq = mysql_query("SELECT `plus`, `minus` FROM `".PREFIX."_notes` WHERE `id` = '".$request->id."'");
-	if(!$idreq) echo "Error: ".mysql_error();
-	else
+	try
 	{
-		if($req = mysql_fetch_assoc($idreq))
+		if($req = $sqlcon->query("SELECT `plus`, `minus` FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'"))
 		{
 			$userAdded = FALSE;
 			foreach(explode(";", $req['plus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
 			foreach(explode(";", $req['minus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
-
+	
 			if(!$userAdded)
 			{
 				if($request->type == "plus")
 				{
-					$idreq = mysql_query("UPDATE `".PREFIX."_comments` SET `plus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` + 1 WHERE `id` = '".$request->id."'");
-					if(!$idreq) $text .= "Error: ".mysql_error();
-					else echo "OK";
+					try
+					{
+						$sqlcon->query("UPDATE `".PREFIX."_comments` SET `plus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` + 1 WHERE `id` = '".$request->id."'");
+						echo "plus";
+					}
+					catch (PDOException $e)
+					{
+						print "Error!: " . $e->getMessage() . "<br/>";
+						die();
+					}
 				}
 				elseif($request->type == "minus")
 				{
-					$idreq = mysql_query("UPDATE `".PREFIX."_comments` SET `minus` = '".implode(";",array($req['minus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` - 1 WHERE `id` = '".$request->id."'");
-					if(!$idreq) $text .= "Error: ".mysql_error();
-					else echo "OK";
+					try
+					{
+						$sqlcon->query("UPDATE `".PREFIX."_comments` SET `minus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` - 1 WHERE `id` = '".$request->id."'");
+						echo "minus";
+					}
+					catch (PDOException $e)
+					{
+						print "Error!: " . $e->getMessage() . "<br/>";
+						die();
+					}
 				}
+				else echo "ERROR#1";
 			}
 			else
 			{
-				echo "ERROR: Ju� oceni�e� ten diss";
+				echo "ERROR: Już oceniłeś ten diss";
 			}
 		}
 		else
@@ -125,7 +159,11 @@ if($request->request == "rate")
 			echo "ERROR: Brak dissa o takim ID";
 		}
 	}
-	die();
+	catch (PDOException $e)
+	{
+		print "Error!: " . $e->getMessage() . "<br/>";
+		die();
+	}
 }
 
 /*
