@@ -43,8 +43,8 @@ function createImage($description, $id){
 	//$image = new gd_gradient_fill(CFG_IMG_WIDTH ,$height, 'rectangle' , CFG_IMG_COLOR_START,CFG_IMG_COLOR_END);
 	
 	imagettftext($image, $fontSize, 0, CFG_IMG_MARGIN, CFG_IMG_MARGIN + CFG_IMG_FONT_SIZE, $textColor, $font, $wrappedText);
-	mkdir("../images/notes/$id/", 0777, true);
-	imagepng($image, "../images/notes/$id/$id.png");
+	mkdir("../images/notes/", 0777, true);
+	imagepng($image, "../images/notes/$id.png");
 	imagedestroy($image);
 }
 
