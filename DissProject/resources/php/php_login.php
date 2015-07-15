@@ -26,7 +26,7 @@ if($request->request == "login")
 {
 	try
 	{
-		if($req = $sqlcon->query("SELECT `password`, `md5rem`, `state`, `id` FROM `".PREFIX."_users` WHERE `login` = '".$request->login."'")->fetch())
+		if($req = $sqlcon->query("SELECT a.password, a.md5rem, a.state, a.id, b.id AS banId, b.time AS timeBan FROM ".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id WHERE login = '".$request->login."'")->fetch())
 		{
 
 			//if($req['password'] == md5($request->password)) // Using md5; probably in future md5+sha1
@@ -44,6 +44,13 @@ if($request->request == "login")
 					$idreq = mysql_query("UPDATE `".PREFIX."_users` SET `md5rem` = '".$md5x."' WHERE `login` = '".$request->login."'");
 					setcookie('logged',$md5, time()*2);
 				}
+				
+				$dateNow = new DateTime();
+				if($req['timeBan'] != null && DateTime::createFromFormat('Y-m-d H:i:s', $req['timeBan']) > $dateNow)
+				{
+					$_SESSION['ban'] = $req['banId'];
+				}
+				else $_SESSION['ban'] = -1;
 
 				$sqlcon->query("UPDATE ".PREFIX."_users SET visits = visits + 1 WHERE id = ".$req['id']);
 
