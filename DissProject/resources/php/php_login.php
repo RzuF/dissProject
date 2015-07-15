@@ -18,8 +18,9 @@ catch (PDOException $e)
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
-$request->request = "userInfo";
+/*$request->request = "giveBan";
 $request->id = 1;
+$request->minutes = 100000000;*/
 
 if($request->request == "login")
 {
@@ -294,7 +295,7 @@ if($request->request == "userInfo")
 	echo "test";
 	try
 	{
-		$req = $sqlcon->query("SELECT a.login, a.name, a.age, a.city, a.description, a.image, a.date AS dateUserJoin, a.sex, b.date, b.time, b.date AS dateBan, d.login AS author FROM (".PREFIX."_users a LEFT JOIN ".PREFIX."_bans b ON a.ban = b.id) JOIN ".PREFIX."_users d ON b.author = d.id WHERE a.id = ".$request->id)->fetch();
+		$req = $sqlcon->query("SELECT a.login, a.name, a.age, a.city, a.description, a.image, a.date AS dateUserJoin, a.sex, b.date, b.time, b.date AS dateBan, d.login AS author FROM (".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id) LEFT OUTER JOIN ".PREFIX."_users d ON b.author = d.id WHERE a.id = ".$request->id)->fetch();
 	
 		$arr = array();
 		
@@ -405,7 +406,47 @@ if($request->request == "giveBan")
 					VALUES ('', '".date('Y-m-d H:i:s')."', '".$dateNow->format('Y-m-d H:i:s')."', '".$request->description."', '".$_SESSION['id']."', '".$request->id."', '".$request->category."'");
 			$l_id = $sqlcon->lastInsertId();
 			
-			$sqlcon->query("UPDATE ".PREFIX."_users SET ban = $l_id WHERE id = ". $request->id);
+			$req = $sqlcon->query("SELECT b.time FROM ".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id WHERE a.id = ".$request->id)->fetch();						
+			
+			/*if(DateTime::createFromFormat('Y-m-d H:i:s', $req['time']) < $dateNow) echo "true";
+			else "false";*/
+			
+			if(($req['time'] == null || DateTime::createFromFormat('Y-m-d H:i:s', $req['time']) < $dateNow) && $l_id != 0) $sqlcon->query("UPDATE ".PREFIX."_users SET ban = $l_id WHERE id = ". $request->id);
+
+			echo "OK";
+		}
+		catch (PDOException $e)
+		{
+			print "Error!: " . $e->getMessage() . "<br/>";
+			die();
+		}
+	}
+	else echo "ERROR: Nie masz takich uprawnień";
+}
+
+/*
+ * What you have to send in data:
+ *
+ * $request = 'giveBan';
+ * $id;
+ * $minutes;
+ * $category;
+ * $description;
+ *
+ * What I send back:
+ *
+ * 'OK' if was successful
+ * 'ERROR:' if was not
+ * 		+ error description
+ */
+
+if($request->request == "removeBan")
+{
+	if($_SESSION['state'] > 2)
+	{
+		try
+		{
+			$sqlcon->query("UPDATE ".PREFIX."_users SET ban = NULL WHERE id = ". $request->id);
 
 			echo "OK";
 		}
