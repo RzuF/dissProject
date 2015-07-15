@@ -22,7 +22,7 @@ define('USER', 'wuvaiscuyggqtj');
 define('PASS', 'FtvFz6iRoI0Nt8xo0uIa7cC3TJ');
 define('DB', 'rzufzxym_diss');
 
-define('DSN', 'mysql:host=ec2-54-204-26-8.compute-1.amazonaws.com;port=5432;dbname=d61m35ju01aehq'); // like URI:host=HOST;port=PORT;dbname=DB
+define('DSN', 'pgsql:host=ec2-54-204-26-8.compute-1.amazonaws.com;port=5432;dbname=d61m35ju01aehq'); // like URI:host=HOST;port=PORT;dbname=DB
 // For MySQL -> URI=mysql | For PostgreSQL -> URI=pgsql
 define('HOST', 'localhost');
 //define('USER', 'root');
