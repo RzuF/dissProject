@@ -292,10 +292,9 @@ if($request->request == "register")
 
 if($request->request == "userInfo")
 {
-	echo "test";
 	try
 	{
-		$req = $sqlcon->query("SELECT a.login, a.name, a.age, a.city, a.description, a.image, a.date AS dateUserJoin, a.sex, b.date, b.time, b.date AS dateBan, d.login AS author FROM (".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id) LEFT OUTER JOIN ".PREFIX."_users d ON b.author = d.id WHERE a.id = ".$request->id)->fetch();
+		$req = $sqlcon->query("SELECT a.login, a.name, a.age, a.city, a.description, a.image, a.date AS dateUserJoin, a.sex, b.time, b.date AS dateBan, d.login AS author FROM (".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id) LEFT OUTER JOIN ".PREFIX."_users d ON b.author = d.id WHERE a.id = ".$request->id)->fetch();
 
 		$arr = array();
 
