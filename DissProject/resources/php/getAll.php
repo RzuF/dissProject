@@ -21,7 +21,7 @@ if(isset($_GET['id']))
 	{
 		$arr = array();
 
-		foreach ($sqlcon->query("SELECT a.id, a.title, a.difference, a.date, b.login, a.tags FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.state = 1") as $req)
+		foreach ($sqlcon->query("SELECT a.id, a.title, a.difference, a.date, b.login, a.tags, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.state = 1") as $req)
 		{
 			$arr[] = $req;
 		}
