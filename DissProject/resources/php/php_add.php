@@ -86,10 +86,13 @@ if($request->request == "add")
 		{
 			//echo "INSERT INTO `".PREFIX."_notes`(`id`, `title`, `text`, `author`, `date`, `state`, `tags`) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '0', '".$request->dissTags."')";
 			
-			$sqlcon->query("INSERT INTO `".PREFIX."_notes`(`id`, `title`, `text`, `author`, `date`, `state`, `tags`) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '0', '".$request->dissTags."')"); // Put 'diss' into DB
+			$sqlcon->query("INSERT INTO `".PREFIX."_notes`(`id`, `title`, `text`, `author`, `date`, `state`, `tags`) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '4', '".$request->dissTags."')"); // Put 'diss' into DB
 			$l_id = $sqlcon->lastInsertId();
 			
 			createImage($request->dissText, $l_id);
+			
+			$sqlcon->query("UPDATE ".PREFIX."_users SET last_action = '".date('Y-m-d H:i:s')."' WHERE id = ".$_SESSION['id']);
+			$sqlcon->query("UPDATE ".PREFIX."_notes SET state = 0 WHERE id = $l_id");
 			
 			echo "OK: $l_id";
 		}
