@@ -68,7 +68,7 @@ if($request->request == "add")
 			$dateNow = new DateTime();
 			if($date->diff($dateNow)->format("%i") < 1)
 			{
-				echo "ERROR: Musisz poczekać ".$date->diff($dateNow)->format("%s")." sekund zanim będziesz mógł dodac kolejnego dissa";
+				echo "ERROR: Musisz poczekać ".(60 - $date->diff($dateNow)->format("%s"))." sekund zanim będziesz mógł dodac kolejnego dissa";
 				$uploadOk = false;
 				die();
 			}
