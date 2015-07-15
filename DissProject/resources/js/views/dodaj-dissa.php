@@ -1,4 +1,4 @@
-<div class="add-note" ng-app="addDiss">
+<div class="add-note">
     <div class="page-header">
         <h1>Dodaj dissa:</h1>
     </div>
@@ -25,7 +25,7 @@
 	        <textarea style="resize: vertical;overflow: auto;" ng-model="dissText" class="form-control"></textarea>
 	    </div>
 	    <div class="form-group">
-	        <button ng-click="add()" type="submit" class="form-control btn btn-login">Dodaj</button>
+	        <button ng-disabled="isDisable" ng-click="add()" type="submit" class="form-control btn btn-login">Dodaj</button>
 	    </div>
     </form>
 </div>

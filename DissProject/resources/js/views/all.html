@@ -26,12 +26,14 @@
             <!-- Note image -->
             <img ng-src='resources/images/notes/{{ note.id }}.png' class="img-responsive img-rounded">
 
-            <div class="note-rank" ng-controller="rate">
+            <div class="row">
+            <div class="col-lg-12 note-rank" ng-controller="rate">
                 <a ng-click='rate(note.id, "plus")'  class="action-button shadow animate green"><i class="fa fa-plus"></i></a>
-                <a ng-click='rate(note.id, "minus")' class="action-button shadow animate red"><i class="fa fa-minus"></i></a>
                 <div ng-if="rateinfo() == 1" class="note-rank-rank">{{ note.difference * 1 + 1 * 1}}</div>
                 <div ng-if="rateinfo() == 0" class="note-rank-rank">{{ note.difference * 1}}</div>
                 <div ng-if="rateinfo() == -1" class="note-rank-rank">{{ note.difference * 1 - 1 * 1}}</div>
+                <a ng-click='rate(note.id, "minus")' class="action-button shadow animate red"><i class="fa fa-minus"></i></a>
+            </div>
             </div>
 
         </div> <!-- END NOTE -->
