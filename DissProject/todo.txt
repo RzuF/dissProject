@@ -1,3 +1,0 @@
-LOG.PHP
-- Dodanie walidacji nicku, maila i powtórzonego hasła, blokada buttona gdy warunki nie spełnione, obsługa komunikatów php. (Rejestracja)
-- Dodanie obsługi komunikatów php (Logowanie)

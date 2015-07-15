@@ -56,12 +56,7 @@ app.controller('PasswordCtrl', function($scope) {
   });
 });
 
-/* Reqister, mail validator */
-/* 
-===========
-===========
-===========
-===========
+/* Reqister, mail validator
 function validateEmail(email) {
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     return re.test(email);
@@ -71,7 +66,7 @@ function validateEmail(email) {
 /* Main site */
 app.controller('mainPageCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.view;
-        $http.get('http://localhost:8888/dissProject/DissProject/resources/php/getAll.php?id=1')
+        $http.get('resources/php/getAll.php?id=1')
             .success(function(data){
                 $scope.data = data;
                 $scope.view = angular.fromJson($scope.data);
@@ -88,7 +83,7 @@ app.controller('sessionCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.session;
     var request = $http({
         method: "post",
-        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_login.php',
+        url: 'resources/php/php_login.php',
         data: {
             request: 'session',
         },
@@ -107,9 +102,10 @@ app.controller('sessionCtrl', ['$scope', '$http', function ($scope, $http) {
     });
 }]);
 
+/* Queqe */
 app.controller('poczekalniaPageCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.view;
-        $http.get('http://localhost:8888/dissProject/DissProject/resources/php/getAll_poczekalnia.php?id=1')
+        $http.get('resources/php/getAll_poczekalnia.php?id=1')
             .success(function(data){
                 $scope.data = data;
                 $scope.view = angular.fromJson($scope.data);
@@ -129,7 +125,7 @@ app.controller('sign-up', function ($scope, $http) {
     $scope.check_credentials = function () {
         var request = $http({
         method: "post",
-        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_login.php',
+        url: 'resources/php/php_login.php',
         data: {
             request: 'login',
             password: $scope.password,
@@ -158,7 +154,7 @@ app.controller('log-out', function ($scope, $http) {
     $scope.logout = function () {
         var request = $http({
         method: "post",
-        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_login.php',
+        url: 'resources/php/php_login.php',
         data: {
             request: 'logout',
         },
@@ -188,7 +184,7 @@ app.controller('rate', function ($scope, $http) {
     $scope.rate = function (id, type) {
         var request = $http({
         method: "post",
-        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_add.php',
+        url: 'resources/php/php_add.php',
         data: {
             request: 'rate',
             id: id, // id posta
@@ -211,7 +207,7 @@ app.controller('rate', function ($scope, $http) {
   }
 });
 
-/* Adding new disses */
+/* Adding new diss */
 app.controller('add-diss', function ($scope, $http) {
     $scope.somethingwentwrong = "NOPE";
     $scope.ok = true;
@@ -220,7 +216,7 @@ app.controller('add-diss', function ($scope, $http) {
     $scope.add = function () {
         var request = $http({
         method: "post",
-        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_add.php',
+        url: 'resources/php/php_add.php',
         data: {
             request: 'add',
             dissName: $scope.dissName,
@@ -232,6 +228,7 @@ app.controller('add-diss', function ($scope, $http) {
 
     /* Check whether the HTTP Request is successful or not. */
     request.success(function (data) {
+        alert(data);
         if( data == "ERROR: Pole tekst nie może być puste" || data == "ERROR: Pole tytuł nie może być puste") {
             $scope.ok = false;
             $scope.errorMessage = true;
@@ -256,7 +253,7 @@ app.controller('deleteCtrl', function ($scope, $http) {
     $scope.delete = function (id) {
         var request = $http({
         method: "post",
-        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_add.php',
+        url: 'resources/php/php_add.php',
         data: {
             request: 'delete',
             id: id
@@ -280,7 +277,7 @@ app.controller('moveToMainCtrl', function ($scope, $http) {
     $scope.moveToMain = function (id) {
         var request = $http({
         method: "post",
-        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_add.php',
+        url: 'resources/php/php_add.php',
         data: {
             request: 'move2main',
             id: id
@@ -304,7 +301,7 @@ app.controller('moveToMainFastCtrl', function ($scope, $http) {
     $scope.moveToMainFast = function (id) {
         var request = $http({
         method: "post",
-        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_add.php',
+        url: 'resources/php/php_add.php',
         data: {
             request: 'move2mainFAST',
             id: id
@@ -330,7 +327,7 @@ app.controller('showNoteCtrl', function($scope, $routeParams, $http) {
 
     var request = $http({
         method: "post",
-        url: 'http://localhost:8888/dissProject/DissProject/resources/php/php_add.php',
+        url: 'resources/php/php_add.php',
         data: {
             request: 'show',
             id: $scope.noteID
@@ -350,4 +347,3 @@ app.controller('showNoteCtrl', function($scope, $routeParams, $http) {
     });
 
 })
-
