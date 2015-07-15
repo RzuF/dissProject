@@ -70,7 +70,6 @@ app.controller('mainPageCtrl', ['$scope', '$http', function ($scope, $http) {
             .success(function(data){
                 $scope.data = data;
                 $scope.view = angular.fromJson($scope.data);
-                //alert(angular.fromJson());
             })
             .error(function() {
                 $scope.data = "error in fetching data";
@@ -138,7 +137,6 @@ app.controller('sign-up', function ($scope, $http, $location) {
     request.success(function (data) {
         if( data == "OK") {
             $location.path("/");
-            //window.location.replace("/");
         }
         else {
         $scope.ok = false;
@@ -165,7 +163,7 @@ app.controller('log-out', function ($scope, $http) {
     /* Check whether the HTTP Request is successful or not. */
     request.success(function (data) {
         if( data == "OK") {
-            window.location.replace("/dissProject/DissProject/");
+            window.location.replace("/dissProject/DissProject/"); // !!!!! view reload !!!!!!
         }
         else {
           alert(data);
@@ -209,7 +207,7 @@ app.controller('rate', function ($scope, $http) {
 });
 
 /* Adding new diss */
-app.controller('add-diss', function ($scope, $http) {
+app.controller('add-diss', function ($scope, $http, $location) {
     $scope.somethingwentwrong = "NOPE";
     $scope.ok = true;
     $scope.errorMessage = false;
@@ -229,7 +227,7 @@ app.controller('add-diss', function ($scope, $http) {
 
     /* Check whether the HTTP Request is successful or not. */
     request.success(function (data) {
-        alert(data);
+        //alert(data);
         if( data == "ERROR: Pole tekst nie może być puste" || data == "ERROR: Pole tytuł nie może być puste") {
             $scope.ok = false;
             $scope.errorMessage = true;
@@ -242,8 +240,7 @@ app.controller('add-diss', function ($scope, $http) {
             $scope.errorMessage = false;
             $scope.myClass = "alert-success"
             $scope.somethingwentwrong = " Diss został dodany pomyślnie! Możesz go zobaczyć w poczekalni. Zaraz nastąpi przekierowanie.";
-            setTimeout(function()
-                { $location.path("/poczekalnia"); }, 3000);
+            $location.path("/poczekalnia");
           }
     });
   }
