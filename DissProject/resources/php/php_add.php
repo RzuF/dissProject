@@ -34,12 +34,14 @@ if($request->request == "add")
 	{
 		echo "ERROR: Pole tytuł nie może być puste";
 		$uploadOk = false;
+		die();
 	}
 	
 	if($request->dissText == "")
 	{
 		echo "ERROR: Pole tekst nie może być puste";
 		$uploadOk = false;
+		die();
 	}
 	
 	try 
@@ -48,6 +50,7 @@ if($request->request == "add")
 		{
 			echo "ERROR: Taki diss juz istnieje";
 			$uploadOk = false;
+			die();
 		}
 	}
 	catch (PDOException $e)
@@ -67,6 +70,7 @@ if($request->request == "add")
 			{
 				echo "ERROR: Musisz poczekać ".$date->diff($dateNow)->format("%s")." sekund zanim będziesz mógł dodac kolejnego dissa";
 				$uploadOk = false;
+				die();
 			}
 		}			
 	}
