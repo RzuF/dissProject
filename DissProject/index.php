@@ -23,6 +23,6 @@ include_once('config.php');
   	</div>
 
     <?php include_once("resources.html"); ?>
-    <script src="resources/js/views/dissApp.js"></script>
+    <script src="resources/js/dissApp.js"></script>
 </body>
 </html>

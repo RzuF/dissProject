@@ -18,7 +18,7 @@
                         <div class="col-lg-12">
                             <form id="login-form" style="display: block;" ng-controller="sign-up" role="form">
                                 <div class="alert alert-danger" role="alert" ng-show="!ok">
-                                    <strong>Błąd:</strong>{{ somethingwentwrong }} 
+                                    <strong>Błąd:</strong>{{ somethingwentwrong }}
                                 </div>
                                 <div style="margin-bottom: 10px" class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -91,14 +91,12 @@
     </div>
 </div>
 
-<script src="resources/js/password-pop.js"></script> <!-- style.css -->
-<script src="resources/js/password-check.js"></script> <!-- Password Pop -->
-<script src="resources/js/bootstrap-maxlength.min.js"></script> <!-- Password Pop -->
+<script src="resources/js/scripts/password-pop.js"></script> <!-- style.css -->
+<script src="resources/js/scripts/password-check.js"></script> <!-- Password Pop -->
+<script src="resources/js/components/bootstrap-maxlength.min.js"></script> <!-- Password Pop -->
 <script>
     $(document).ready(function () {
         $('input#username').maxlength({
             threshold: 20
         });});
 </script>
-
-

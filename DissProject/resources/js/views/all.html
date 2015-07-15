@@ -9,7 +9,7 @@
                 <div class="col-lg-4 col-xs-4">
                     <div class="note-title-comments">
                     <button ng-show="session.state > 2" ng-controller="deleteCtrl" ng-click="delete(note.id)" type="button" class="btn btn-danger btn-sm">Delete</button>
-                        <a href="#"><i class="fa fa-comments"></i> 65</a>
+                        <a href="#"><i class="fa fa-comments"></i> {{ note.comments }}</a>
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
 
             <!-- Note image -->
             <img src='resources/php/getImage.php?id= + {{ note.id }}' class="img-responsive img-rounded">
-            
+
             <div class="note-rank" ng-controller="rate">
                 <a ng-click='rate(note.id, "plus")'  class="action-button shadow animate green"><i class="fa fa-plus"></i></a>
                 <a ng-click='rate(note.id, "minus")' class="action-button shadow animate red"><i class="fa fa-minus"></i></a>

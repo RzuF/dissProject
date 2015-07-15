@@ -9,7 +9,7 @@
                     <div class="note-title-comments">
                     <!-- <button ng-show="session.state > 2" ng-controller="deleteCtrl" ng-click="delete(note.id)" type="button" class="btn btn-danger btn-sm">Delete</button> -->
                         <div class="dropdown">
-                            <button ng-show="session.state > 2" class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span></button> <span><i class="fa fa-comments"></i> 5</span>
+                            <button ng-show="session.state > 2" class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span></button> <span><i class="fa fa-comments"></i> {{ view[0].comments }}</span>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                 <li><a ng-controller="deleteCtrl" ng-click="delete(view[0].id)">Delete</a></li>
                                 <li><a>Zbanuj usera (to implement)</a></li>
@@ -30,7 +30,7 @@
 
             <!-- Note image -->
             <img src='resources/php/getImage.php?id= + {{ noteID }}' class="img-responsive img-rounded">
-            
+
             <div class="note-rank" ng-controller="rate">
                 <a ng-click='rate(view[0].id, "plus")'  class="action-button shadow animate green"><i class="fa fa-plus"></i></a>
                 <a ng-click='rate(view[0].id, "minus")' class="action-button shadow animate red"><i class="fa fa-minus"></i></a>

@@ -1,27 +1,24 @@
-var app=angular.module('dissApp',['ngRoute']);
+var app = angular.module('dissApp',['ngRoute']);
 app.config(function($routeProvider){
       $routeProvider
           .when('/',{
-                templateUrl: 'all.html'
+                templateUrl: 'resources/js/views/all.html'
           })
           .when('/poczekalnia',{
-                templateUrl: 'poczekalnia.html'
+                templateUrl: 'resources/js/views/poczekalnia.html'
           })
           .when('/logowanie',{
-                templateUrl: 'log.html'
+                templateUrl: 'resources/js/views/log.html'
           })
           .when('/dodaj-dissa',{
-                templateUrl: 'dodaj-dissa.php'
+                templateUrl: 'resources/js/views/dodaj-dissa.php'
           })
           .when('/notes/:noteID', {
-                templateUrl: 'show.html',
+                templateUrl: 'resources/js/views/show.html',
                 controller: 'showNoteCtrl'
           })
-          .when('/pokaz',{
-                templateUrl: 'show.html'
-          })
           .when('/profil',{
-                templateUrl: 'profile.html'
+                templateUrl: 'resources/js/views/profile.html'
           })
           .otherwise({
             redirectTo: '/'
@@ -228,7 +225,7 @@ app.controller('add-diss', function ($scope, $http, $location) {
     /* Check whether the HTTP Request is successful or not. */
     request.success(function (data) {
         //alert(data);
-        if( data == "ERROR: Pole tekst nie może być puste" || data == "ERROR: Pole tytuł nie może być puste") {
+        if( data.search("ERROR") != -1) {
             $scope.ok = false;
             $scope.errorMessage = true;
             $scope.myClass = "alert-danger"
@@ -236,11 +233,13 @@ app.controller('add-diss', function ($scope, $http, $location) {
             $scope.somethingwentwrong = data;
         }
         else {
+            data = data.replace("OK: ", "");
+            var id = data;
             $scope.ok = false;
             $scope.errorMessage = false;
             $scope.myClass = "alert-success"
             $scope.somethingwentwrong = " Diss został dodany pomyślnie! Możesz go zobaczyć w poczekalni. Zaraz nastąpi przekierowanie.";
-            $location.path("/poczekalnia");
+            $location.path("/notes/" + id);
           }
     });
   }

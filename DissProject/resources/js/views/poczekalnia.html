@@ -10,7 +10,7 @@
                 <div class="col-lg-4 col-xs-4">
                     <div class="note-title-comments">
                         <div class="dropdown">
-                            <button ng-show="session.state > 2" class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span></button> <span><a href="#"><i class="fa fa-comments"></i> 5</a></span>
+                            <button ng-show="session.state > 2" class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span></button> <span><a href="#"><i class="fa fa-comments"></i> {{ note.comments }}</a></span>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                 <li><a ng-controller="deleteCtrl" ng-click="delete(note.id)">Delete</a></li>
                                 <li><a ng-controller="moveToMainFastCtrl" ng-click="moveToMainFast(note.id)">moveToMainFast</a></li>
@@ -25,7 +25,7 @@
             <div class="row">
                 <div class="col-lg-8 col-xs-8">
                     <div class="note-copright"><i class="fa fa-user"></i> {{ note.login }} </div>
-                
+
                 </div>
                 <div class="col-lg-4 col-xs-4">
                     <div class="note-date"> <i class="fa fa-calendar"></i> {{ note.date }} </div>
@@ -34,7 +34,7 @@
 
             <!-- Note image -->
             <img src='resources/php/getImage.php?id= + {{ note.id }}' class="img-responsive img-rounded">
-            
+
             <div class="note-rank" ng-controller="rate">
                 <a ng-click='rate(note.id, "plus")'  class="action-button shadow animate green"><i class="fa fa-plus"></i></a>
                 <a ng-click='rate(note.id, "minus")' class="action-button shadow animate red"><i class="fa fa-minus"></i></a>
