@@ -18,11 +18,14 @@ catch (PDOException $e)
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
+$request->request = "userInfo";
+$request->id = 1;
+
 if($request->request == "login")
 {
 	try
 	{
-		if($req = $sqlcon->query("SELECT `password`, `md5rem`, `state`, `id` FROM `".PREFIX."_users` WHERE `login` = '".$request->login."'"))
+		if($req = $sqlcon->query("SELECT `password`, `md5rem`, `state`, `id` FROM `".PREFIX."_users` WHERE `login` = '".$request->login."'")->fetch())
 		{
 	
 			//if($req['password'] == md5($request->password)) // Using md5; probably in future md5+sha1
@@ -76,7 +79,7 @@ if($request->request == "logout")
 	$_SESSION['logged'] = 0;
 	try
 	{
-		if($req = $sqlcon->query("DELETE FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'"))
+		if($req = $sqlcon->query("DELETE FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'")->fetch())
 		{
 			$md5 = str_replace(";;", ';', str_replace($_COOKIE['logged'], '', $req['md5rem']));
 		}			
@@ -110,7 +113,7 @@ if($request->request == "active")
 {
 	try
 	{
-		if($req = $sqlcon->query("DELETE FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'"))
+		if($req = $sqlcon->query("DELETE FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'")->fetch())
 			{
 				if($req['state'] == 1)
 				{
@@ -157,7 +160,7 @@ if($request->request == "resend")
 {
 	try
 	{
-		$req = $sqlcon->query("SELECT `aid`, `email` FROM `".PREFIX."_users` WHERE `login` = '".$_SESSION['login']."'");
+		$req = $sqlcon->query("SELECT `aid`, `email` FROM `".PREFIX."_users` WHERE `login` = '".$_SESSION['login']."'")->fetch();
 	
 		$tresc =
 		'<html><head><title>Aktywacja konta</title></head>
@@ -212,7 +215,7 @@ if($request->request == "register")
 			echo "ERROR: Hasło/Login nie mogą być puste";
 		elseif($resp == null || !$resp->success)
 			echo "ERROR: Nieprawidłowy token";
-		elseif($req = $sqlcon->query("SELECT `login` FROM `".PREFIX."_users` WHERE `login` = '".$request->login."'"))
+		elseif($req = $sqlcon->query("SELECT `login` FROM `".PREFIX."_users` WHERE `login` = '".$request->login."'")->fetch())
 			echo "ERROR: Login jest już zajęty";
 		else{
 		
@@ -288,9 +291,10 @@ if($request->request == "register")
 
 if($request->request == "userInfo")
 {
+	echo "test";
 	try
 	{
-		$req = $sqlcon->query("SELECT login, name, age, city, description, image, sex FROM ".PREFIX."_users WHERE id = ".$request->id);
+		$req = $sqlcon->query("SELECT a.login, a.name, a.age, a.city, a.description, a.image, a.date AS dateUserJoin, a.sex, b.date, b.time, b.date AS dateBan, d.login AS author FROM (".PREFIX."_users a LEFT JOIN ".PREFIX."_bans b ON a.ban = b.id) JOIN ".PREFIX."_users d ON b.author = d.id WHERE a.id = ".$request->id)->fetch();
 	
 		$arr = array();
 		
@@ -319,31 +323,9 @@ if($request->request == "changeData")
 {
 		if(isset($request->password))
 		{
-			$idreq = mysql_query("SELECT password FROM ".PREFIX."_users WHERE id = ".$request->id);
-			if(!$idreq) echo "Error: ".mysql_error();
-			else
-			{
-				if($req = mysql_fetch_assoc($idreq))
-				{
-					if($request->password == $req['password'])
-					{
-						
-						if($request->newPassword == $request->newPassword2)
-						{
-							$idreq = mysql_query("UPDATE ".PREFIX."_users SET password = '".$request->newPassword."', name = '".$request->name."', age = '".$request->age."', city = '".$request->city."', description = '".$request->description."', sex = '".$request->sex."' WHERE id = ".$request->id);
-							if(!$idreq) echo "Error: ".mysql_error();
-							else echo "OK";
-						}
-						else echo "ERROR: Hasła nie pasują do siebie";
-					}
-					else echo "ERROR: Podane hasło jest nieprawidłowe";
-				}
-				else echo "ERROR: Brak użytkownika o takim ID";
-			}
-			
 			try
 			{
-				if($req = $sqlcon->query("SELECT password FROM ".PREFIX."_users WHERE id = ".$request->id))
+				if($req = $sqlcon->query("SELECT password FROM ".PREFIX."_users WHERE id = ".$request->id)->fetch())
 				{
 					if($request->password == $req['password'])
 					{

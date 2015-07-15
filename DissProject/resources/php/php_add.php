@@ -43,7 +43,7 @@ if($request->request == "add")
 	
 	try 
 	{
-		if($req = $sqlcon->query("SELECT id FROM ".PREFIX."_notes WHERE text = '".$request->dissText."'"))
+		if($req = $sqlcon->query("SELECT id FROM ".PREFIX."_notes WHERE text = '".$request->dissText."'")->fetch())
 		{
 			echo "ERROR: Taki diss juz istnieje";
 			$uploadOk = false;
@@ -57,7 +57,7 @@ if($request->request == "add")
 	
 	try 
 	{
-		if($req = $sqlcon->query("SELECT last_action FROM ".PREFIX."_users WHERE id = ".$_SESSION['id']));
+		if($req = $sqlcon->query("SELECT last_action FROM ".PREFIX."_users WHERE id = ".$_SESSION['id'])->fetch());
 		{
 			$format = 'Y-m-d H:i:s';
 			$date = DateTime::createFromFormat($format, $req['last_action']);
@@ -207,7 +207,7 @@ if($request->request == "show")
 {
 	try
 	{
-		$req = $sqlcon->query("SELECT a.title, a.difference, a.date, b.login, a.tags, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments  FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id);
+		$req = $sqlcon->query("SELECT a.title, a.difference, a.date, b.login, a.tags, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments  FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id)->fetch();
 	
 		$arr = array();
 		
@@ -236,7 +236,7 @@ if($request->request == "rate")
 {
 	try
 	{
-		if($req = $sqlcon->query("SELECT `plus`, `minus` FROM `".PREFIX."_notes` WHERE `id` = '".$request->id."'"))
+		if($req = $sqlcon->query("SELECT `plus`, `minus` FROM `".PREFIX."_notes` WHERE `id` = '".$request->id."'")->fetch())
 		{
 			$userAdded = FALSE;
 			foreach(explode(";", $req['plus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;

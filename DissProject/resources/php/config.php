@@ -17,17 +17,17 @@ define('CFG_IMG_COLOR_TEXT_B', '0');
 /*define('HOST', '');
 define('USER', '');
 define('PASS', '');
-define('DB', '');
+define('DB', '');*/
 define('USER', 'rzufzxym_diss');
 define('PASS', 'lol123**');
 define('DB', 'rzufzxym_diss');
-*/
-define('DSN', 'mysql:host=localhost;dbname=dissProject'); // like URI:host=HOST;port=PORT;dbname=DB
+
+define('DSN', 'mysql:host=localhost;dbname=rzufzxym_diss'); // like URI:host=HOST;port=PORT;dbname=DB
 // For MySQL -> URI=mysql | For PostgreSQL -> URI=pgsql
 define('HOST', 'localhost');
-define('USER', 'root');
-define('PASS', 'qw3rty');
-define('DB', 'dissProject');
+//define('USER', 'root');
+//define('PASS', 'qw3rty');
+//define('DB', 'dissProject');
 define('ADRES', ''); // Like http://your.site.adress
 define('PREFIX', 'diss');
 

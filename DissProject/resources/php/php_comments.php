@@ -140,7 +140,7 @@ if($request->request == "rate")
 {
 	try
 	{
-		if($req = $sqlcon->query("SELECT `plus`, `minus` FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'"))
+		if($req = $sqlcon->query("SELECT `plus`, `minus` FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'")->fetch())
 		{
 			$userAdded = FALSE;
 			foreach(explode(";", $req['plus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
