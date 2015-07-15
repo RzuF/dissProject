@@ -6,23 +6,29 @@ include_once('config.php');
 
 session_start();
 
-$sqlcon = mysql_connect(HOST, USER, PASS);
-if(!$sqlcon) echo 'Error: '.mysql_error();
+try 
+{
+	$sqlcon = new PDO(DSN, USER, PASS);
 
-$blad = mysql_select_db(DB);
-if(!$blad) echo 'Error: '.mysql_error();
+} 
+catch (PDOException $e) 
+{
+	print "Connection Error!: " . $e->getMessage() . "<br/>";
+	die();
+}
 
 $description = "Diss o podanym ID nie istnieje!\n\nThere is no diss with given ID!";
 
-$idreq = mysql_query("SELECT `text`, `author` FROM `".PREFIX."_notes` WHERE `id` = '".$_GET['id']."'"); // Zapytanie o dane obrazka o otrzymanym ID
-if(!$idreq) echo "Error: ".mysql_error();
-else
+/*try 
 {
-	if($req = mysql_fetch_assoc($idreq))
-	{
+	if($req = $sqlcon->query("SELECT text, author FROM ".PREFIX."_notes WHERE id = '".$_GET['id']."'")->fetch())
 		$description = $req['text'];
-	}
 }
+catch (PDOException $e)
+{
+	print "Connection Error!: " . $e->getMessage() . "<br/>";
+	die();
+}*/
 
 $font = CFG_IMG_FONT;
 $fontSize = CFG_IMG_FONT_SIZE;

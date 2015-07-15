@@ -1,6 +1,7 @@
 <?php
 
 include_once('config.php');
+include_once('functions.php');
 
 session_start();
 
@@ -83,6 +84,8 @@ if($request->request == "add")
 			
 			$sqlcon->query("INSERT INTO `".PREFIX."_notes`(`id`, `title`, `text`, `author`, `date`, `state`, `tags`) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '0', '".$request->dissTags."')"); // Put 'diss' into DB
 			$l_id = $sqlcon->lastInsertId();
+			
+			createImage($request->description, $l_id);
 			
 			echo "OK: $l_id";
 		}
