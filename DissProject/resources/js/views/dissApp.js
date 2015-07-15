@@ -118,7 +118,7 @@ app.controller('poczekalniaPageCtrl', ['$scope', '$http', function ($scope, $htt
 }]);
 
 /* Sing up */
-app.controller('sign-up', function ($scope, $http) {
+app.controller('sign-up', function ($scope, $http, $location) {
     $scope.somethingwentwrong = "NOPE";
     $scope.ok = true;
 
@@ -137,7 +137,8 @@ app.controller('sign-up', function ($scope, $http) {
     /* Check whether the HTTP Request is successful or not. */
     request.success(function (data) {
         if( data == "OK") {
-            window.location.replace("/dissProject/DissProject/");
+            $location.path("/");
+            //window.location.replace("/");
         }
         else {
         $scope.ok = false;
@@ -242,7 +243,7 @@ app.controller('add-diss', function ($scope, $http) {
             $scope.myClass = "alert-success"
             $scope.somethingwentwrong = " Diss został dodany pomyślnie! Możesz go zobaczyć w poczekalni. Zaraz nastąpi przekierowanie.";
             setTimeout(function()
-                { window.location.replace("/dissProject/DissProject/#/poczekalnia"); }, 3000);
+                { $location.path("/poczekalnia"); }, 3000);
           }
     });
   }
