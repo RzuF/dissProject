@@ -191,6 +191,7 @@ app.controller('rate', function ($scope, $http) {
 
     /* Check whether the HTTP Request is successful or not. */
     request.success(function (data) {
+        alert(data);
         if( data == "plus") {
           $scope.ratemark = 1;
         }
@@ -208,8 +209,10 @@ app.controller('add-diss', function ($scope, $http, $location) {
     $scope.somethingwentwrong = "NOPE";
     $scope.ok = true;
     $scope.errorMessage = false;
+    $scope.isDisable = false;
 
     $scope.add = function () {
+        $scope.isDisable = true;
         var request = $http({
         method: "post",
         url: 'resources/php/php_add.php',
@@ -226,6 +229,7 @@ app.controller('add-diss', function ($scope, $http, $location) {
     request.success(function (data) {
         //alert(data);
         if( data.search("ERROR") != -1) {
+            $scope.isDisable = false;
             $scope.ok = false;
             $scope.errorMessage = true;
             $scope.myClass = "alert-danger"
