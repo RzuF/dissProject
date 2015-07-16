@@ -87,15 +87,13 @@ if($request->request == "add")
 		die();
 	}
 	
-	die();
-	
 	if ($uploadOk)
 	{
 		try 
 		{
 			//echo "INSERT INTO `".PREFIX."_notes`(`id`, `title`, `text`, `author`, `date`, `state`, `tags`) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '0', '".$request->dissTags."')";
 			echo "#6";
-			$sqlcon->query("INSERT INTO `".PREFIX."_notes`(`id`, `title`, `text`, `author`, `date`, `state`, `tags`) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '4', '".$request->dissTags."')"); // Put 'diss' into DB
+			$sqlcon->query("INSERT INTO ".PREFIX."_notes(title, text, author, date, state, tags) VALUES ('".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '4', '".$request->dissTags."')"); // Put 'diss' into DB
 			$l_id = $sqlcon->lastInsertId();
 			echo "#7";
 			//createImage($request->dissText, $l_id);
