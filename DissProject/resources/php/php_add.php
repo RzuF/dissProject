@@ -87,6 +87,8 @@ if($request->request == "add")
 		die();
 	}
 	
+	echo $uploadOk;
+	
 	if ($uploadOk)
 	{
 		try 
