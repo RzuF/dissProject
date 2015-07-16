@@ -11,12 +11,12 @@ if(!$sqlcon) echo 'Error: '.mysql_error();
 $blad = mysql_select_db(DB);
 if(!$blad) echo 'Error: '.mysql_error();*/
 
-try 
+try
 {
 	$sqlcon = new PDO(DSN, USER, PASS);
 
-} 
-catch (PDOException $e) 
+}
+catch (PDOException $e)
 {
 	print "Connection Error!: " . $e->getMessage() . "<br/>";
 	die();
@@ -29,22 +29,22 @@ $request = json_decode($postdata);
 if($request->request == "add")
 {
 	$uploadOk = true;
-	
+
 	if($request->dissName == "")
 	{
 		echo "ERROR: Pole tytuł nie może być puste";
 		$uploadOk = false;
 		die();
 	}
-	
+
 	if($request->dissText == "")
 	{
 		echo "ERROR: Pole tekst nie może być puste";
 		$uploadOk = false;
 		die();
 	}
-	
-	try 
+
+	try
 	{
 		if($req = $sqlcon->query("SELECT id FROM ".PREFIX."_notes WHERE text = '".$request->dissText."'")->fetch())
 		{
@@ -58,8 +58,8 @@ if($request->request == "add")
 		print "Error!: " . $e->getMessage() . "<br/>";
 		die();
 	}
-	
-	try 
+
+	try
 	{
 		if($req = $sqlcon->query("SELECT last_action FROM ".PREFIX."_users WHERE id = ".$_SESSION['id'])->fetch());
 		{
@@ -72,36 +72,36 @@ if($request->request == "add")
 				$uploadOk = false;
 				die();
 			}
-		}			
+		}
 	}
 	catch (PDOException $e)
 	{
 		print "Error!: " . $e->getMessage() . "<br/>";
 		die();
 	}
-	
+
 	if ($uploadOk)
 	{
-		try 
+		try
 		{
 			//echo "INSERT INTO `".PREFIX."_notes`(`id`, `title`, `text`, `author`, `date`, `state`, `tags`) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '0', '".$request->dissTags."')";
-			
+
 			$sqlcon->query("INSERT INTO `".PREFIX."_notes`(`id`, `title`, `text`, `author`, `date`, `state`, `tags`) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '4', '".$request->dissTags."')"); // Put 'diss' into DB
 			$l_id = $sqlcon->lastInsertId();
-			
-			//createImage($request->dissText, $l_id);
+
+			createImage($request->dissText, $l_id);
 			
 			$sqlcon->query("UPDATE ".PREFIX."_users SET last_action = '".date('Y-m-d H:i:s')."' WHERE id = ".$_SESSION['id']);
 			$sqlcon->query("UPDATE ".PREFIX."_notes SET state = 0 WHERE id = $l_id");
-			
+
 			echo "OK: $l_id";
 		}
 		catch (PDOException $e)
 		{
 			print "Error!: " . $e->getMessage() . "<br/>";
 			die();
-		}	
-	}		
+		}
+	}
 }
 
 /*
@@ -126,7 +126,7 @@ if($request->request == "delete")
 		try
 		{
 			$sqlcon->query("DELETE FROM `".PREFIX."_notes` WHERE `id` = '".$request->id."'");
-				
+
 			echo "OK";
 		}
 		catch (PDOException $e)
@@ -158,7 +158,7 @@ if($request->request == "move2main")
 		try
 		{
 			$sqlcon->query("UPDATE `".PREFIX."_notes` SET `state` = '3' WHERE `id` = '".$request->id."'");
-		
+
 			echo "OK";
 		}
 		catch (PDOException $e)
@@ -190,7 +190,7 @@ if($request->request == "move2mainFAST")
 		try
 		{
 			$sqlcon->query("UPDATE `".PREFIX."_notes` SET `state` = '1' WHERE `id` = '".$request->id."'");
-		
+
 			echo "OK";
 		}
 		catch (PDOException $e)
@@ -220,9 +220,9 @@ if($request->request == "show")
 	try
 	{
 		$req = $sqlcon->query("SELECT a.title, a.difference, a.date, b.login, a.tags, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments  FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id)->fetch();
-	
+
 		$arr = array();
-		
+
 		$arr[] = $req;
 		echo $json_response = json_encode($arr);
 	}
@@ -253,7 +253,7 @@ if($request->request == "rate")
 			$userAdded = FALSE;
 			foreach(explode(";", $req['plus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
 			foreach(explode(";", $req['minus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
-	
+
 			if(!$userAdded)
 			{
 				if($request->type == "plus")
@@ -285,7 +285,7 @@ if($request->request == "rate")
 				else echo "ERROR#1";
 			}
 			else
-			{				
+			{
 				echo "ERROR: Już oceniłeś ten diss";
 			}
 		}
@@ -298,7 +298,7 @@ if($request->request == "rate")
 	{
 		print "Error!: " . $e->getMessage() . "<br/>";
 		die();
-	}	
+	}
 }
 
 /*
