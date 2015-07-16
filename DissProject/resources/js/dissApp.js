@@ -191,7 +191,7 @@ app.controller('rate', function ($scope, $http) {
 
     /* Check whether the HTTP Request is successful or not. */
     request.success(function (data) {
-        alert(data);
+        //alert(data);
         if( data == "plus") {
           $scope.ratemark = 1;
         }
@@ -212,6 +212,10 @@ app.controller('add-diss', function ($scope, $http, $location) {
     $scope.isDisable = false;
 
     $scope.add = function () {
+        $scope.ok = false;
+        $scope.errorMessage = false;
+        $scope.myClass = "alert-success"
+        $scope.somethingwentwrong = " Trwa przetwarzanie obrazka.";
         $scope.isDisable = true;
         var request = $http({
         method: "post",
@@ -227,7 +231,7 @@ app.controller('add-diss', function ($scope, $http, $location) {
 
     /* Check whether the HTTP Request is successful or not. */
     request.success(function (data) {
-        //alert(data);
+        alert(data);
         if( data.search("ERROR") != -1) {
             $scope.isDisable = false;
             $scope.ok = false;
@@ -239,10 +243,6 @@ app.controller('add-diss', function ($scope, $http, $location) {
         else {
             data = data.replace("OK: ", "");
             var id = data;
-            $scope.ok = false;
-            $scope.errorMessage = false;
-            $scope.myClass = "alert-success"
-            $scope.somethingwentwrong = " Diss został dodany pomyślnie! Możesz go zobaczyć w poczekalni. Zaraz nastąpi przekierowanie.";
             $location.path("/notes/" + id);
           }
     });
