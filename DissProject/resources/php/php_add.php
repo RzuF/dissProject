@@ -30,7 +30,7 @@ if($request->request == "add")
 {
 	$uploadOk = true;
 	
-	echo $_SESSION['id'];
+	//echo $_SESSION['id'];
 	
 	echo "#1";
 	if($request->dissName == "")
