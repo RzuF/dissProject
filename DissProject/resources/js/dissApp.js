@@ -227,7 +227,7 @@ app.controller('add-diss', function ($scope, $http, $location) {
 
     /* Check whether the HTTP Request is successful or not. */
     request.success(function (data) {
-        //alert(data);
+        alert(data);
         if( data.search("ERROR") != -1) {
             $scope.isDisable = false;
             $scope.ok = false;
@@ -243,7 +243,7 @@ app.controller('add-diss', function ($scope, $http, $location) {
             $scope.errorMessage = false;
             $scope.myClass = "alert-success"
             $scope.somethingwentwrong = " Diss został dodany pomyślnie! Możesz go zobaczyć w poczekalni. Zaraz nastąpi przekierowanie.";
-            $location.path("/notes/" + id);
+            //$location.path("/notes/" + id);
           }
     });
     request.error(function (data) {
