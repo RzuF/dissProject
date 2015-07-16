@@ -30,6 +30,7 @@ if($request->request == "add")
 {
 	$uploadOk = true;
 	
+	echo "#1";
 	if($request->dissName == "")
 	{
 		echo "ERROR: Pole tytuł nie może być puste";
@@ -37,6 +38,7 @@ if($request->request == "add")
 		die();
 	}
 	
+	echo "#2";
 	if($request->dissText == "")
 	{
 		echo "ERROR: Pole tekst nie może być puste";
@@ -46,6 +48,7 @@ if($request->request == "add")
 	
 	try 
 	{
+		echo "#3";
 		if($req = $sqlcon->query("SELECT id FROM ".PREFIX."_notes WHERE text = '".$request->dissText."'")->fetch())
 		{
 			echo "ERROR: Taki diss juz istnieje";
@@ -61,11 +64,13 @@ if($request->request == "add")
 	
 	try 
 	{
+		echo "#4";
 		if($req = $sqlcon->query("SELECT last_action FROM ".PREFIX."_users WHERE id = ".$_SESSION['id'])->fetch());
 		{
 			$format = 'Y-m-d H:i:s';
 			$date = DateTime::createFromFormat($format, $req['last_action']);
 			$dateNow = new DateTime();
+			echo "#5";
 			if($date->diff($dateNow)->format("%i") < 1)
 			{
 				echo "ERROR: Musisz poczekać ".(60 - $date->diff($dateNow)->format("%s"))." sekund zanim będziesz mógł dodac kolejnego dissa";
@@ -85,10 +90,10 @@ if($request->request == "add")
 		try 
 		{
 			//echo "INSERT INTO `".PREFIX."_notes`(`id`, `title`, `text`, `author`, `date`, `state`, `tags`) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '0', '".$request->dissTags."')";
-			
+			echo "#6";
 			$sqlcon->query("INSERT INTO `".PREFIX."_notes`(`id`, `title`, `text`, `author`, `date`, `state`, `tags`) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '4', '".$request->dissTags."')"); // Put 'diss' into DB
 			$l_id = $sqlcon->lastInsertId();
-			
+			echo "#7";
 			//createImage($request->dissText, $l_id);
 			
 			$sqlcon->query("UPDATE ".PREFIX."_users SET last_action = '".date('Y-m-d H:i:s')."' WHERE id = ".$_SESSION['id']);
