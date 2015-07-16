@@ -31,7 +31,6 @@ if($request->request == "add")
 	$uploadOk = true;
 	
 	echo $_SESSION['id'];
-	die();
 	
 	echo "#1";
 	if($request->dissName == "")
@@ -87,6 +86,8 @@ if($request->request == "add")
 		print "Error!: " . $e->getMessage() . "<br/>";
 		die();
 	}
+	
+	die();
 	
 	if ($uploadOk)
 	{
