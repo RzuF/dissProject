@@ -246,6 +246,9 @@ app.controller('add-diss', function ($scope, $http, $location) {
             $location.path("/notes/" + id);
           }
     });
+    request.error(function (data) {
+        alert(data);
+    };
   }
 });
 
