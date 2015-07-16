@@ -248,7 +248,7 @@ app.controller('add-diss', function ($scope, $http, $location) {
     });
     request.error(function (data) {
         alert(data);
-    };
+    });
   }
 });
 
