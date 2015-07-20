@@ -86,10 +86,22 @@ if($request->request == "add")
 		{
 			//echo "INSERT INTO `".PREFIX."_notes`(`id`, `title`, `text`, `author`, `date`, `state`, `tags`) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '0', '".$request->dissTags."')";
 			
-			$sqlcon->query("INSERT INTO `".PREFIX."_notes`(`id`, `title`, `text`, `author`, `date`, `state`, `tags`) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '4', '".$request->dissTags."')"); // Put 'diss' into DB
+			$sqlcon->query("INSERT INTO ".PREFIX."_notes(id, title, text, author, date, state) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '4')"); // Put 'diss' into DB
 			$l_id = $sqlcon->lastInsertId();
 			
 			createImage($request->dissText, $l_id);
+			
+			{
+				$tags = explode(" ", str_replace(",", " ", $request->dissTags));
+				foreach($tags as $i)
+				{
+					$tag_id = 0;
+					$sqlcon->query("INSERT INTO ".PREFIX."_tags(id, name, rank) VALUES ('', '$i', '1') ON DUPLICATE KEY UPDATE rank = rank + 1");
+					$tag_id = $sqlcon->lastInsertId();
+					
+					if($tag_id > 0) $sqlcon->query("INSERT INTO ".PREFIX."_tagmap(noteId, tagId) VALUES ('$l_id', '$tag_id')");					
+				}
+			}
 			
 			$sqlcon->query("UPDATE ".PREFIX."_users SET last_action = '".date('Y-m-d H:i:s')."' WHERE id = ".$_SESSION['id']);
 			$sqlcon->query("UPDATE ".PREFIX."_notes SET state = 0 WHERE id = $l_id");
@@ -219,7 +231,7 @@ if($request->request == "show")
 {
 	try
 	{
-		$req = $sqlcon->query("SELECT a.title, a.difference, a.date, b.login, a.tags, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments  FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id)->fetch();
+		$req = $sqlcon->query("SELECT a.title, a.difference, a.date, b.login, (SELECT GROUP_CONCAT(t.name SEPARATOR ', ') FROM ".PREFIX."_tags t JOIN ".PREFIX."_tagmap m ON t.id = m.tagId WHERE m.noteId = a.id GROUP BY m.NoteId) AS tags, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments  FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id)->fetch();
 	
 		$arr = array();
 		
