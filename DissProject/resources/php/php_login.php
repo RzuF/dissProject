@@ -121,14 +121,10 @@ if($request->request == "active")
 {
 	try
 	{
-		if($req = $sqlcon->query("DELETE FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'")->fetch())
+		if($req = $sqlcon->query("SELECT state FROM ".PREFIX."_users WHERE aid = '".$request->active."'")->fetch())
 			{
 				if($req['state'] == 1)
 				{
-					$idreq = mysql_query("UPDATE `".PREFIX."_users` SET `state` ='0', `aid` = NULL WHERE `aid` = '".$request->active."'");
-					if(!$idreq) echo "Error: ".mysql_error();
-					else echo "OK";
-
 					try
 					{
 						$sqlcon->query("UPDATE `".PREFIX."_users` SET `state` ='0', `aid` = NULL WHERE `aid` = '".$request->active."'");
