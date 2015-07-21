@@ -8,16 +8,16 @@
                 </div>
                 <div class="col-lg-4 col-xs-4">
                     <div class="note-title-comments">
-                        <div class="dropdown" ng-controller="notesCommandsCtrl as command">
+                        <span class="dropdown" ng-controller="notesCommandsCtrl as command">
                             <button ng-if="session.state > 2" class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span></button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                 <li><a ng-click="command.delete(note.id)">Delete</a></li>
                                 <li><a ng-show="ctrl.que == true" ng-click="command.moveToMainFast(note.id)">moveToMainFast</a></li>
                                 <li><a ng-show="ctrl.que == true" ng-click="command.moveToMain(note.id)">moveToMain</a></li>
-                                <li ng-show="ctrl.que == true"><a>Zbanuj usera (to implement)</a></li>
+                                <li ng-show="ctrl.que == true" data-toggle="modal" data-target="#myModal"><a>Zbanuj usera (to implement)</a></li>
                             </ul>
-                            <a ng-href="#/notes/{{note.id}}"><i class="fa fa-comments"></i> {{ note.comments }}</a>
-                        </div>
+                        </span>
+                        <a ng-href="#/notes/{{note.id}}"><i class="fa fa-comments"></i> {{ note.comments }}</a>
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@
                     <a ng-click='rate.addNewMark(note.id, "minus")' class="action-button shadow animate red"><i class="fa fa-minus"></i></a>
                 </div>
             </div>
-
         </div>
+
     </div> <!-- !NG-REPEAT -->
 </div>

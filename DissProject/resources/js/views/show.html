@@ -13,7 +13,7 @@
                                 <li><a ng-click="command.delete(ctrl.noteID)">ADD | Delete</a></li>
                                 <li><a ng-click="command.moveToMainFast(ctrl.noteID)">STATE |moveToMainFast</a></li>
                                 <li><a ng-click="command.moveToMain(ctrl.noteID)">OF | moveToMain</a></li>
-                                <li><a>DISS | Zbanuj usera (to implement)</a></li>
+                                <li><a data-toggle="modal" data-target="#myModal"">DISS | Zbanuj usera</a></li>
                             </ul>
                         </div>
                     </div>
@@ -129,4 +129,41 @@
     </ul>
     </div>
 <!-- Dodać dymek do obsługi błędów po powtórnym dodaniu plusa-->
+</div>
+
+<!-- Modal -->
+<div ng-if="session.state > 2" ng-controller="notesCommandsCtrl as command" class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Zbanuj {{note.login}}</h4>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <pre>{{ctrl.time || 'Na jak długo'}}</pre>
+                <div class="btn-group">
+                    <label class="btn btn-danger" ng-model="ctrl.time" btn-radio="'Godzina'">Godzina</label>
+                    <label class="btn btn-danger" ng-model="ctrl.time" btn-radio="'Dzień'">Dzień</label>
+                    <label class="btn btn-danger" ng-model="ctrl.time" btn-radio="'Tydzień'">Tydzień</label>
+                    <label class="btn btn-danger" ng-model="ctrl.time" btn-radio="'Miesiąc'">Miesiąc</label>
+                    <label class="btn btn-danger" ng-model="ctrl.time" btn-radio="'Zawsze'">Zawsze</label>
+                </div>
+                <hr>
+                <pre>{{ctrl.category || 'Kategoria'}}</pre>
+                <div class="btn-group">
+                    <label class="btn btn-danger" ng-model="ctrl.category" btn-radio="'X'">X</label>
+                    <label class="btn btn-danger" ng-model="ctrl.category" btn-radio="'X'">X</label>
+                    <label class="btn btn-danger" ng-model="ctrl.category" btn-radio="'X'">X</label>
+                    <label class="btn btn-danger" ng-model="ctrl.category" btn-radio="'X'">X</label>
+                    <label class="btn btn-danger" ng-model="ctrl.category" btn-radio="'X'">X</label>
+                </div>
+                <hr>
+                <textarea class="form-control" placeholder="Opis za co."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cofnij</button>
+                <button type="button" class="btn btn-danger">Banuj</button>
+            </div>
+        </div>
+    </div>
 </div>

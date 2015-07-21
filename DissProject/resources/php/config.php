@@ -18,16 +18,16 @@ define('CFG_IMG_COLOR_TEXT_B', '0');
 define('USER', '');
 define('PASS', '');
 define('DB', '');*/
-define('USER', 'wuvaiscuyggqtj');
-define('PASS', 'FtvFz6iRoI0Nt8xo0uIa7cC3TJ');
-define('DB', 'rzufzxym_diss');
+//define('USER', 'wuvaiscuyggqtj');
+//define('PASS', 'FtvFz6iRoI0Nt8xo0uIa7cC3TJ');
+//define('DB', 'rzufzxym_diss');
 
-define('DSN', 'pgsql:host=ec2-54-204-26-8.compute-1.amazonaws.com;port=5432;dbname=d61m35ju01aehq'); // like URI:host=HOST;port=PORT;dbname=DB
+define('DSN', 'mysql:host=localhost;dbname=dissProject'); // like URI:host=HOST;port=PORT;dbname=DB
 // For MySQL -> URI=mysql | For PostgreSQL -> URI=pgsql
 define('HOST', 'localhost');
-//define('USER', 'root');
-//define('PASS', 'qw3rty');
-//define('DB', 'dissProject');
+define('USER', 'root');
+define('PASS', 'qw3rty');
+define('DB', 'dissProject');
 define('ADRES', ''); // Like http://your.site.adress
 define('PREFIX', 'diss');
 

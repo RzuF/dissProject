@@ -16,68 +16,9 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <form id="login-form" style="display: block;" ng-controller="sign-up" role="form">
-                                <div class="alert alert-danger" role="alert" ng-show="!ok">
-                                    <strong>Błąd:</strong>{{ somethingwentwrong }}
-                                </div>
-                                <div style="margin-bottom: 10px" class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                    <input type="text" tabindex="1" class="form-control" placeholder="Login" value="" ng-model="login">
-                                </div>
-
-                                <div style="margin-bottom: 10px" class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                    <input type="password" tabindex="2" class="form-control" placeholder="Hasło" ng-model="password">
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" ng-click="check_credentials()" tabindex="4" class="form-control btn btn-login" value="Zaloguj">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="text-center">
-                                                <a href="#" tabindex="5" class="forgot-password">Zapomniałeś hasła?</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                            <log-in-form></log-in-form>
                             <!-- Dodanie walidacji nicku, maila i powtórzonego hasła, blokada buttona gdy warunki nie spełnione, obsługa komunikatów php -->
-                            <form id="register-form" action="#" method="post" role="form" style="display: none;" ng-controller="PasswordCtrl">
-                                <div style="margin-bottom: 10px" class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                    <input type="text" maxlength="25" name="username" id="username" tabindex="1" class="form-control" placeholder="Nazwa użytkownika" value="">
-                                </div>
-                                <div style="margin-bottom: 10px" class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
-                                    <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email">
-                                </div>
-                                <div style="margin-bottom: 10px" class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
-                                    <!-- <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Hasło"> -->
-                                    <input ng-model="user.password" type="password" class="form-control" name="password" id="password" tabindex="2" placeholder="Hasło" required data-toggle="popover" title="Siła hasła" data-content="Wprowadź hasło...">
-                                </div>
-                                <div class="alert alert-danger" role="alert" ng-show="showReqs">
-                                    <ul>
-                                        <li ng-repeat="req in reqs">{{ req }}</li>
-                                    </ul>
-                                </div>
-                                <div style="margin-bottom: 10px" class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-repeat"></i></span>
-                                    <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Powtórz hasło">
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-login" value="Rejesracja">
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
+                            <register-form></register-form>
                         </div>
                     </div>
                 </div>

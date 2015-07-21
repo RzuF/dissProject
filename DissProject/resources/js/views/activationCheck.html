@@ -1,0 +1,9 @@
+<div class="add-note">
+    <div class="page-header">
+        <h1>Aktywacja konta</h1>
+    </div>
+    <div class="alert alert-success" role="alert" ng-if="ctrl.isSuccessful">Twoje konto zostało aktywowane. Aby się zalogować przejdź <a href="/logowanie" class="alert-link">tutaj</a>.</b>
+    </div>
+    <div class="alert alert-danger" role="alert" ng-if="!ctrl.isSuccessful">Wygląda na to że coś poszło nie tak: <strong>{{ctrl.message}}</strong>
+    </div>
+</div>

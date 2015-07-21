@@ -30,11 +30,19 @@ include_once('config.php');
 	<script src="resources/js/controllers/notesCommandsCtrl.js"></script>
 	<script src="resources/js/controllers/addNewDissCtrl.js"></script>
 	<script src="resources/js/controllers/showNoteCtrl.js"></script>
+	<script src="resources/js/controllers/signUpCtrl.js"></script>
+	<script src="resources/js/controllers/registerCtrl.js"></script>
+	<script src="resources/js/controllers/activationCtrl.js"></script>
+	<script src="resources/js/controllers/showUserCtrl.js"></script>
 	<!-- Services -->
 	<script src="resources/js/services/deleteService.js"></script>
 	<script src="resources/js/services/moveToMainService.js"></script>
 	<script src="resources/js/services/moveToMainFastService.js"></script>
 	<script src="resources/js/services/showNoteDetailsService.js"></script>
-    <script src="resources/js/services/addNewMarkService.js"></script>
+	<script src="resources/js/services/addNewMarkService.js"></script>
+	<script src="resources/js/services/logInService.js"></script>
+	<script src="resources/js/services/registerService.js"></script>
+	<script src="resources/js/services/activationCheckService.js"></script>
+    <script src="resources/js/services/showUserService.js"></script>
 </body>
 </html>

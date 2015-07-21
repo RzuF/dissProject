@@ -1,4 +1,4 @@
-var app = angular.module('dissApp',['ngRoute', 'ngResource']);
+var app = angular.module('dissApp',['ngRoute', 'ngResource', 'ui.bootstrap']);
 app.config(function($routeProvider){
       $routeProvider
           .when('/',{
@@ -12,6 +12,13 @@ app.config(function($routeProvider){
           .when('/logowanie',{
                 templateUrl: 'resources/js/views/log.html'
           })
+          .when('/rejestracja-sukcess',{
+                templateUrl: 'resources/js/views/registerSuccess.html'
+          })
+          .when('/aktywacja/:AID',{
+                templateUrl: 'resources/js/views/activationCheck.html',
+                controller: 'activationCtrl as ctrl'
+          })
           .when('/dodaj-dissa',{
                 templateUrl: 'resources/js/views/dodaj-dissa.html',
                 controller: 'addNewDissCtrl as ctrl'
@@ -19,6 +26,10 @@ app.config(function($routeProvider){
           .when('/notes/:noteID', {
                 templateUrl: 'resources/js/views/show.html',
                 controller: 'showNoteCtrl as ctrl'
+          })
+          .when('/user/:userID', {
+                templateUrl: 'resources/js/views/user.html',
+                controller: 'showUserCtrl as ctrl'
           })
           .when('/profil',{
                 templateUrl: 'resources/js/views/profile.html'
@@ -29,7 +40,9 @@ app.config(function($routeProvider){
 });
 // Directive for commands and rate buttons
 // Change to stateProvider (login and register)
-// Think about login / sing in in isolate states
+// Design and add all data to user profiles show
+// add links to userprofiles on main and queue site and show note
+// add users score
 
 /* Main site */
 /* Find better solution for que bollean value | Directive?*/
@@ -92,81 +105,19 @@ app.controller('rateCtrl', function (addNewMarkService) {
     };
 });
 
-/* Sing up */
-app.controller('sign-up', function ($rootScope, $scope, $http, $location) {
-    $scope.returnMessage = "";
-    $scope.ok = true;
-
-    $scope.check_credentials = function () {
-        var request = $http({
-            method: "post",
-            url: 'resources/php/php_login.php',
-            data: {
-                request: 'login',
-                password: $scope.password,
-                login: $scope.login
-            },
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        });
-
-        request.success(function (data) {
-            if( data == "OK") {
-                $rootScope.sessionCheck();
-                $location.path("/");
-            }
-            else {
-                $scope.ok = false;
-                data = data.replace("ERROR:", "");
-                $scope.returnMessage = data;
-            }
-        });
-    }
-});
-
-/* Reqister, password controllelr */
-app.controller('PasswordCtrl', function($scope) {
-
-  function isLongEnough( pwd ) {
-    return pwd.length > 7;
-  }
-
-  function hasNumber (pwd) {
-    return /[0-9]/.test(pwd);
-  }
-
-  $scope.$watch('user.password', function(newVal, odlVal) {
-    if (!newVal) return;
-
-    $scope.reqs = [];
-
-    if (!isLongEnough(newVal)) {
-      $scope.reqs.push('Hasło jest za krótkie. (min. 8 znaków)');
-    }
-
-    if (!hasNumber(newVal)) {
-      $scope.reqs.push('Hasło musi posiadać chociaż jeden numer.');
-    }
-
-    $scope.showReqs = $scope.reqs.length;
-  });
-});
-
-/* Reqister, mail validator
-function validateEmail(email) {
-    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-    return re.test(email);
-}
-*/
-
 // <note-commands>Check out the contents, {{name}}!</note-commands>
-app.directive('noteCommands', function() {
+app.directive('logInForm', function() {
     return {
         restrict: 'E',
-        transclude: true,
         scope: {},
-        templateUrl: 'my-dialog.html',
-        link: function (scope, element) {
-          scope.name = 'Jeff';
-        }
+        templateUrl: 'resources/js/views/forms/logIn.html'
+    };
+});
+
+app.directive('registerForm', function() {
+    return {
+        restrict: 'E',
+        scope: {},
+        templateUrl: 'resources/js/views/forms/register.html'
     };
 });

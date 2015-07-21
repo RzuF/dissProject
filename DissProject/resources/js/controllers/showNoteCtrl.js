@@ -5,7 +5,6 @@
         var ctrl = this;
         ctrl.noteID = $routeParams.noteID;
         showNoteDetailsService.async($routeParams.noteID).then(function(data) {
-            console.log(data);
             ctrl.noteDetails = data;
         });
     }

@@ -1,0 +1,45 @@
+<form id="register-form" role="form" style="display: none;" ng-controller="registerCtrl as register" name="registerForm" novalidate>
+
+    <!-- Username -->
+    <div style="margin-bottom: 10px" class="input-group">
+        <span class="input-group-addon"><i class="fa fa-user"></i>&nbsp</span>
+        <input type="text" maxlength="25" name="username" tabindex="1" class="form-control" placeholder="Nazwa użytkownika" ng-model="register.username" ng-minlength=4 required>
+    </div>
+
+    <!-- Email -->
+    <div style="margin-bottom: 10px" class="input-group">
+        <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
+        <input type="text" name="email" tabindex="1" class="form-control" placeholder="Email" ng-model="register.email" required>
+    </div>
+
+    <!-- Password -->
+    <div style="margin-bottom: 10px" class="input-group">
+        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+        <input ng-model="password" type="password" class="form-control" name="password" tabindex="2" placeholder="Hasło" required>
+    </div>
+    <div class="alert alert-danger" role="alert" ng-show="register.showReqs">
+        <ul><li ng-repeat="req in register.reqs">{{ req }}</li></ul>
+    </div>
+
+    <!-- Repeat Password -->
+    <div style="margin-bottom: 10px" class="input-group">
+        <span class="input-group-addon"><i class="fa fa-repeat"></i>&nbsp;</span>
+        <input type="password" name="confirmPassword" id="confirm-password" tabindex="2" class="form-control" placeholder="Powtórz hasło" ng-model="confirmPassword" required>
+    </div>
+
+    <!-- Alerts -->
+    <div class="alert alert-warning" role="alert" ng-show='!register.serviceError'>
+        <ul>
+            <li ng-show="!register.serviceError"><strong>Błąd:</strong>{{ register.returnMessage }}</li>
+        </ul>
+    </div>
+
+    <!-- Register button -->
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <button ng-disabled='registerForm.username.$error.required || registerForm.email.$error.required || registerForm.password.$error.required || registerForm.confirmPassword.$error.required || !register.noErrors' type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control btn btn-login" ng-click='register.register(register.username, password, confirmPassword, register.email)'>Rejesracja</button>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,37 @@
+<form id="login-form" style="display: block;" ng-controller="signUpCtrl as login" role="form" name="LogInForm" novalidate>
+
+    <div class="alert alert-warning" role="alert" ng-show='!login.noErrors'>
+        <ul>
+            <li ng-show="LogInForm.Login.$error.required">Pole login nie może być puste.</li>
+            <li ng-show="LogInForm.Password.$error.required">Pole hasło nie może być puste puste.</li>
+            <li ng-show="!login.noErrors"><strong>Błąd:</strong>{{ login.returnMessage }}</li>
+        </ul>
+    </div>
+
+    <div style="margin-bottom: 10px" class="input-group">
+        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+        <input type="text" tabindex="1" class="form-control" placeholder="Login" name="Login" ng-model="login.login" required>
+    </div>
+
+    <div style="margin-bottom: 10px" class="input-group">
+        <span class="input-group-addon"><i class="fa fa-key"></i></span>
+        <input type="password" tabindex="2" class="form-control" placeholder="Hasło" name="Password" ng-model="login.password" required>
+    </div>
+
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <button type="submit" ng-disabled='LogInForm.Login.$error.required || LogInForm.Password.$error.required' ng-click='login.check_credentials(login.password, login.login)' tabindex="4" class="form-control btn btn-login">Zaloguj</button>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="text-center">
+                    <a href="#" tabindex="5" class="forgot-password">Zapomniałeś hasła?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
