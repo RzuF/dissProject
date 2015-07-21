@@ -68,7 +68,7 @@ if($request->request == "add")
 			$dateNow = new DateTime();
 			if($date->diff($dateNow)->format("%i") < 1)
 			{
-				echo "ERROR: Musisz poczekać ".(60 - $date->diff($dateNow)->format("%s"))." sekund zanim będziesz mógł dodac kolejnego dissa";
+				echo "ERROR: Nie tak szybko!. Musisz poczekać ".(60 - $date->diff($dateNow)->format("%s"))." sekund zanim będziesz mógł dodac kolejnego dissa.";
 				$uploadOk = false;
 				die();
 			}
@@ -90,7 +90,7 @@ if($request->request == "add")
 			$l_id = $sqlcon->lastInsertId();
 
 			createImage($request->dissText, $l_id);
-			
+
 			{
 				$tags = explode(" ", str_replace(",", " ", $request->dissTags));
 				foreach($tags as $i)
@@ -98,11 +98,11 @@ if($request->request == "add")
 					$tag_id = 0;
 					$sqlcon->query("INSERT INTO ".PREFIX."_tags(id, name, rank) VALUES ('', '$i', '1') ON DUPLICATE KEY UPDATE rank = rank + 1");
 					$tag_id = $sqlcon->lastInsertId();
-					
-					if($tag_id > 0) $sqlcon->query("INSERT INTO ".PREFIX."_tagmap(noteId, tagId) VALUES ('$l_id', '$tag_id')");					
+
+					if($tag_id > 0) $sqlcon->query("INSERT INTO ".PREFIX."_tagmap(noteId, tagId) VALUES ('$l_id', '$tag_id')");
 				}
 			}
-			
+
 			$sqlcon->query("UPDATE ".PREFIX."_users SET last_action = '".date('Y-m-d H:i:s')."' WHERE id = ".$_SESSION['id']);
 			$sqlcon->query("UPDATE ".PREFIX."_notes SET state = 0 WHERE id = $l_id");
 
@@ -232,7 +232,7 @@ if($request->request == "show")
 	try
 	{
 		$req = $sqlcon->query("SELECT a.title, a.difference, a.date, b.login, (SELECT GROUP_CONCAT(t.name SEPARATOR ', ') FROM ".PREFIX."_tags t JOIN ".PREFIX."_tagmap m ON t.id = m.tagId WHERE m.noteId = a.id GROUP BY m.NoteId) AS tags, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments  FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id)->fetch();
-		
+
 		$arr = array();
 
 		$arr[] = $req;

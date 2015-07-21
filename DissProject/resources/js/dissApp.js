@@ -1,21 +1,24 @@
-var app = angular.module('dissApp',['ngRoute']);
+var app = angular.module('dissApp',['ngRoute', 'ngResource']);
 app.config(function($routeProvider){
       $routeProvider
           .when('/',{
-                templateUrl: 'resources/js/views/all.html'
+                templateUrl: 'resources/js/views/all.html',
+                controller: 'mainPageCtrl as ctrl'
           })
           .when('/poczekalnia',{
-                templateUrl: 'resources/js/views/poczekalnia.html'
+                templateUrl: 'resources/js/views/all.html',
+                controller: 'poczekalniaPageCtrl as ctrl'
           })
           .when('/logowanie',{
                 templateUrl: 'resources/js/views/log.html'
           })
           .when('/dodaj-dissa',{
-                templateUrl: 'resources/js/views/dodaj-dissa.php'
+                templateUrl: 'resources/js/views/dodaj-dissa.html',
+                controller: 'addNewDissCtrl as ctrl'
           })
           .when('/notes/:noteID', {
                 templateUrl: 'resources/js/views/show.html',
-                controller: 'showNoteCtrl'
+                controller: 'showNoteCtrl as ctrl'
           })
           .when('/profil',{
                 templateUrl: 'resources/js/views/profile.html'
@@ -23,6 +26,101 @@ app.config(function($routeProvider){
           .otherwise({
             redirectTo: '/'
           });
+});
+// Directive for commands and rate buttons
+// Change to stateProvider (login and register)
+// Think about login / sing in in isolate states
+
+/* Main site */
+/* Find better solution for que bollean value | Directive?*/
+app.controller('mainPageCtrl', ['notesDAO', function (notesDAO) {
+    var ctrl = this;
+    ctrl.que = false;
+    notesDAO.getAllMain().then(function(data) {
+        ctrl.view = data;
+    });
+}]);
+
+/* Queqe | Directive? */
+app.controller('poczekalniaPageCtrl', ['notesDAO', function (notesDAO) {
+    var ctrl = this;
+    ctrl.que = true;
+    notesDAO.getAllQueue().then(function(data) {
+        ctrl.view = data;
+    });
+}]);
+
+/* Delete, moveToMain and moveToMainFast functions in dropdown | Change to directive*/
+app.controller('notesCommands', ['deleteService', 'moveToMainService', 'moveToMainFastService', function(deleteService, moveToMainService, moveToMainFastService) {
+    var ctrl = this;
+    ctrl.delete = function(id) {
+        deleteService.async(id).then(function(data) {
+            alert(data);
+        });
+    };
+
+    ctrl.moveToMain = function(id) {
+        moveToMainService.async(id).then(function(data) {
+            alert(data);
+        });
+    };
+
+    ctrl.moveToMainFast = function(id) {
+        moveToMainFastService.async(id).then(function(data) {
+            alert(data);
+        });
+    };
+}]);
+
+/* Adding new marks | Change to directive */
+app.controller('rateCtrl', function (addNewMarkService) {
+    var rate = this;
+    rate.mark = 0;
+    rate.info = function() {
+        return rate.mark;
+    };
+
+    rate.addNewMark = function(id, type) {
+        addNewMarkService.async(id, type).then (function(data) {
+            if( data == "plus")
+                rate.mark = 1;
+            else if(data == "minus")
+                rate.mark = -1;
+            else
+                alert(data);
+        });
+    };
+});
+
+/* Sing up */
+app.controller('sign-up', function ($rootScope, $scope, $http, $location) {
+    $scope.returnMessage = "";
+    $scope.ok = true;
+
+    $scope.check_credentials = function () {
+        var request = $http({
+            method: "post",
+            url: 'resources/php/php_login.php',
+            data: {
+                request: 'login',
+                password: $scope.password,
+                login: $scope.login
+            },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        });
+
+        request.success(function (data) {
+            if( data == "OK") {
+                $rootScope.sessionCheck();
+                $location.path("/");
+            }
+            else {
+                $scope.ok = false;
+                data = data.replace("ERROR:", "");
+                $scope.returnMessage = data;
+            }
+        });
+    }
 });
 
 /* Reqister, password controllelr */
@@ -60,292 +158,15 @@ function validateEmail(email) {
 }
 */
 
-/* Main site */
-app.controller('mainPageCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.view;
-        $http.get('resources/php/getAll.php?id=1')
-            .success(function(data){
-                $scope.data = data;
-                $scope.view = angular.fromJson($scope.data);
-            })
-            .error(function() {
-                $scope.data = "error in fetching data";
-                alert("Błąd w przekazywaniu danych.");
-            });
-}]);
-
-/* Session */
-app.controller('sessionCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.session;
-    $scope.sessionCheck = function() {
-        var request = $http({
-            method: "post",
-            url: 'resources/php/php_login.php',
-            data: {
-                request: 'session',
-            },
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        })
-
-        request.success(function (data) {
-            $scope.data = data;
-            $scope.session = angular.fromJson($scope.data);
-        });
-
-        request.error(function (data) {
-            $scope.data = "error in fetching data";
-                    alert("Błąd w przekazywaniu danych.");
-        });
+// <note-commands>Check out the contents, {{name}}!</note-commands>
+app.directive('noteCommands', function() {
+    return {
+        restrict: 'E',
+        transclude: true,
+        scope: {},
+        templateUrl: 'my-dialog.html',
+        link: function (scope, element) {
+          scope.name = 'Jeff';
+        }
     };
-
-    /* Check session on visit */
-    $scope.sessionCheck();
-}]);
-
-/* Queqe */
-app.controller('poczekalniaPageCtrl', ['$scope', '$http', function ($scope, $http) {
-    $scope.view;
-        $http.get('resources/php/getAll_poczekalnia.php?id=1')
-            .success(function(data){
-                $scope.data = data;
-                $scope.view = angular.fromJson($scope.data);
-                //alert(angular.fromJson());
-            })
-            .error(function() {
-                $scope.data = "error in fetching data";
-                alert("Błąd w przekazywaniu danych.");
-            });
-}]);
-
-/* Sing up */
-app.controller('sign-up', function ($scope, $http, $location) {
-    $scope.somethingwentwrong = "NOPE";
-    $scope.ok = true;
-
-    $scope.check_credentials = function () {
-        var request = $http({
-            method: "post",
-            url: 'resources/php/php_login.php',
-            data: {
-                request: 'login',
-                password: $scope.password,
-                login: $scope.login
-            },
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        });
-
-        request.success(function (data) {
-            if( data == "OK") {
-                $scope.sessionCheck();
-                $location.path("/");
-            }
-            else {
-                $scope.ok = false;
-                data = data.replace("ERROR:", "");
-                $scope.somethingwentwrong = data;
-            }
-        });
-    }
-});
-
-/* Loging out */
-app.controller('log-out', function ($scope, $http, $location) {
-    $scope.somethingwentwrong = "NOPE";
-    $scope.logout = function () {
-        var request = $http({
-            method: "post",
-            url: 'resources/php/php_login.php',
-            data: {
-                request: 'logout',
-            },
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-            });
-
-        /* Check whether the HTTP Request is successful or not. */
-        request.success(function (data) {
-            if( data == "OK") {
-                $scope.sessionCheck();
-                $location.path("/");
-                //window.location.replace("/dissProject/DissProject/"); // !!!!! view reload !!!!!!
-            }
-            else {
-                alert(data);
-            }
-        });
-    }
-});
-
-/* Adding new rates */
-app.controller('rate', function ($scope, $http) {
-
-    $scope.ratemark = 0;
-    $scope.rateinfo = function() {
-        return $scope.ratemark;
-    }
-
-    $scope.rate = function (id, type) {
-        var request = $http({
-            method: "post",
-            url: 'resources/php/php_add.php',
-            data: {
-                request: 'rate',
-                id: id, // id posta
-                type: type // type plus or minus
-            },
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        });
-
-        /* Check whether the HTTP Request is successful or not. */
-        request.success(function (data) {
-            if( data == "plus")
-                $scope.ratemark = 1;
-            else if(data == "minus")
-                $scope.ratemark = -1;
-            else
-                alert(data);
-        });
-    }
-});
-
-/* Adding new diss */
-app.controller('add-diss', function ($scope, $http, $location) {
-    $scope.somethingwentwrong = "NOPE";
-    $scope.ok = true;
-    $scope.errorMessage = false;
-    $scope.isDisable = false;
-
-    $scope.add = function () {
-        $scope.ok = false;
-        $scope.errorMessage = false;
-        $scope.myClass = "alert-success"
-        $scope.somethingwentwrong = " Trwa przetwarzanie obrazka.";
-        $scope.isDisable = true;
-        var request = $http({
-            method: "post",
-            url: 'resources/php/php_add.php',
-            data: {
-                request: 'add',
-                dissName: $scope.dissName,
-                dissText: $scope.dissText,
-                dissTags: $scope.dissTags
-            },
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        });
-
-        request.success(function (data) {
-            if( data.search("ERROR") != -1) {
-                $scope.isDisable = false;
-                $scope.ok = false;
-                $scope.errorMessage = true;
-                $scope.myClass = "alert-danger"
-                data = data.replace("ERROR:", "");
-                $scope.somethingwentwrong = data;
-            }
-            else {
-                data = data.replace("OK: ", "");
-                var id = data;
-                $location.path("/notes/" + id);
-              }
-        });
-    }
-});
-
-/* Removing posts */
-app.controller('deleteCtrl', function ($scope, $http) {
-    $scope.delete = function (id) {
-        var request = $http({
-        method: "post",
-        url: 'resources/php/php_add.php',
-        data: {
-            request: 'delete',
-            id: id
-        },
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    });
-
-        /* Check whether the HTTP Request is successful or not. */
-        request.success(function (data) {
-            if( data == "OK")
-                alert("Diss został usunięty. Po odświerzeniu okna nie będzie widoczny.");
-            else {
-                alert(data);
-            }
-        });
-    }
-});
-
-/* Move to main (queue)*/
-app.controller('moveToMainCtrl', function ($scope, $http) {
-    $scope.moveToMain = function (id) {
-        var request = $http({
-        method: "post",
-        url: 'resources/php/php_add.php',
-        data: {
-            request: 'move2main',
-            id: id
-        },
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        });
-
-        /* Check whether the HTTP Request is successful or not. */
-        request.success(function (data) {
-            if( data == "OK")
-                alert("Diss wysłany do poczekalni na główna.");
-            else {
-                alert(data);
-            }
-        });
-    }
-});
-
-/* Move to main (direct) */
-app.controller('moveToMainFastCtrl', function ($scope, $http) {
-    $scope.moveToMainFast = function (id) {
-        var request = $http({
-        method: "post",
-        url: 'resources/php/php_add.php',
-        data: {
-            request: 'move2mainFAST',
-            id: id
-        },
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        });
-
-        /* Check whether the HTTP Request is successful or not. */
-        request.success(function (data) {
-            if( data == "OK")
-                alert("Diss wysłany na główna.");
-            else {
-                alert(data);
-            }
-        });
-    }
-});
-
-/* Showing notes */
-app.controller('showNoteCtrl', function($scope, $routeParams, $http) {
-    $scope.noteID = $routeParams.noteID;
-    $scope.view;
-
-    var request = $http({
-        method: "post",
-        url: 'resources/php/php_add.php',
-        data: {
-            request: 'show',
-            id: $scope.noteID
-        },
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-    });
-
-    /* Check whether the HTTP Request is successful or not. */
-    request.success(function (data) {
-        $scope.data = data;
-        $scope.view = angular.fromJson($scope.data);
-    });
-
-    request.error(function (data) {
-        $scope.data = "error in fetching data";
-                alert("Błąd w przekazywaniu danych.");
-    });
-
 });

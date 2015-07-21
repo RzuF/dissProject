@@ -49,6 +49,10 @@ img {
     -webkit-box-shadow: 0 4px 4px -2px #888888;
 }
 
+li {
+	margin-left: 15px;
+}
+
 /* Remove link udnerline */
 a:hover {
     text-decoration: none;
