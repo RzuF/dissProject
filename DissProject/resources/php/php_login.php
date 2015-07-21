@@ -221,8 +221,8 @@ if($request->request == "register")
 			echo "ERROR: Błędny adres email";
 		elseif($request->login == "" || $request->password == "")
 			echo "ERROR: Hasło/Login nie mogą być puste";
-		elseif($resp == null || !$resp->success)
-			echo "ERROR: Nieprawidłowy token";
+		//elseif($resp == null || !$resp->success)
+		//	echo "ERROR: Nieprawidłowy token";
 		elseif($req = $sqlcon->query("SELECT `login` FROM `".PREFIX."_users` WHERE `login` = '".$request->login."'")->fetch())
 			echo "ERROR: Login jest już zajęty";
 		else{
