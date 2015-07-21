@@ -243,7 +243,7 @@ if($request->request == "register")
 
 				try
 				{
-					$sqlcon->query("INSERT INTO `".PREFIX."_users`(`id`, `login`, `password`, `data`, `email`, `state`, `aid`, `ranga`, `name`, `age`, `city`, `description`, `sex`)
+					$sqlcon->query("INSERT INTO `".PREFIX."_users`(`id`, `login`, `password`, `date`, `email`, `state`, `aid`, `ranga`, `name`, `age`, `city`, `description`, `sex`)
 						VALUES ('', '".htmlentities($request->login)."', '".$request->password."', '".date('Y-m-d H:i:s')."', '".htmlentities($request->email)."', '1', '".$aid."', '0', '$name', '$age', '$city', '$description', '$sex')");
 
 					$tresc = // Treść emaila z aktywacją
