@@ -13,6 +13,10 @@ catch (PDOException $e)
 	die();
 }
 
+$postdata = file_get_contents("php://input");
+$request = json_decode($postdata);
+
+
 if($request->request == "mainPage")
 {
 	try
