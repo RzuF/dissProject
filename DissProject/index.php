@@ -18,6 +18,11 @@ include_once('config.php');
 </head>
 <body ng-controller="globalCtrl">
     <?php include_once("nav.html"); ?>
+	<div class="col-md-6 col-md-offset-3 alert alert-danger alert-dismissible" role="alert" ng-if="session.ban > -1">
+  		<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  		<strong>Uwaga!</strong> Dostałeś bana od USER. Kategoria bana to CATEGORY. Opis: DESCRIPTION.
+		Nie możesz teraz komentować ani dodawać nowych dissów.
+	</div>
     <div ng-view></div>
     <?php include_once("resources.html"); ?>
 

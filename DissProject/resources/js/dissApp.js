@@ -43,7 +43,6 @@ app.config(function($routeProvider){
 // Design and add all data to user profiles show
 // add links to userprofiles on main and queue site and show note
 // add users score
-// change notesNewDAO to notesDAO and add some functions
 
 /* Main site */
 /* Find better solution for que bollean value | Directive?*/
@@ -60,7 +59,6 @@ app.controller('poczekalniaPageCtrl', ['notesDAO', function (notesDAO) {
     var ctrl = this;
     ctrl.que = true;
     notesDAO.getAllNotesWaitPage().then(function(data) {
-        console.log("Pobrałem");
         ctrl.view = data;
     });
 }]);

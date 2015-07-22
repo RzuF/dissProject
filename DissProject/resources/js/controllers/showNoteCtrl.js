@@ -3,6 +3,7 @@
 
     function showNoteCtrl($routeParams, noteDAO) {
         var ctrl = this;
+        ctrl.noteID = $routeParams.noteID;
         noteDAO.getNoteDetails($routeParams.noteID).then(function(data) {
             ctrl.noteDetails = data;
         });
