@@ -1,8 +1,7 @@
 (function ()
 {
     'use strict';
-    /* Fetch all data about note: title, author, date, comments count, id, ranking */
-    function notesDAO($resource, $http, $q)
+    function notessDAO($resource)
     {
         var notesList = $resource('resources/php/:a?:b', null, {
             getAllMain: {
@@ -17,22 +16,6 @@
             }
         });
 
-        var getNoteDetails = function(id) {
-            var request = $http({
-                method: "GET",
-                url: 'resources/php/php_add.php',
-                data: {
-                    request: 'show',
-                    id: id
-                }}).success(function (backendResponse) {
-                    console.log(backendResponse.data[0] + "DAO");
-                    var defer = $q.defer();
-                    defer.resolve(backendResponse);
-                    return defer.promise;
-                }).error(function (data) {
-                    alert("Błąd w przekazywaniu danych.");
-                });
-        };
 
         return {
             getAllMain: function () {
@@ -40,11 +23,8 @@
             },
 			getAllQueue: function () {
                 return notesList.getAllQueue().$promise;
-            },
-            getNoteDetails: function(id) {
-                return getNoteDetails(id);
             }
         }
     }
-    angular.module('dissApp').factory('notesDAO', ['$resource', '$http', '$q', notesDAO]);
+    angular.module('dissApp').factory('notessDAO', ['$resource', notessDAO]);
 })();

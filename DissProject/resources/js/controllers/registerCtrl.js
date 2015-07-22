@@ -1,14 +1,14 @@
 (function () {
     'use strict';
 
-    function registerCtrl($scope, registerService, $location) {
+    function registerCtrl($scope, userDAO, $location) {
         var ctrl = this;
         ctrl.noErrors = true;
         ctrl.serviceError = true;
         ctrl.returnMessage = "";
 
         ctrl.register = function(login, password, password2, email) {
-            registerService.async(login, password, password2, email).then(function(data) {
+            userDAO.register(login, password, password2, email).then(function(data) {
                 if( data == "OK")
                     $location.path("/rejestracja-sukcess");
                 else {
@@ -54,5 +54,5 @@
     }
 
     var module = angular.module('dissApp');
-    module.controller('registerCtrl', ['$scope', 'registerService', '$location', registerCtrl]);
+    module.controller('registerCtrl', ['$scope', 'userDAO', '$location', registerCtrl]);
 })();

@@ -1,14 +1,13 @@
 (function () {
     'use strict';
 
-    function showUserCtrl($routeParams, showUserService) {
+    function showUserCtrl($routeParams, userDAO) {
         var ctrl = this;
-        showUserService.async($routeParams.userID).then(function(data) {
-            console.log(data);
+        userDAO.getInfo($routeParams.userID).then(function(data) {
             ctrl.user = data;
         });
     }
 
     var module = angular.module('dissApp');
-    module.controller('showUserCtrl', ['$routeParams', 'showUserService', showUserCtrl]);
+    module.controller('showUserCtrl', ['$routeParams', 'userDAO', showUserCtrl]);
 })();

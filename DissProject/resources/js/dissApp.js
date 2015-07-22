@@ -1,12 +1,12 @@
-var app = angular.module('dissApp',['ngRoute', 'ngResource', 'ui.bootstrap']);
+var app = angular.module('dissApp',['ngRoute', 'ngResource', 'ui.bootstrap', 'ui.router']);
 app.config(function($routeProvider){
       $routeProvider
           .when('/',{
-                templateUrl: 'resources/js/views/all.html',
+                templateUrl: 'resources/js/views/displayAllNotes.html',
                 controller: 'mainPageCtrl as ctrl'
           })
           .when('/poczekalnia',{
-                templateUrl: 'resources/js/views/all.html',
+                templateUrl: 'resources/js/views/displayAllNotes.html',
                 controller: 'poczekalniaPageCtrl as ctrl'
           })
           .when('/logowanie',{
@@ -43,13 +43,14 @@ app.config(function($routeProvider){
 // Design and add all data to user profiles show
 // add links to userprofiles on main and queue site and show note
 // add users score
+// change notesNewDAO to notesDAO and add some functions
 
 /* Main site */
 /* Find better solution for que bollean value | Directive?*/
-app.controller('mainPageCtrl', ['notesDAO', function (notesDAO) {
+app.controller('mainPageCtrl', ['notessDAO', function (notessDAO) {
     var ctrl = this;
     ctrl.que = false;
-    notesDAO.getAllMain().then(function(data) {
+    notessDAO.getAllMain().then(function(data) {
         ctrl.view = data;
     });
 }]);
@@ -58,35 +59,14 @@ app.controller('mainPageCtrl', ['notesDAO', function (notesDAO) {
 app.controller('poczekalniaPageCtrl', ['notesDAO', function (notesDAO) {
     var ctrl = this;
     ctrl.que = true;
-    notesDAO.getAllQueue().then(function(data) {
+    notesDAO.getAllNotesWaitPage().then(function(data) {
+        console.log("Pobrałem");
         ctrl.view = data;
     });
 }]);
 
-/* Delete, moveToMain and moveToMainFast functions in dropdown | Change to directive*/
-app.controller('notesCommands', ['deleteService', 'moveToMainService', 'moveToMainFastService', function(deleteService, moveToMainService, moveToMainFastService) {
-    var ctrl = this;
-    ctrl.delete = function(id) {
-        deleteService.async(id).then(function(data) {
-            alert(data);
-        });
-    };
-
-    ctrl.moveToMain = function(id) {
-        moveToMainService.async(id).then(function(data) {
-            alert(data);
-        });
-    };
-
-    ctrl.moveToMainFast = function(id) {
-        moveToMainFastService.async(id).then(function(data) {
-            alert(data);
-        });
-    };
-}]);
-
 /* Adding new marks | Change to directive */
-app.controller('rateCtrl', function (addNewMarkService) {
+app.controller('rateCtrl', function (noteDAO) {
     var rate = this;
     rate.mark = 0;
     rate.info = function() {
@@ -94,7 +74,7 @@ app.controller('rateCtrl', function (addNewMarkService) {
     };
 
     rate.addNewMark = function(id, type) {
-        addNewMarkService.async(id, type).then (function(data) {
+        noteDAO.rateNote(id, type).then (function(data) {
             if( data == "plus")
                 rate.mark = 1;
             else if(data == "minus")
@@ -121,3 +101,23 @@ app.directive('registerForm', function() {
         templateUrl: 'resources/js/views/forms/register.html'
     };
 });
+
+
+/*
+[
+{"id":"26","0":"26","title":"okokok","1":"okokok","difference":"0","2":"0","date":"2015-07-22 13:04:33","3":"2015-07-22 13:04:33","login":"rzuf","4":"rzuf","tags":null,"5":null,"comments":"0","6":"0"},
+{"id":"25","0":"25","title":"okok","1":"okok","difference":"0","2":"0","date":"2015-07-22 13:00:49","3":"2015-07-22 13:00:49","login":"rzuf","4":"rzuf","tags":null,"5":null,"comments":"0","6":"0"},
+{"id":"20","0":"20","title":"okok","1":"okok","difference":"-1","2":"-1","date":"2015-07-21 14:51:05","3":"2015-07-21 14:51:05","login":"test","4":"test","tags":null,"5":null,"comments":"0","6":"0"}
+]
+[
+{"id":"31","0":"31","title":"okokokookok","1":"okokokookok","difference":"0","2":"0","date":"2015-07-22 13:10:37","3":"2015-07-22 13:10:37","login":"rzuf","4":"rzuf","tags":null,"5":null,"state":"0","6":"0","comments":"0","7":"0"},
+{"id":"30","0":"30","title":"okoko","1":"okoko","difference":"0","2":"0","date":"2015-07-22 13:09:17","3":"2015-07-22 13:09:17","login":"rzuf","4":"rzuf","tags":null,"5":null,"state":"0","6":"0","comments":"0","7":"0"},
+{"id":"29","0":"29","title":"okok","1":"okok","difference":"0","2":"0","date":"2015-07-22 13:07:58","3":"2015-07-22 13:07:58","login":"rzuf","4":"rzuf","tags":null,"5":null,"state":"0","6":"0","comments":"0","7":"0"},
+{"id":"28","0":"28","title":"okok","1":"okok","difference":"0","2":"0","date":"2015-07-22 13:06:46","3":"2015-07-22 13:06:46","login":"rzuf","4":"rzuf","tags":null,"5":null,"state":"0","6":"0","comments":"0","7":"0"},
+{"id":"27","0":"27","title":"kkk","1":"kkk","difference":"0","2":"0","date":"2015-07-22 13:05:34","3":"2015-07-22 13:05:34","login":"rzuf","4":"rzuf","tags":null,"5":null,"state":"0","6":"0","comments":"0","7":"0"}
+]
+
+[{"id":"26","0":"26","title":"okokok","1":"okokok","difference":"0","2":"0","date":"2015-07-22 13:04:33","3":"2015-07-22 13:04:33","login":"rzuf","4":"rzuf","tags":null,"5":null,"comments":"0","6":"0"},
+{"id":"25","0":"25","title":"okok","1":"okok","difference":"0","2":"0","date":"2015-07-22 13:00:49","3":"2015-07-22 13:00:49","login":"rzuf","4":"rzuf","tags":null,"5":null,"comments":"0","6":"0"},
+{"id":"20","0":"20","title":"okok","1":"okok","difference":"-1","2":"-1","date":"2015-07-21 14:51:05","3":"2015-07-21 14:51:05","login":"test","4":"test","tags":null,"5":null,"comments":"0","6":"0"}
+] */

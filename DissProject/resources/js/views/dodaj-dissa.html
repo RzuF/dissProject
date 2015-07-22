@@ -2,38 +2,42 @@
     <div class="page-header">
         <h1>Dodaj dissa:</h1>
     </div>
-    <div ng-show="session.length == 0" class="alert alert-info" role="alert">Gdy dodajesz dissa będąc zajerestrowanym masz możliwość podlądu jego ocen i komentarzy. To tylko diwe z wielu przywilejów zajerestrowanych użytkowników. Jeśli chcesz dowiedzieć się więcej <b><a href="#" class="alert-link">kliknij.</a></b></div>
+    <!-- Użytkownik niezalogowany-->
+    <div ng-show="session.length == 0" class="alert alert-info" role="alert">Przepraszamy, ale tylko zarejestrowani użytkownicy mogą dodawać dissy. Jeżeli chcesz się zarejestrować<b><a ng-href="#/logowanie" class="alert-link"> kliknij.</a></b></div>
 
-    <div ng-show="session.length == 0" class="alert alert-danger" role="alert">Nie będąc zalogowanym nie możesz dodawać nowych dissów.</div>
+    <!-- Użytkownik nie mający potwierdzonego maila-->
+    <div ng-show="session.state == 1" class="alert alert-danger" role="alert">Już prawie, jedyne co musisz zrobić aby móc dodawać dissy to potwierdzić maila. Jeżeli nie możesz znaleźć maila na swojej skrzynce mailowej, możemy wysłać go ponownie.<a ng-href="" class="alert-link"> Kliknij, a to zrobimy.</a></div>
 
-    <div ng-show="session.logged == 1" class="alert alert-info" role="alert">Po dodaniu dissa będziesz otrzymywał powiadomienia o nowych komentarzach i ocenach twojego dissa.Będą one widoczne w menu po kliknięciu przycisku profil.</div>
+    <div ng-if='session.logged == 1 && session.state != 1'>
+        <div ng-show="session.logged == 1" class="alert alert-info" role="alert">Po dodaniu dissa otrzymasz X puntków na twoje konto ble ble ble <b>system rang</b></div>
 
-    <form role="form" name="addDissForm" novalidate>
-    	<div class="alert" role="alert" ng-show="!ctrl.noErrors" ng-class="ctrl.messageClass">
-            <strong ng-show="ctrl.errorMessage">Błąd:</strong>
-            <strong ng-show="!ctrl.errorMessage">Sukces:</strong>{{ ctrl.returnMessage }}
-        </div>
-    	<div class="form-group">
-            <label for="word" class="control-label">Tytuł:</label>
-            <input type="text" class="form-control" name="dissName" ng-model="dissName" required>
-        </div>
-        <div class="form-group">
-	        <label for="word" class="control-label">Tagi:</label>
-	        <input type="text" class="form-control" name="dissTags" ng-model="dissTags" required>
-	    </div>
-	    <div class="form-group">
-	        <label for="mainText" class="control-label">Tekst:</label>
-	        <textarea name="dissText" ng-model="dissText" class="form-control" required></textarea>
-	    </div>
-        <div class="alert alert-warning" role="alert" ng-show='addDissForm.dissText.$error.required || addDissForm.dissTags.$error.required || addDissForm.dissName.$error.required'>
-            <ul>
-                <li ng-show="addDissForm.dissName.$error.required">Tutuł jest pusty.</li>
-                <li ng-show="addDissForm.dissTags.$error.required">Pole tagów jest puste.</li>
-                <li ng-show="addDissForm.dissText.$error.required">Tekst dissa jest pusty.</li>
-            </ul>
-        </div>
-	    <div class="form-group">
-	        <button ng-disabled='ctrl.isDisable || addDissForm.dissText.$error.required || addDissForm.dissTags.$error.required || addDissForm.dissName.$error.required' ng-click="ctrl.add()" type="submit" class="form-control btn btn-add">Dodaj</button>
-	    </div>
-    </form>
+        <form role="form" name="addDissForm" novalidate>
+        	<div class="alert" role="alert" ng-show="!ctrl.noErrors" ng-class="ctrl.messageClass">
+                <strong ng-show="ctrl.errorMessage">Błąd:</strong>
+                <strong ng-show="!ctrl.errorMessage">Sukces:</strong>{{ ctrl.returnMessage }}
+            </div>
+        	<div class="form-group">
+                <label for="word" class="control-label">Tytuł:</label>
+                <input type="text" class="form-control" name="dissName" ng-model="ctrl.dissName" required>
+            </div>
+            <div class="form-group">
+    	        <label for="word" class="control-label">Tagi:</label>
+    	        <input type="text" class="form-control" name="dissTags" ng-model="ctrl.dissTags" required>
+    	    </div>
+    	    <div class="form-group">
+    	        <label for="mainText" class="control-label">Tekst:</label>
+    	        <textarea name="dissText" ng-model="ctrl.dissText" class="form-control" required></textarea>
+    	    </div>
+            <div class="alert alert-warning" role="alert" ng-show='addDissForm.dissText.$error.required || addDissForm.dissTags.$error.required || addDissForm.dissName.$error.required'>
+                <ul>
+                    <li class="alert-li" ng-show="addDissForm.dissName.$error.required">Tutuł jest pusty.</li>
+                    <li class="alert-li" ng-show="addDissForm.dissTags.$error.required">Pole tagów jest puste.</li>
+                    <li class="alert-li" ng-show="addDissForm.dissText.$error.required">Tekst dissa jest pusty.</li>
+                </ul>
+            </div>
+    	    <div class="form-group">
+    	        <button ng-disabled='ctrl.isDisable || addDissForm.dissText.$error.required || addDissForm.dissTags.$error.required || addDissForm.dissName.$error.required' ng-click="ctrl.add(ctrl.dissName, ctrl.dissText, ctrl.dissTags)" type="submit" class="form-control btn btn-add">Dodaj</button>
+    	    </div>
+        </form>
+    </div>
 </div>

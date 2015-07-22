@@ -1,14 +1,13 @@
 (function () {
     'use strict';
 
-    function showNoteCtrl($routeParams, showNoteDetailsService) {
+    function showNoteCtrl($routeParams, noteDAO) {
         var ctrl = this;
-        ctrl.noteID = $routeParams.noteID;
-        showNoteDetailsService.async($routeParams.noteID).then(function(data) {
+        noteDAO.getNoteDetails($routeParams.noteID).then(function(data) {
             ctrl.noteDetails = data;
         });
     }
 
     var module = angular.module('dissApp');
-    module.controller('showNoteCtrl', ['$routeParams', 'showNoteDetailsService', showNoteCtrl]);
+    module.controller('showNoteCtrl', ['$routeParams', 'noteDAO', showNoteCtrl]);
 })();

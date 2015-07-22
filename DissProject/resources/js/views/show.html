@@ -1,24 +1,24 @@
 <div class="container note-size">
     <div class="box14">
-        <!-- Note description -->
         <div class="row note-title">
             <div class="col-lg-8 col-xs-8">
                 <div class="note-title-title"> {{ ctrl.noteDetails.title }}</div>
-                </div>
-                <div class="col-lg-4 col-xs-4">
-                    <div class="note-title-comments">
-                        <div class="dropdown" ng-controller="notesCommandsCtrl as command">
-                            <button ng-if="session.state > 2" class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span></button> <span><a href="#"><i class="fa fa-comments"></i> {{ ctrl.noteDetails.comments }}</a></span>
-                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li><a ng-click="command.delete(ctrl.noteID)">ADD | Delete</a></li>
-                                <li><a ng-click="command.moveToMainFast(ctrl.noteID)">STATE |moveToMainFast</a></li>
-                                <li><a ng-click="command.moveToMain(ctrl.noteID)">OF | moveToMain</a></li>
-                                <li><a data-toggle="modal" data-target="#myModal"">DISS | Zbanuj usera</a></li>
-                            </ul>
-                        </div>
-                    </div>
+            </div>
+            <div class="col-lg-4 col-xs-4">
+                <div class="note-title-comments">
+                    <span class="dropdown" ng-controller="notesCommandsCtrl as command">
+                        <button ng-if="session.state > 2" class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span></button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a ng-click="command.delete(ctrl.noteID)">Delete</a></li>
+                            <li><a ng-click="command.moveToMainFast(ctrl.noteID)">moveToMainFast</a></li>
+                            <li><a ng-click="command.moveToMain(ctrl.noteID)">moveToMain</a></li>
+                            <li><a data-toggle="modal" data-target="#myModal">Zbanuj usera</a></li>
+                        </ul>
+                    </span>
+                    <span><a href="#"><i class="fa fa-comments"></i> {{ ctrl.noteDetails.comments }}</a></span>
                 </div>
             </div>
+        </div>
 
             <div class="row">
                 <div class="col-lg-8 col-xs-8">
@@ -33,13 +33,14 @@
             <img ng-src='resources/images/notes/{{ ctrl.noteID }}.png' class="img-responsive img-rounded">
 
             <div class="row">
-                <div class="col-lg-12 note-rank" ng-controller="rateCtrl as rate">
+                <span class="col-lg-12 note-rank" ng-controller="rateCtrl as rate">
                     <a ng-click='rate.addNewMark(ctrl.noteID, "plus")'  class="action-button shadow animate green"><i class="fa fa-plus"></i></a>
-                    <div ng-if="rate.info() == 1" class="note-rank-rank">{{ ctrl.noteDetails.difference * 1 + 1 * 1}}</div>
-                    <div ng-if="rate.info() == 0" class="note-rank-rank">{{ ctrl.noteDetails.difference * 1}}</div>
-                    <div ng-if="rate.info() == -1" class="note-rank-rank">{{ ctrl.noteDetails.difference * 1 - 1 * 1}}</div>
+                    <span ng-if="rate.info() == 1" class="note-rank-rank">{{ ctrl.noteDetails.difference * 1 + 1 * 1}}</span>
+                    <span ng-if="rate.info() == 0" class="note-rank-rank">{{ ctrl.noteDetails.difference * 1}}</span>
+                    <span ng-if="rate.info() == -1" class="note-rank-rank">{{ ctrl.noteDetails.difference * 1 - 1 * 1}}</span>
                     <a ng-click='rate.addNewMark(ctrl.noteID, "minus")' class="action-button shadow animate red"><i class="fa fa-minus"></i></a>
-                </div>
+                    <a class='like-button'><i class="fa fa-heart"></i></a>
+                </span>
             </div>
         </div> <!-- END NOTE -->
 
@@ -137,32 +138,33 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Zbanuj {{note.login}}</h4>
+                <h4 class="modal-title" id="myModalLabel">Zbanuj {{ctrl.noteDetails.login}}</h4>
             </div>
             <div class="modal-body" style="text-align: center;">
-                <pre>{{ctrl.time || 'Na jak długo'}}</pre>
+                <pre>{{command.time || 'Na jak długo'}}</pre>
                 <div class="btn-group">
-                    <label class="btn btn-danger" ng-model="ctrl.time" btn-radio="'Godzina'">Godzina</label>
-                    <label class="btn btn-danger" ng-model="ctrl.time" btn-radio="'Dzień'">Dzień</label>
-                    <label class="btn btn-danger" ng-model="ctrl.time" btn-radio="'Tydzień'">Tydzień</label>
-                    <label class="btn btn-danger" ng-model="ctrl.time" btn-radio="'Miesiąc'">Miesiąc</label>
-                    <label class="btn btn-danger" ng-model="ctrl.time" btn-radio="'Zawsze'">Zawsze</label>
+                    <label class="btn btn-danger" ng-model="command.time" btn-radio="'Godzina'">Godzina</label>
+                    <label class="btn btn-danger" ng-model="command.time" btn-radio="'Dzień'">Dzień</label>
+                    <label class="btn btn-danger" ng-model="command.time" btn-radio="'Tydzień'">Tydzień</label>
+                    <label class="btn btn-danger" ng-model="command.time" btn-radio="'Miesiąc'">Miesiąc</label>
                 </div>
                 <hr>
-                <pre>{{ctrl.category || 'Kategoria'}}</pre>
+                <pre>{{command.category || 'Kategoria'}}</pre>
                 <div class="btn-group">
-                    <label class="btn btn-danger" ng-model="ctrl.category" btn-radio="'X'">X</label>
-                    <label class="btn btn-danger" ng-model="ctrl.category" btn-radio="'X'">X</label>
-                    <label class="btn btn-danger" ng-model="ctrl.category" btn-radio="'X'">X</label>
-                    <label class="btn btn-danger" ng-model="ctrl.category" btn-radio="'X'">X</label>
-                    <label class="btn btn-danger" ng-model="ctrl.category" btn-radio="'X'">X</label>
+                    <label class="btn btn-danger" ng-model="command.category" btn-radio="'Nie przestrzeganie reuglaminu'">Nie przestrzeganie reuglaminu</label>
+                    <label class="btn btn-danger" ng-model="command.category" btn-radio="'Upomnienie'">Upomnienie</label>
+                    <label class="btn btn-danger" ng-model="command.category" btn-radio="'Inne'">Inne</label>
                 </div>
                 <hr>
-                <textarea class="form-control" placeholder="Opis za co."></textarea>
+                <textarea class="form-control" placeholder="Opis" ng-model='command.description'></textarea>
+                <hr>
+                <div class="alert alert-warning" role="alert" ng-show='!command.description'>
+                    <strong>Uwaga:</strong> Pole opisu nie może być puste.
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cofnij</button>
-                <button type="button" class="btn btn-danger">Banuj</button>
+                <button type="button" class="btn btn-danger" ng-disabled='!command.description' ng-click='command.giveBan(command.time, command.category, command.description, ctrl.noteDetails.login)'>Banuj</button>
             </div>
         </div>
     </div>

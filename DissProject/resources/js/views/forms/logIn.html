@@ -1,10 +1,10 @@
-<form id="login-form" style="display: block;" ng-controller="signUpCtrl as login" role="form" name="LogInForm" novalidate>
+<form id="login-form" style="display: block;" ng-controller="logInCtrl as login" role="form" name="LogInForm" novalidate>
 
     <div class="alert alert-warning" role="alert" ng-show='!login.noErrors'>
         <ul>
-            <li ng-show="LogInForm.Login.$error.required">Pole login nie może być puste.</li>
-            <li ng-show="LogInForm.Password.$error.required">Pole hasło nie może być puste puste.</li>
-            <li ng-show="!login.noErrors"><strong>Błąd:</strong>{{ login.returnMessage }}</li>
+            <li class="alert-li" ng-show="LogInForm.Login.$error.required">Pole login nie może być puste.</li>
+            <li class="alert-li" ng-show="LogInForm.Password.$error.required">Pole hasło nie może być puste puste.</li>
+            <li class="alert-li" ng-show="!login.noErrors"><strong>Błąd:</strong>{{ login.returnMessage }}</li>
         </ul>
     </div>
 

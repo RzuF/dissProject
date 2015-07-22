@@ -1,10 +1,10 @@
 (function () {
     'use strict';
 
-    function activationCtrl($routeParams, activationCheckService) {
+    function activationCtrl($routeParams, userDAO) {
         var ctrl = this;
         ctrl.activate = function(aid) {
-            activationCheckService.async(aid).then(function(data) {
+            userDAO.emailVeryfication(aid).then(function(data) {
                 if( data == "OK")
                     ctrl.isSuccessful = true;
                 else {
@@ -19,5 +19,5 @@
     };
 
     var module = angular.module('dissApp');
-    module.controller('activationCtrl', ['$routeParams', 'activationCheckService', activationCtrl]);
+    module.controller('activationCtrl', ['$routeParams', 'userDAO', activationCtrl]);
 })();
