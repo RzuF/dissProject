@@ -13,7 +13,7 @@ catch (PDOException $e)
 	die();
 }
 
-if($request->request = "mainPage")
+if($request->request == "mainPage")
 {
 	try
 	{
@@ -43,7 +43,7 @@ if($request->request = "mainPage")
  * JSON encoded array
  */
 
-if($request->request = "waitPage")
+if($request->request == "waitPage")
 {
 	try
 	{
