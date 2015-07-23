@@ -11,13 +11,10 @@
                     request: 'logout',
                 }
                 }).success(function (data) {
-                if( data == "OK") {
+                if( data == "OK")
                     $rootScope.sessionCheck();
-                    $location.path("/");
-                }
-                else {
+                else
                     alert(data);
-                }
             });
         };
     }

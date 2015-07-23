@@ -1,9 +1,11 @@
 <!-- Contenedor Principal -->
+<div ng-if='session.state == 1' class="alert alert-info alert-dismissable">Aby móc dodawać komentarze musisz aktywować swoje konto.</div>
+<div ng-if='session.logged == 0' class="alert alert-info alert-dismissable">Jak się zalogujesz ble ble ble.</div>
 <div class="comments-container">
     <h1>Komentarze:</h1>
     <ul id="comments-list" class="comments-list">
         <!-- Add new comment -->
-        <li>
+        <li ng-if='session.state != 1'>
             <div class="comment-main-level">
                 <div class="comment-avatar">
                     <img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg" alt="">
