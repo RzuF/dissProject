@@ -213,7 +213,7 @@ if($request->request == "show")
 	{
 		$arr = array();
 
-		foreach ($sqlcon->query("SELECT a.id, a.difference, a.date, b.login, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply IS NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.reply IS NULL a.note = "  . $request->id) as $req)
+		foreach ($sqlcon->query("SELECT a.id, a.difference, a.date, b.login, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply IS NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.reply IS NULL AND a.note = "  . $request->id) as $req)
 		{
 			$arr[] = "x";
 		}
