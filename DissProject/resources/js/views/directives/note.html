@@ -8,7 +8,7 @@
         <div class="col-lg-4 col-xs-4">
             <div class="note-title-comments">
                 <span class="dropdown" ng-controller="notesCommandsCtrl as command">
-                    <button ng-if="session.state > 2" class="btn btn-sm btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span></button>
+                    <button ng-if="session.state > 2" class="btn btn-xs btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span></button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li><a ng-click="command.delete(noteID)">Delete</a></li>
                         <li ng-if='que == 1'><a ng-click="command.moveToMainFast(noteID)">moveToMainFast</a></li>
@@ -23,10 +23,10 @@
     </div>
     <!-- Note author and date -->
     <div class="row">
-        <div class="col-lg-8 col-xs-8">
+        <div class="col-lg-6 col-xs-6">
             <div class="note-copright"><i class="fa fa-user"></i> {{ noteDetails.login }} </div>
         </div>
-        <div class="col-lg-4 col-xs-4">
+        <div class="col-lg-6 col-xs-6">
             <div class="note-date"> <i class="fa fa-calendar"></i> {{ noteDetails.date | timeAgo}} </div>
         </div>
     </div>
@@ -34,5 +34,7 @@
     <img ng-if='links == 0' ng-src='resources/images/notes/{{ noteID }}.png' class="img-responsive img-rounded">
     <a ng-if='links == 1' ng-href="#/notes/{{noteID}}"><img  ng-src='resources/images/notes/{{ noteID }}.png' class="img-responsive img-rounded"></a>
     <!-- Rank buttons -->
+    <i class="fa fa-minus"></i>
+    <i class="fa fa-plus"></i>
     <rate-buttons id="noteID" dif='noteDetails.difference'></rate-buttons>
 </div>

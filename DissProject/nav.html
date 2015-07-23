@@ -1,6 +1,5 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
-    <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
           	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-4">
             	<span class="sr-only">Toggle navigation</span>
@@ -11,7 +10,6 @@
           	<a class="navbar-brand" href="#/">dissProject</a>
         </div>
 
-        <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="navbar-collapse-4">
           	<ul class="nav navbar-nav navbar-right">
             	<li><a href="#/poczekalnia">Poczekalnia</a></li>
@@ -19,24 +17,13 @@
             	<li><a href="#">Losuj</a></li>
             	<li><a href="#/dodaj-dissa">Dodaj</a></li>
            		<li>
-                <a ng-if="session.logged == 1" class="btn btn-default btn-outline btn-circle"  data-toggle="collapse" href="\#nav-collapse4" aria-expanded="false" aria-controls="nav-collapse4">Profil&nbsp;<i class="fa fa-user"></i></a>
-
-                <a ng-if="session.length == 0" href="#/logowanie" class="btn btn-default btn-outline btn-circle" >Zaloguj&nbsp;<i class="fa fa-user"></i></a>
-
-              		<!-- <a class="btn btn-default btn-outline btn-circle"  data-toggle="collapse" href="#nav-collapse4" aria-expanded="false" aria-controls="nav-collapse4">Zaloguj <i class=""></i> </a> -->
-              		<!-- <a href="log.php" class="btn btn-default btn-outline btn-circle" >Zaloguj <i class="fa fa-user"></i></a> -->
+                    <a ng-if="session.logged == 1" class="btn btn-default btn-outline btn-circle"  data-toggle="collapse" href="\#nav-collapse4" aria-expanded="false" aria-controls="nav-collapse4">Profil&nbsp;<i class="fa fa-user"></i></a>
+                    <a ng-if="session.length == 0" href="#/logowanie" class="btn btn-default btn-outline btn-circle">Zaloguj&nbsp;<i class="fa fa-user"></i></a>
             	</li>
           	</ul>
           	<ul class="collapse nav navbar-nav nav-collapse" role="search" id="nav-collapse4" style="background-color: #222930;">
                 <li ng-controller="logOutCtrl as logOut"><a data-toggle="collapse" href="\#nav-collapse4" aria-expanded="false" aria-controls="nav-collapse4" ng-click="logOut.logout()">Wyloguj</a></li>
-                <li><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Powiadomienia <span class="badge badge-success">3</span></a>
-                  <ul class="dropdown-menu" role="menu">
-                  <li><a href="#"><i style="color: red;" class="fa fa-heart"></i> Stosiu dodał twój diss<br /> do ulubionych!</a></li>
-                  <li><a href="#"><i class="fa fa-exchange"></i> Twój diss trafił na główną!</a></li>
-                  <li><a href="#"><i class="fa fa-warning"></i> Dostałeś ostrzeżenie.</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#">Zobaczy wszystkie</a></li>
-              </ul>
+                <li><a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i style="color: red;" class="fa fa-heart"></i> Ulubione <span class="badge badge-success">3</span></a>
                 </li>
                 <li><a href="#">Ustawienia</a></li>
                 <li><a href="#/profil">Mój profil</a></li>

@@ -1,4 +1,4 @@
-var app = angular.module('dissApp',['ngRoute', 'ngResource', 'ui.bootstrap', 'ui.router']);
+var app = angular.module('dissApp',['ngRoute', 'ngResource', 'ui.bootstrap', 'ui.router', 'ngAnimate']);
 app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
     $stateProvider
