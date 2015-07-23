@@ -24,19 +24,18 @@
                 });
             },
             getAllNotesMainPage: function() {
-                return api('GET', 'resources/php/php_getNotes.php', {
-                    request: 'mainPage'})
+                return api('POST', 'resources/php/php_getNotes.php', {
+                    request: 'main'})
                     .then(function (backendResponse) {
-                        backendResponse = angular.fromJson(backendResponse);
-                        console.log(backendResponse);
-
+                        var defer = $q.defer();
+                        defer.resolve(backendResponse.data);
+                        return defer.promise;
                 });
             },
             getAllNotesWaitPage: function() {
-                return api('GET', 'resources/php/php_getNotes.php', {
-                    request: 'waitPage'})
+                return api('POST', 'resources/php/php_getNotes.php', {
+                    request: 'wait'})
                     .then(function (backendResponse) {
-                        console.log(backendResponse);
                         var defer = $q.defer();
                         defer.resolve(backendResponse.data);
                         return defer.promise;

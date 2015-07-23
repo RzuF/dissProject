@@ -31,17 +31,8 @@
 
             <!-- Note image -->
             <img ng-src='resources/images/notes/{{ ctrl.noteID }}.png' class="img-responsive img-rounded">
-
-            <div class="row">
-                <span class="col-lg-12 note-rank" ng-controller="rateCtrl as rate">
-                    <a ng-click='rate.addNewMark(ctrl.noteID, "plus")'  class="action-button shadow animate green"><i class="fa fa-plus"></i></a>
-                    <span ng-if="rate.info() == 1" class="note-rank-rank">{{ ctrl.noteDetails.difference * 1 + 1 * 1}}</span>
-                    <span ng-if="rate.info() == 0" class="note-rank-rank">{{ ctrl.noteDetails.difference * 1}}</span>
-                    <span ng-if="rate.info() == -1" class="note-rank-rank">{{ ctrl.noteDetails.difference * 1 - 1 * 1}}</span>
-                    <a ng-click='rate.addNewMark(ctrl.noteID, "minus")' class="action-button shadow animate red"><i class="fa fa-minus"></i></a>
-                    <a class='like-button'><i class="fa fa-heart"></i></a>
-                </span>
-            </div>
+            <!-- Rank buttons -->
+            <rate-buttons id="ctrl.noteID" dif='ctrl.noteDetails.difference'></rate-buttons>
         </div> <!-- END NOTE -->
 
     <!-- Contenedor Principal -->

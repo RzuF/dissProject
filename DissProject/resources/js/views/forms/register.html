@@ -34,6 +34,36 @@
         </ul>
     </div>
 
+    <!-- Aditional options -->
+    <a ng-click="register.isCollapsed = !register.isCollapsed">Dodatkowe opcje</a>
+	<div collapse="!register.isCollapsed">
+        <!-- Imię -->
+        <div style="margin-bottom: 10px" class="input-group">
+            <span class="input-group-addon"><i class="fa fa-street-view"></i></span>
+            <input type="text" tabindex="2" class="form-control" placeholder="Imię">
+        </div>
+        <!-- Wiek -->
+        <div style="margin-bottom: 10px" class="input-group">
+            <span class="input-group-addon">Wiek</span>
+            <input type="number" min="0" max="100" tabindex="2" class="form-control">
+        </div>
+        <!-- Miasto -->
+        <div style="margin-bottom: 10px" class="input-group">
+            <span class="input-group-addon"><i class="fa fa-building-o"></i>&nbsp;</span>
+            <input type="text" tabindex="2" class="form-control" placeholder="Miasto">
+        </div>
+        <div style="margin-bottom: 10px" class="input-group">
+            <span class="input-group-addon"><i class="fa fa-sort-alpha-asc"></i></i>&nbsp;</span>
+            <textarea type="text" tabindex="2" class="form-control" placeholder="Opis"></textarea>
+        </div>
+        <!-- Płeć -->
+        <div style="margin-bottom: 10px" class="input-group">
+            <span>Płeć: &nbsp;</span>
+            <label><input type="radio" ng-model="register.name" value="Mężczyzna">&nbsp;Mężczyzna</label>&nbsp;&nbsp;
+            <label><input type="radio" ng-model="register.name" value="Kobieta">&nbsp;Kobieta</label>
+        </div>
+	</div>
+    <hr>
     <!-- Register button -->
     <div class="form-group">
         <div class="row">

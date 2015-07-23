@@ -1,0 +1,10 @@
+<div class="row">
+    <div class="col-lg-12 note-rank">
+        <a ng-click='rate.addNewMark(noteID, "plus")'  class="action-button shadow animate green"><i class="fa fa-plus"></i></a>
+        <div ng-if="rate.info() == 1" class="note-rank-rank">{{ noteDiffrence * 1 + 1 * 1}}</div>
+        <div ng-if="rate.info() == 0" class="note-rank-rank">{{ noteDiffrence * 1}}</div>
+        <div ng-if="rate.info() == -1" class="note-rank-rank">{{ noteDiffrence * 1 - 1 * 1}}</div>
+        <a ng-click='rate.addNewMark(noteID, "minus")' class="action-button shadow animate red"><i class="fa fa-minus"></i></a>
+        <a class='like-button'><i class="fa fa-heart"></i></a>
+    </div>
+</div>

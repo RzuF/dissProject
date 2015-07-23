@@ -1,13 +1,13 @@
 (function () {
     'use strict';
 
-    function showUserCtrl($routeParams, userDAO) {
+    function showUserCtrl($stateParams, userDAO) {
         var ctrl = this;
-        userDAO.getInfo($routeParams.userID).then(function(data) {
+        userDAO.getInfo($stateParams.userID).then(function(data) {
             ctrl.user = data;
         });
     }
 
     var module = angular.module('dissApp');
-    module.controller('showUserCtrl', ['$routeParams', 'userDAO', showUserCtrl]);
+    module.controller('showUserCtrl', ['$stateParams', 'userDAO', showUserCtrl]);
 })();

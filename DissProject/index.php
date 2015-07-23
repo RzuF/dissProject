@@ -15,6 +15,7 @@ include_once('config.php');
 	<link rel="stylesheet" type="text/css" href="resources/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="resources/css/style.css">
 	<link rel="stylesheet" type="text/css" href="resources/css/password-validation.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/jasny-bootstrap.min.css">
 </head>
 <body ng-controller="globalCtrl">
     <?php include_once("nav.html"); ?>
@@ -23,7 +24,7 @@ include_once('config.php');
   		<strong>Uwaga!</strong> Dostałeś bana od USER. Kategoria bana to CATEGORY. Opis: DESCRIPTION.
 		Nie możesz teraz komentować ani dodawać nowych dissów.
 	</div>
-    <div ng-view></div>
+    <div ui-view></div>
     <?php include_once("resources.html"); ?>
 
 	<!-- Config -->
@@ -39,6 +40,8 @@ include_once('config.php');
 	<script src="resources/js/controllers/registerCtrl.js"></script>
 	<script src="resources/js/controllers/activationCtrl.js"></script>
 	<script src="resources/js/controllers/showUserCtrl.js"></script>
+	<!-- Directives -->
+	<script src="resources/js/directives/rateButtonsDirective.js"></script>
 	<!-- DAO -->
 	<script src="resources/js/DAO/noteDAO.js"></script>
 	<script src="resources/js/DAO/notesDAO.js"></script>

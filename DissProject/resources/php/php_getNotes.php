@@ -2,13 +2,10 @@
 
 include_once('config.php');
 
-try
-{
+try {
 	$sqlcon = new PDO(DSN, USER, PASS);
-
 }
-catch (PDOException $e)
-{
+catch (PDOException $e) {
 	print "Connection Error!: " . $e->getMessage() . "<br/>";
 	die();
 }
@@ -16,8 +13,7 @@ catch (PDOException $e)
 $postdata = file_get_contents("php://input");
 $request = json_decode($postdata);
 
-
-if($request->request == "mainPage")
+if($request->request == "main")
 {
 	try
 	{
@@ -47,7 +43,7 @@ if($request->request == "mainPage")
  * JSON encoded array
  */
 
-if($request->request == "waitPage")
+if($request->request == "wait")
 {
 	try
 	{

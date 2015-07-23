@@ -58,6 +58,7 @@
             },
             getNoteComments: function(id) {
                 return api('POST', 'resources/php/php_comments.php', {request: 'show', id: id}).then(function(backendResponse) {
+                    console.log(backendResponse);
                     var defer = $q.defer();
                     defer.resolve(backendResponse.data[0]);
                     return defer.promise;

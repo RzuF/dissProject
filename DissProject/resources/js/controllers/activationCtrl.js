@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    function activationCtrl($routeParams, userDAO) {
+    function activationCtrl($stateParams, userDAO) {
         var ctrl = this;
         ctrl.activate = function(aid) {
             userDAO.emailVeryfication(aid).then(function(data) {
@@ -15,9 +15,9 @@
                 }
             })
         }
-        ctrl.activate($routeParams.AID);
+        ctrl.activate($stateParams.AID);
     };
 
     var module = angular.module('dissApp');
-    module.controller('activationCtrl', ['$routeParams', 'userDAO', activationCtrl]);
+    module.controller('activationCtrl', ['$stateParams', 'userDAO', activationCtrl]);
 })();

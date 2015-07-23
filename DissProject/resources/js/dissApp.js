@@ -1,55 +1,61 @@
 var app = angular.module('dissApp',['ngRoute', 'ngResource', 'ui.bootstrap', 'ui.router']);
-app.config(function($routeProvider){
-      $routeProvider
-          .when('/',{
-                templateUrl: 'resources/js/views/displayAllNotes.html',
-                controller: 'mainPageCtrl as ctrl'
-          })
-          .when('/poczekalnia',{
-                templateUrl: 'resources/js/views/displayAllNotes.html',
-                controller: 'poczekalniaPageCtrl as ctrl'
-          })
-          .when('/logowanie',{
-                templateUrl: 'resources/js/views/log.html'
-          })
-          .when('/rejestracja-sukcess',{
-                templateUrl: 'resources/js/views/registerSuccess.html'
-          })
-          .when('/aktywacja/:AID',{
-                templateUrl: 'resources/js/views/activationCheck.html',
-                controller: 'activationCtrl as ctrl'
-          })
-          .when('/dodaj-dissa',{
-                templateUrl: 'resources/js/views/dodaj-dissa.html',
-                controller: 'addNewDissCtrl as ctrl'
-          })
-          .when('/notes/:noteID', {
-                templateUrl: 'resources/js/views/show.html',
-                controller: 'showNoteCtrl as ctrl'
-          })
-          .when('/user/:userID', {
-                templateUrl: 'resources/js/views/user.html',
-                controller: 'showUserCtrl as ctrl'
-          })
-          .when('/profil',{
-                templateUrl: 'resources/js/views/profile.html'
-          })
-          .otherwise({
-            redirectTo: '/'
-          });
-});
+app.config(function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise("/");
+    $stateProvider
+        .state('Strona główna', {
+            url: "/",
+            templateUrl: 'resources/js/views/displayAllNotes.html',
+            controller: 'mainPageCtrl as ctrl'
+        })
+        .state('Poczekalnia', {
+            url: "/poczekalnia",
+            templateUrl: 'resources/js/views/displayAllNotes.html',
+            controller: 'poczekalniaPageCtrl as ctrl'
+            })
+        .state('Logowanie', {
+            url: "/logowanie",
+            templateUrl: 'resources/js/views/log.html'
+            })
+        .state('Rejestracja', {
+            url: "/rejestracja-sukcess",
+            templateUrl: 'resources/js/views/registerSuccess.html'
+            })
+        .state('Aktywacja',{
+            url: '/aktywacja/:AID',
+            templateUrl: 'resources/js/views/activationCheck.html',
+            controller: 'activationCtrl as ctrl'
+        })
+        .state('Dodaj dissa',{
+            url: '/dodaj-dissa',
+            templateUrl: 'resources/js/views/dodaj-dissa.html',
+            controller: 'addNewDissCtrl as ctrl'
+        })
+        .state('Diss', {
+            url: '/notes/:noteID',
+            templateUrl: 'resources/js/views/show.html',
+            controller: 'showNoteCtrl as ctrl'
+        })
+        .state('Użytkownik', {
+            url: '/user/:userID',
+            templateUrl: 'resources/js/views/user.html',
+            controller: 'showUserCtrl as ctrl'
+        })
+        .state('Profil',{
+            url: '/profil',
+            templateUrl: 'resources/js/views/profile.html'
+        })
+    });
 // Directive for commands and rate buttons
-// Change to stateProvider (login and register)
 // Design and add all data to user profiles show
 // add links to userprofiles on main and queue site and show note
 // add users score
 
 /* Main site */
 /* Find better solution for que bollean value | Directive?*/
-app.controller('mainPageCtrl', ['notessDAO', function (notessDAO) {
+app.controller('mainPageCtrl', ['notesDAO', function (notesDAO) {
     var ctrl = this;
     ctrl.que = false;
-    notessDAO.getAllMain().then(function(data) {
+    notesDAO.getAllNotesMainPage().then(function(data) {
         ctrl.view = data;
     });
 }]);
@@ -62,26 +68,6 @@ app.controller('poczekalniaPageCtrl', ['notesDAO', function (notesDAO) {
         ctrl.view = data;
     });
 }]);
-
-/* Adding new marks | Change to directive */
-app.controller('rateCtrl', function (noteDAO) {
-    var rate = this;
-    rate.mark = 0;
-    rate.info = function() {
-        return rate.mark;
-    };
-
-    rate.addNewMark = function(id, type) {
-        noteDAO.rateNote(id, type).then (function(data) {
-            if( data == "plus")
-                rate.mark = 1;
-            else if(data == "minus")
-                rate.mark = -1;
-            else
-                alert(data);
-        });
-    };
-});
 
 // <note-commands>Check out the contents, {{name}}!</note-commands>
 app.directive('logInForm', function() {
@@ -99,8 +85,6 @@ app.directive('registerForm', function() {
         templateUrl: 'resources/js/views/forms/register.html'
     };
 });
-
-
 /*
 [
 {"id":"26","0":"26","title":"okokok","1":"okokok","difference":"0","2":"0","date":"2015-07-22 13:04:33","3":"2015-07-22 13:04:33","login":"rzuf","4":"rzuf","tags":null,"5":null,"comments":"0","6":"0"},
