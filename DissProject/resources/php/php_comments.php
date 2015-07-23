@@ -4,12 +4,12 @@ include_once('config.php');
 
 session_start();
 
-try 
+try
 {
 	$sqlcon = new PDO(DSN, USER, PASS);
 
-} 
-catch (PDOException $e) 
+}
+catch (PDOException $e)
 {
 	print "Connection Error!: " . $e->getMessage() . "<br/>";
 	die();
@@ -22,20 +22,20 @@ $request = json_decode($postdata);
 if($request->request == "add")
 {
 	$uploadOk = true;
-	
+
 	if($request->commentText == "")
 	{
 		echo "ERROR: Pole tekst nie może być puste\n";
 		$uploadOk = false;
 	}
-	
+
 	if ($uploadOk)
 	{
 		try
 		{
 			$sqlcon->query("INSERT INTO `".PREFIX."_comments`(`id`, `text`, `author`, `date`, `note`, `author_ip`) VALUES ('', '".htmlentities($request->dissText)."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '".$request->id."', '".$_SERVER['REMOTE_ADDR']."')");
 			$l_id = $sqlcon->lastInsertId();
-				
+
 			echo "OK: $l_id";
 		}
 		catch (PDOException $e)
@@ -43,7 +43,7 @@ if($request->request == "add")
 			print "Error!: " . $e->getMessage() . "<br/>";
 			die();
 		}
-	}		
+	}
 }
 
 /*
@@ -62,7 +62,7 @@ if($request->request == "add")
 if($request->request == "addAnon")
 {
 $uploadOk = true;
-	
+
 	if($request->commentText == "")
 	{
 		echo "ERROR: Pole tekst nie może być puste\n";
@@ -73,14 +73,14 @@ $uploadOk = true;
 		echo "ERROR: Nieprawidłowy token";
 		$uploadOk = false;
 	}
-	
+
 	if ($uploadOk)
 	{
 		try
 		{
 			$sqlcon->query("INSERT INTO `".PREFIX."_comments`(`id`, `text`, `author`, `date`, `note`, `author_ip`) VALUES ('', '".htmlentities($request->dissText)."', '1337', '".date('Y-m-d H:i:s')."', '".$request->id."', '".$_SERVER['REMOTE_ADDR']."')");
 			$l_id = $sqlcon->lastInsertId();
-				
+
 			echo "OK: $l_id";
 		}
 		catch (PDOException $e)
@@ -111,7 +111,7 @@ if($request->request == "delete")
 		try
 		{
 			$sqlcon->query("DELETE FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'");
-		
+
 			echo "OK";
 		}
 		catch (PDOException $e)
@@ -145,7 +145,7 @@ if($request->request == "rate")
 			$userAdded = FALSE;
 			foreach(explode(";", $req['plus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
 			foreach(explode(";", $req['minus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
-	
+
 			if(!$userAdded)
 			{
 				if($request->type == "plus")
@@ -178,7 +178,7 @@ if($request->request == "rate")
 			}
 			else
 			{
-				echo "ERROR: Już oceniłeś ten diss";
+				echo "ERROR: Już oceniłeś ten komentarz.";
 			}
 		}
 		else
@@ -212,12 +212,12 @@ if($request->request == "show")
 	try
 	{
 		$arr = array();
-		
+
 		foreach ($sqlcon->query("SELECT a.id, a.difference, a.date, b.login, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply IS NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.reply IS NULL a.note = "  . $request->id) as $req)
 		{
-			$arr[] = $req;
+			$arr[] = "x";
 		}
-		
+
 		echo $json_response = json_encode($arr);
 	}
 	catch (PDOException $e)
@@ -243,12 +243,12 @@ if($request->request == "best")
 	try
 	{
 		$arr = array();
-	
+
 		foreach ($sqlcon->query("SELECT TOP 1 a.id, a.difference, a.date, b.login, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE difference > 0 ORDER BY difference DESC") as $req)
 		{
 			$arr[] = $req;
 		}
-	
+
 		echo $json_response = json_encode($arr);
 	}
 	catch (PDOException $e)

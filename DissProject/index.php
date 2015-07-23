@@ -31,7 +31,6 @@ include_once('config.php');
 	<script src="resources/js/dissApp.js"></script>
 	<!-- Controllers -->
 	<script src="resources/js/controllers/globalCtrl.js"></script>
-	<script src="resources/js/controllers/notesDAO.js"></script>
 	<script src="resources/js/controllers/logOutCtrl.js"></script>
 	<script src="resources/js/controllers/notesCommandsCtrl.js"></script>
 	<script src="resources/js/controllers/addNewDissCtrl.js"></script>
@@ -40,8 +39,14 @@ include_once('config.php');
 	<script src="resources/js/controllers/registerCtrl.js"></script>
 	<script src="resources/js/controllers/activationCtrl.js"></script>
 	<script src="resources/js/controllers/showUserCtrl.js"></script>
+	<script src="resources/js/controllers/commentsCtrl.js"></script>
+	<!-- Filters -->
+	<script src="resources/js/filters/timeAgo.js"></script>
 	<!-- Directives -->
 	<script src="resources/js/directives/rateButtonsDirective.js"></script>
+	<script src="resources/js/directives/noteDirective.js"></script>
+	<script src="resources/js/directives/banModalDirective.js"></script>
+	<script src="resources/js/directives/commentsDirective.js"></script>
 	<!-- DAO -->
 	<script src="resources/js/DAO/noteDAO.js"></script>
 	<script src="resources/js/DAO/notesDAO.js"></script>
