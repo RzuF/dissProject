@@ -1,23 +1,23 @@
 (function () {
     'use strict';
 
-    function notesCommandsCtrl($log, $scope, $modal, noteDAO) {
+    function notesCommandsCtrl($log, $scope, $modal, noteDAO, notesDAO) {
         var ctrl = this;
         ctrl.delete = function(id) {
             noteDAO.deleteNote(id).then(function(data) {
-                alert(data);
+                swal("Sukces", data, "success");
             });
         };
 
         ctrl.moveToMain = function(id) {
             noteDAO.moveToMain(id).then(function(data) {
-                alert(data);
+                swal("Sukces", data, "success");
             });
         };
 
         ctrl.moveToMainFast = function(id) {
             noteDAO.moveToMainFast(id).then(function(data) {
-                alert(data);
+                swal("Sukces", data, "success");
             });
         };
 
@@ -41,5 +41,5 @@
     }
 
     var module = angular.module('dissApp');
-    module.controller('notesCommandsCtrl', ['$log', '$scope', '$modal', 'noteDAO', notesCommandsCtrl]);
+    module.controller('notesCommandsCtrl', ['$log', '$scope', '$modal', 'noteDAO', 'notesDAO', notesCommandsCtrl]);
 })();

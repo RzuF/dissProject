@@ -1,6 +1,4 @@
 <?php
-
-include_once('gd-gradient-fill.php');
 include_once('config.php');
 
 function wrap($fontSize, $angle, $fontFace, $string, $width){

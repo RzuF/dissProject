@@ -3,7 +3,7 @@
     <div class="row note-title">
         <div class="col-lg-8 col-xs-8">
             <div ng-if='links == 0' class="note-title-title"> {{ noteDetails.title }}</div>
-            <a ng-if='links == 1' href="#/notes/{{noteID}}"><div class="note-title-title"> {{ noteDetails.title }} </div></a>
+            <a ng-if='links == 1' href="#/notes/{{noteID}}"><div class="note-title-title"> {{ noteDetails.title }}</div></a>
         </div>
         <div class="col-lg-4 col-xs-4">
             <div class="note-title-comments">
@@ -33,8 +33,6 @@
     <!-- Note image -->
     <img ng-if='links == 0' ng-src='resources/images/notes/{{ noteID }}.png' class="img-responsive img-rounded">
     <a ng-if='links == 1' ng-href="#/notes/{{noteID}}"><img  ng-src='resources/images/notes/{{ noteID }}.png' class="img-responsive img-rounded"></a>
-    <!-- Rank buttons -->
-    <i class="fa fa-minus"></i>
-    <i class="fa fa-plus"></i>
+
     <rate-buttons id="noteID" dif='noteDetails.difference'></rate-buttons>
 </div>

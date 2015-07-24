@@ -14,7 +14,7 @@
                 if( data == "OK")
                     $rootScope.sessionCheck();
                 else
-                    alert(data);
+                    swal("Błąd", data, "error")
             });
         };
     }

@@ -22,6 +22,7 @@
                     ctrl.returnMessage = data;
                 }
                 else {
+                    swal("Twój diss został dodany!", "Na twoje konto wpłynęło 10 punktów.", "success");
                     data = data.replace("OK: ", "");
                     var id = data;
                     $location.path("/notes/" + id);

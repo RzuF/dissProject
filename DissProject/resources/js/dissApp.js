@@ -50,7 +50,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 // add users score
 
 /* Main site */
-app.controller('mainPageCtrl', ['notesDAO', 'userDAO', function (notesDAO, userDAO) {
+app.controller('mainPageCtrl', ['$scope', 'notesDAO', 'userDAO', function ($scope, notesDAO, userDAO) {
     var ctrl = this;
     ctrl.que = 0;
     notesDAO.getAllNotesMainPage().then(function(data) {
@@ -59,7 +59,7 @@ app.controller('mainPageCtrl', ['notesDAO', 'userDAO', function (notesDAO, userD
 }]);
 
 /* Queqe */
-app.controller('poczekalniaPageCtrl', ['notesDAO', function (notesDAO) {
+app.controller('poczekalniaPageCtrl', ['$scope', 'notesDAO', function ($scope, notesDAO) {
     var ctrl = this;
     ctrl.que = 1;
     notesDAO.getAllNotesWaitPage().then(function(data) {

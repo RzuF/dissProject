@@ -14,7 +14,7 @@
             }).success(function (data) {
                 $rootScope.session = angular.fromJson(data);
             }).error(function (data) {
-                alert("Błąd w przekazywaniu danych.");
+                swal("Błąd", "Coś poszło nie tak.", "error")
             });
         };
 

@@ -89,23 +89,83 @@ a:hover {
 	padding-top: 10px;
 	font-size: 18px;
 	padding-bottom: 5px;
-	max-width: 230px;
+	max-width: 400px;
 }
 
 .note-rank-rank {
 	font-size: 24px;
 	font-weight: bold;
-	font-style: italic;
-	margin-top: 2px;
 	float: left;
 	position: relative;
 	margin-left: 10px;
 	margin-right: 10px;
 }
 
+.plus { color: #5cb386; }
+.minus { color: #d70b0b; }
+.default { color: black; };
+
 .note-rank-plus-and-minus {	text-align: left; }
 .note-rank-social { text-align: right; }
 
+.action-button
+{
+	position: relative;
+	padding: 0px 0px 0px 0px;
+  	margin: 0px 3px 3px 0px;
+  	float: left;
+	border-radius: 5px;
+	font-size: 40px;
+	color: #FFF;
+	text-decoration: none;
+}
+
+.addToFavourites-button
+{
+	position: relative;
+	padding: 0px 25px 0px 15px;
+  	margin: 0px 3px 3px 0px;
+  	float: left;
+	border-radius: 5px;
+	font-size: 40px;
+	color: #FFF;
+	text-decoration: none;
+}
+
+@media only screen and (max-width: 700px) {
+	.action-button {
+		padding: 0px 0px 0px 0px;
+	}
+}
+
+.red
+{
+	background-color: #E74C3C;
+	border-bottom: 5px solid #BD3E31;
+	text-shadow: 0px -2px #BD3E31;
+}
+
+.green
+{
+	background-color: #82BF56;
+	border-bottom: 5px solid #669644;
+	text-shadow: 0px -2px #669644;
+}
+
+.blue
+{
+	background-color: #3498DB;
+	border-bottom: 5px solid #2980B9;
+	text-shadow: 0px -2px #2980B9;
+}
+
+/*.action-button:hover
+{
+	transform: translate(0px,5px);
+  	-webkit-transform: translate(0px,5px);
+	border-bottom: 1px solid;
+	color: #fff;
+}*/
 
 .note-copright {
 	font-size: 16px;
@@ -193,56 +253,16 @@ Follow me on Twitter @maridlcrmn
 	-webkit-transition: all 0.1s;
 }
 
-.action-button
-{
-	position: relative;
-	padding: 5px 15px;
-  	margin: 0px 5px 5px 0px;
-  	float: left;
-	border-radius: 5px;
-	font-family: 'Pacifico', cursive;
-	font-size: 15px;
-	color: #FFF;
-	text-decoration: none;
-}
-
-.red
-{
-	background-color: #E74C3C;
-	border-bottom: 5px solid #BD3E31;
-	text-shadow: 0px -2px #BD3E31;
-}
-
-.green
-{
-	background-color: #82BF56;
-	border-bottom: 5px solid #669644;
-	text-shadow: 0px -2px #669644;
-}
-
-.blue
-{
-	background-color: #3498DB;
-	border-bottom: 5px solid #2980B9;
-	text-shadow: 0px -2px #2980B9;
-}
-
-.action-button:hover
-{
-	transform: translate(0px,5px);
-  	-webkit-transform: translate(0px,5px);
-	border-bottom: 1px solid;
-	color: #fff;
-}
-
 .box14{
     margin: 40px auto;
     padding: 10px;
     position:relative;
     background: -webkit-gradient(linear, 0% 20%, 0% 92%, from(#fff), to(#f3f3f3), color-stop(.1,#fff));
     border: 1px solid #ccc;
-    -webkit-border-radius: 60px 5px;
-    -webkit-box-shadow: 0px 0px 35px rgba(0, 0, 0, 0.1) inset;
+	-webkit-border-radius: 60px 5px;
+    -moz-border-radius: 60px 5px;
+	-webkit-box-shadow: 0px 0px 35px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow: 0px 0px 35px rgba(0, 0, 0, 0.1) inset;
 }
 
 .box14:before{
@@ -253,10 +273,14 @@ Follow me on Twitter @maridlcrmn
     position:absolute;
     display: inline-block;
     z-index:-1;
-    -webkit-box-shadow: 10px -10px 8px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 10px -10px 8px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 10px -10px 8px rgba(0, 0, 0, 0.2);
     -webkit-transform: rotate(2deg)
                         translate(-14px,20px)
                            skew(-20deg);
+						   -moz-transform: rotate(2deg)
+					                           translate(-14px,20px)
+					                              skew(-20deg);
 }
 
 .box14:after{
@@ -267,10 +291,14 @@ Follow me on Twitter @maridlcrmn
     position:absolute;
     z-index:-1;
     display: inline-block;
-    -webkit-box-shadow: -10px -10px 10px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: -10px -10px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: -10px -10px 10px rgba(0, 0, 0, 0.2);
     -webkit-transform: rotate(2deg)
                         translate(20px,25px)
                            skew(20deg);
+	-moz-transform: rotate(2deg)
+					   translate(20px,25px)
+					    skew(20deg);
 }
 
 .box14_ribbon{
@@ -281,8 +309,10 @@ Follow me on Twitter @maridlcrmn
     background: -webkit-gradient(linear, 555% 20%, 0% 92%, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.0)), color-stop(.1,rgba(0, 0, 0, 0.2)));
     border-left: 1px dashed rgba(0, 0, 0, 0.1);
     border-right: 1px dashed rgba(0, 0, 0, 0.1);
-    -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
-    -webkit-transform: rotate(6deg) skew(0,0) translate(-60%,-5px);
+	-webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.2);
+	-webkit-transform: rotate(6deg) skew(0,0) translate(-60%,-5px);
+    -moz-transform: rotate(6deg) skew(0,0) translate(-60%,-5px);
 }
 
 /**
@@ -304,7 +334,7 @@ Follow me on Twitter @maridlcrmn
  * Lista de Comentarios
  =======================*/
 .comments-container {
-    width: 700;
+    width: 100%;
     font-family: 'Roboto', Arial, Helvetica, Sans-serif, Verdana;
 }
 
@@ -523,15 +553,57 @@ Follow me on Twitter @maridlcrmn
  ========================*/
 @media only screen and (max-width: 766px) {
     .comments-container {
-        width: 480px;
+        width: 100%;
     }
 
     .comments-list .comment-box {
-        width: 395px;
+        width: 86%;
     }
 
     .reply-list .comment-box {
-        width: 360px;
+        width: 88%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .comments-container {
+        width: 100%;
+    }
+
+    .comments-list .comment-box {
+        width: 83%;
+    }
+
+    .reply-list .comment-box {
+        width: 85%;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .comments-container {
+        width: 100%;
+    }
+
+    .comments-list .comment-box {
+        width: 80%;
+    }
+
+    .reply-list .comment-box {
+        width: 82%;
+    }
+}
+
+@media only screen and (max-width: 430px) {
+    .comments-container {
+        width: 100%;
+    }
+
+    .comments-list .comment-box {
+        width: 77%;
+    }
+
+    .reply-list .comment-box {
+        width: 80%;
     }
 }
 
@@ -567,4 +639,16 @@ span.tags {
   	font-size: 25px;
 }
 
+.plus-button{
+  	color: #666;
+  	font-size: 25px;
+}
+
+.minus-button{
+  	color: #666;
+  	font-size: 25px;
+}
+
 .like-button:hover { color: #F26D7D; }
+.plus-button:hover { color: #5cb386; }
+.minus-button:hover { color: #d70b0b; }

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once('config.php');
+include_once('resources/php/config.php');
 ?>
 
 <!DOCTYPE html>
@@ -17,6 +17,7 @@ include_once('config.php');
 	<link rel="stylesheet" type="text/css" href="resources/css/password-validation.css">
 	<link rel="stylesheet" type="text/css" href="resources/css/jasny-bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="resources/css/anim-in-out.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/sweetalert.css">
 </head>
 <body ng-controller="globalCtrl">
     <?php include_once("nav.html"); ?>

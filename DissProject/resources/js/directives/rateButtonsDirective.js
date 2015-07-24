@@ -15,7 +15,7 @@
                 else if(data == "minus")
                     rate.mark = -1;
                 else
-                    alert(data);
+                swal("Hola hola", "Już oceniłęś ten diss.", "warning");
             });
         };
     }

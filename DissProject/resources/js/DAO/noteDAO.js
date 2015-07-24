@@ -30,7 +30,7 @@
                 return api('POST', 'resources/php/php_add.php', {request: 'move2main', id: id}).then(function(backendResponse) {
                     var defer = $q.defer();
                     if( backendResponse.data == "OK")
-                        defer.resolve("Diss wysłany do poczekalni na główna.");
+                        defer.resolve("Diss wysłany do kolejki na główna. Odświerz stronę, aby zobaczyć efekt.");
                     else
                         defer.resolve(backendResponse.data);
                     return defer.promise;
@@ -40,7 +40,7 @@
                 return api('POST', 'resources/php/php_add.php', {request: 'move2mainFAST', id: id}).then(function(backendResponse) {
                     var defer = $q.defer();
                     if( backendResponse.data == "OK")
-                        defer.resolve("Diss wysłany na główna.");
+                        defer.resolve("Diss wysłany na główna. Odświerz stronę, aby zobaczyć efekt.");
                     else
                         defer.resolve(backendResponse.data);
                     return defer.promise;
