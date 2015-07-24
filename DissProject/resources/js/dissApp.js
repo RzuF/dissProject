@@ -50,7 +50,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 // add users score
 
 /* Main site */
-app.controller('mainPageCtrl', ['notesDAO', function (notesDAO) {
+app.controller('mainPageCtrl', ['notesDAO', 'userDAO', function (notesDAO, userDAO) {
     var ctrl = this;
     ctrl.que = 0;
     notesDAO.getAllNotesMainPage().then(function(data) {
