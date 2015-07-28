@@ -26,7 +26,7 @@ if($request->request == "login")
 {
 	try
 	{
-		if($req = $sqlcon->query("SELECT a.password, a.md5rem, a.state, a.id, b.id AS banId, b.time AS timeBan FROM ".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id WHERE login = '".$request->login."'")->fetch())
+		if($req = $sqlcon->query("SELECT a.password, a.md5rem, a.state, a.id, b.id AS banId, b.time AS timeBan, b.date AS dateBan, d.login AS author, b.author AS banAuthorID, b.description AS banDescription FROM (".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id) LEFT OUTER JOIN ".PREFIX."_users d ON b.author = d.id WHERE login = '".$request->login."'")->fetch())
 		{
 
 			//if($req['password'] == md5($request->password)) // Using md5; probably in future md5+sha1
@@ -41,7 +41,7 @@ if($request->request == "login")
 				{
 					$md5 = md5(time());
 					$md5x = implode(";",array($req['md5rem'],$md5));
-					$idreq = mysql_query("UPDATE `".PREFIX."_users` SET `md5rem` = '".$md5x."' WHERE `login` = '".$request->login."'");
+					$idreq = mysql_query("UPDATE ".PREFIX."_users SET md5rem = '".$md5x."' WHERE login = '".$request->login."'");
 					setcookie('logged',$md5, time()*2);
 				}
 				
@@ -49,6 +49,11 @@ if($request->request == "login")
 				if($req['timeBan'] != null && DateTime::createFromFormat('Y-m-d H:i:s', $req['timeBan']) > $dateNow)
 				{
 					$_SESSION['ban'] = $req['banId'];
+					$_SESSION['timeBan'] = $req['timeBan'];
+					$_SESSION['dateBan'] = $req['dateBan'];
+					$_SESSION['author'] = $req['author'];
+					$_SESSION['banAuthorID'] = $req['banAuthorID'];
+					$_SESSION['banDescription'] = $req['banDescription'];
 				}
 				else $_SESSION['ban'] = -1;
 
@@ -87,9 +92,10 @@ if($request->request == "logout")
 	$_SESSION['logged'] = 0;
 	try
 	{
-		if($req = $sqlcon->query("DELETE FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'")->fetch())
+		if($req = $sqlcon->query("SELECT md5rem FROM ".PREFIX."_users WHERE md5rem LIKE '%".$_COOKIE['logged']."%'")->fetch())
 		{
 			$md5 = str_replace(";;", ';', str_replace($_COOKIE['logged'], '', $req['md5rem']));
+			$sqlcon->query("UPDATE ".PREFIX."_users SET md5rem = '$md5' WHERE id = '".$_SESSION['id']."'");
 		}
 	}
 	catch (PDOException $e)
@@ -98,7 +104,6 @@ if($request->request == "logout")
 		//die();
 	}
 
-	if(($_COOKIE['logged'] != 'not logged') || ($_COOKIE['logged'] != 0)) $sqlcon->query('UPDATE `'.PREFIX.'_users` SET `md5rem` = \''.$md5.'\' WHERE `login` = \''.$_SESSION['login'].'\'');
 	$_SESSION = array(); // removing session data
 	$_COOKIE['logged'] = 'not logged'; // changing cookie
 	setcookie('logged','not logged', time()*2);
@@ -127,7 +132,7 @@ if($request->request == "active")
 				{
 					try
 					{
-						$sqlcon->query("UPDATE `".PREFIX."_users` SET `state` ='0', `aid` = NULL WHERE `aid` = '".$request->active."'");
+						$sqlcon->query("UPDATE ".PREFIX."_users SET state ='0', aid = NULL WHERE aid = '".$request->active."'");
 						echo "OK";
 					}
 					catch (PDOException $e)
@@ -136,7 +141,8 @@ if($request->request == "active")
 						//die();
 					}
 				}
-				elseif($req['active'] == 0) {echo "ERROR: Konto juz zostało aktywowane";}
+				elseif($req['active'] == 0) 
+					echo "ERROR: Konto juz zostało aktywowane";
 			}
 			else echo "ERROR: Błędny kod aktywacyjny";
 	}
@@ -164,7 +170,7 @@ if($request->request == "resend")
 {
 	try
 	{
-		$req = $sqlcon->query("SELECT `aid`, `email` FROM `".PREFIX."_users` WHERE `login` = '".$_SESSION['login']."'")->fetch();
+		$req = $sqlcon->query("SELECT aid, email FROM ".PREFIX."_users WHERE login = '".$_SESSION['login']."'")->fetch();
 
 		$tresc =
 		'<html><head><title>Aktywacja konta</title></head>
@@ -213,13 +219,13 @@ if($request->request == "register")
 	{
 		if($request->password != $request->password2)
 			echo "ERROR: Hasła do siebie nie pasują";
-		elseif(!(strpos($request->email, '@') !== FALSE))
+		elseif(!isValidEmail($request->email))
 			echo "ERROR: Błędny adres email";
 		elseif($request->login == "" || $request->password == "")
 			echo "ERROR: Hasło/Login nie mogą być puste";
 		//elseif($resp == null || !$resp->success)
 		//	echo "ERROR: Nieprawidłowy token";
-		elseif($req = $sqlcon->query("SELECT `login` FROM `".PREFIX."_users` WHERE `login` = '".$request->login."'")->fetch())
+		elseif($req = $sqlcon->query("SELECT login FROM ".PREFIX."_users WHERE login = '".$request->login."'")->fetch())
 			echo "ERROR: Login jest już zajęty";
 		else{
 
@@ -239,8 +245,8 @@ if($request->request == "register")
 
 				try
 				{
-					$sqlcon->query("INSERT INTO `".PREFIX."_users`(`id`, `login`, `password`, `date`, `email`, `state`, `aid`, `ranga`, `name`, `age`, `city`, `description`, `sex`)
-						VALUES ('', '".htmlentities($request->login)."', '".$request->password."', '".date('Y-m-d H:i:s')."', '".htmlentities($request->email)."', '1', '".$aid."', '0', '$name', '$age', '$city', '$description', '$sex')");
+					$sqlcon->query("INSERT INTO ".PREFIX."_users(login, password, date, email, state, aid, ranga, name, age, city, description, sex)
+						VALUES ('".htmlentities($request->login)."', '".$request->password."', '".date('Y-m-d H:i:s')."', '".htmlentities($request->email)."', '1', '".$aid."', '0', '$name', '$age', '$city', '$description', '$sex')");
 
 					$tresc = // Treść emaila z aktywacją
 					'<html><head><title>Aktywacja konta</title></head>
@@ -297,7 +303,7 @@ if($request->request == "userInfo")
 {
 	try
 	{
-		$req = $sqlcon->query("SELECT a.login, a.name, a.age, a.city, a.description, a.image, a.date AS dateUserJoin, a.sex, b.time, b.date AS dateBan, d.login AS author FROM (".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id) LEFT OUTER JOIN ".PREFIX."_users d ON b.author = d.id WHERE a.id = ".$request->id)->fetch();
+		$req = $sqlcon->query("SELECT a.login, a.name, a.age, a.city, a.description, a.image, a.date AS dateUserJoin, a.sex, b.time, b.id AS banID, b.date AS dateBan, d.login AS author, b.author AS banAuthorID FROM (".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id) LEFT OUTER JOIN ".PREFIX."_users d ON b.author = d.id WHERE a.id = ".$request->id)->fetch();
 
 		$arr = array();
 
@@ -404,8 +410,8 @@ if($request->request == "giveBan")
 		{
 			$dateNow = new DateTime();
 			$dateNow->add(new DateInterval("PT".$request->minutes."M"));
-			$sqlcon->query("INSERT INTO ".PREFIX."_bans (id, date, time, description, author, user, category)
-					VALUES ('', '".date('Y-m-d H:i:s')."', '".$dateNow->format('Y-m-d H:i:s')."', '".$request->description."', '".$_SESSION['id']."', '".$request->id."', '".$request->category."'");
+			$sqlcon->query("INSERT INTO ".PREFIX."_bans (date, time, description, author, user, category)
+					VALUES ('".date('Y-m-d H:i:s')."', '".$dateNow->format('Y-m-d H:i:s')."', '".$request->description."', '".$_SESSION['id']."', '".$request->id."', '".$request->category."'");
 			$l_id = $sqlcon->lastInsertId();
 
 			$req = $sqlcon->query("SELECT b.time FROM ".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id WHERE a.id = ".$request->id)->fetch();

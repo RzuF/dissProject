@@ -84,9 +84,7 @@ if($request->request == "add")
 	{
 		try
 		{
-			//echo "INSERT INTO `".PREFIX."_notes`(`id`, `title`, `text`, `author`, `date`, `state`, `tags`) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '0', '".$request->dissTags."')";
-
-			$sqlcon->query("INSERT INTO ".PREFIX."_notes(id, title, text, author, date, state) VALUES ('', '".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '4')"); // Put 'diss' into DB
+			$sqlcon->query("INSERT INTO ".PREFIX."_notes(title, text, author, date, state) VALUES ('".htmlentities($request->dissName)."', '".$request->dissText."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '4')"); // Put 'diss' into DB
 			$l_id = $sqlcon->lastInsertId();
 
 			createImage($request->dissText, $l_id);
@@ -137,7 +135,7 @@ if($request->request == "delete")
 	{
 		try
 		{
-			$sqlcon->query("DELETE FROM `".PREFIX."_notes` WHERE `id` = '".$request->id."'");
+			$sqlcon->query("DELETE FROM ".PREFIX."_notes WHERE id = '".$request->id."'");
 
 			echo "OK";
 		}
@@ -169,7 +167,7 @@ if($request->request == "move2main")
 	{
 		try
 		{
-			$sqlcon->query("UPDATE `".PREFIX."_notes` SET `state` = '3' WHERE `id` = '".$request->id."'");
+			$sqlcon->query("UPDATE ".PREFIX."_notes SET state = '3' WHERE id = '".$request->id."'");
 
 			echo "OK";
 		}
@@ -201,7 +199,7 @@ if($request->request == "move2mainFAST")
 	{
 		try
 		{
-			$sqlcon->query("UPDATE `".PREFIX."_notes` SET `state` = '1' WHERE `id` = '".$request->id."'");
+			$sqlcon->query("UPDATE ".PREFIX."_notes SET state = '1' WHERE id = '".$request->id."'");
 
 			echo "OK";
 		}
@@ -231,7 +229,7 @@ if($request->request == "show")
 {
 	try
 	{
-		$req = $sqlcon->query("SELECT a.title, a.difference, a.date, b.login, (SELECT GROUP_CONCAT(t.name SEPARATOR ', ') FROM ".PREFIX."_tags t JOIN ".PREFIX."_tagmap m ON t.id = m.tagId WHERE m.noteId = a.id GROUP BY m.NoteId) AS tags, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments  FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id)->fetch();
+		$req = $sqlcon->query("SELECT a.title, a.difference, a.date, a.author AS authorID, b.login, b.range AS authorRange, (SELECT GROUP_CONCAT(t.name SEPARATOR ', ') FROM ".PREFIX."_tags t JOIN ".PREFIX."_tagmap m ON t.id = m.tagId WHERE m.noteId = a.id GROUP BY m.NoteId) AS tags, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments  FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id)->fetch();
 
 		$arr = array();
 
@@ -260,7 +258,7 @@ if($request->request == "rate")
 {
 	try
 	{
-		if($req = $sqlcon->query("SELECT `plus`, `minus` FROM `".PREFIX."_notes` WHERE `id` = '".$request->id."'")->fetch())
+		if($req = $sqlcon->query("SELECT plus, minus FROM ".PREFIX."_notes WHERE id = '".$request->id."'")->fetch())
 		{
 			$userAdded = FALSE;
 			foreach(explode(";", $req['plus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
@@ -272,7 +270,7 @@ if($request->request == "rate")
 				{
 					try
 					{
-						$sqlcon->query("UPDATE `".PREFIX."_notes` SET `plus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` + 1 WHERE `id` = '".$request->id."'");
+						$sqlcon->query("UPDATE ".PREFIX."_notes SET plus = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , difference = difference + 1 WHERE id = '".$request->id."'");
 						echo "plus";
 					}
 					catch (PDOException $e)
@@ -285,7 +283,7 @@ if($request->request == "rate")
 				{
 				try
 					{
-						$sqlcon->query("UPDATE `".PREFIX."_notes` SET `minus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` - 1 WHERE `id` = '".$request->id."'");
+						$sqlcon->query("UPDATE ".PREFIX."_notes SET minus = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , difference = difference - 1 WHERE id = '".$request->id."'");
 						echo "minus";
 					}
 					catch (PDOException $e)
@@ -294,7 +292,7 @@ if($request->request == "rate")
 						die();
 					}
 				}
-				else echo "ERROR#1";
+				else echo "ERROR: Błędny 'request: type'";
 			}
 			else
 			{

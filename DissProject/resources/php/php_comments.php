@@ -4,12 +4,12 @@ include_once('config.php');
 
 session_start();
 
-try
+try 
 {
 	$sqlcon = new PDO(DSN, USER, PASS);
 
-}
-catch (PDOException $e)
+} 
+catch (PDOException $e) 
 {
 	print "Connection Error!: " . $e->getMessage() . "<br/>";
 	die();
@@ -22,28 +22,28 @@ $request = json_decode($postdata);
 if($request->request == "add")
 {
 	$uploadOk = true;
-
+	
 	if($request->commentText == "")
 	{
 		echo "ERROR: Pole tekst nie może być puste\n";
 		$uploadOk = false;
 	}
-
+	
 	if ($uploadOk)
 	{
 		try
 		{
-			$sqlcon->query("INSERT INTO `".PREFIX."_comments`(`id`, `text`, `author`, `date`, `note`, `author_ip`) VALUES ('', '".htmlentities($request->dissText)."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '".$request->id."', '".$_SERVER['REMOTE_ADDR']."')");
+			$sqlcon->query("INSERT INTO ".PREFIX."_comments(text, author, date, note, author_ip) VALUES ('".htmlentities($request->commentText)."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '".$request->id."', '".$_SERVER['REMOTE_ADDR']."')");
 			$l_id = $sqlcon->lastInsertId();
-
+				
 			echo "OK: $l_id";
 		}
 		catch (PDOException $e)
 		{
-			print "Error!: " . $e->getMessage() . "<br/>";
+			print "Error!: " . $e->getMessage() . "\n";
 			die();
 		}
-	}
+	}		
 }
 
 /*
@@ -62,7 +62,7 @@ if($request->request == "add")
 if($request->request == "addAnon")
 {
 $uploadOk = true;
-
+	
 	if($request->commentText == "")
 	{
 		echo "ERROR: Pole tekst nie może być puste\n";
@@ -73,14 +73,14 @@ $uploadOk = true;
 		echo "ERROR: Nieprawidłowy token";
 		$uploadOk = false;
 	}
-
+	
 	if ($uploadOk)
 	{
 		try
 		{
-			$sqlcon->query("INSERT INTO `".PREFIX."_comments`(`id`, `text`, `author`, `date`, `note`, `author_ip`) VALUES ('', '".htmlentities($request->dissText)."', '1337', '".date('Y-m-d H:i:s')."', '".$request->id."', '".$_SERVER['REMOTE_ADDR']."')");
+			$sqlcon->query("INSERT INTO ".PREFIX."_comments(text, author, date, note, author_ip) VALUES ('".htmlentities($request->commentText)."', '1337', '".date('Y-m-d H:i:s')."', '".$request->id."', '".$_SERVER['REMOTE_ADDR']."')");
 			$l_id = $sqlcon->lastInsertId();
-
+				
 			echo "OK: $l_id";
 		}
 		catch (PDOException $e)
@@ -110,8 +110,8 @@ if($request->request == "delete")
 	{
 		try
 		{
-			$sqlcon->query("DELETE FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'");
-
+			$sqlcon->query("DELETE FROM ".PREFIX."_comments WHERE id = '".$request->id."'");
+		
 			echo "OK";
 		}
 		catch (PDOException $e)
@@ -140,19 +140,19 @@ if($request->request == "rate")
 {
 	try
 	{
-		if($req = $sqlcon->query("SELECT `plus`, `minus` FROM `".PREFIX."_comments` WHERE `id` = '".$request->id."'")->fetch())
+		if($req = $sqlcon->query("SELECT plus, minus FROM ".PREFIX."_comments WHERE id = '".$request->id."'")->fetch())
 		{
 			$userAdded = FALSE;
 			foreach(explode(";", $req['plus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
 			foreach(explode(";", $req['minus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;
-
+	
 			if(!$userAdded)
 			{
 				if($request->type == "plus")
 				{
 					try
 					{
-						$sqlcon->query("UPDATE `".PREFIX."_comments` SET `plus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` + 1 WHERE `id` = '".$request->id."'");
+						$sqlcon->query("UPDATE ".PREFIX."_comments SET plus = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , difference = difference + 1 WHERE id = '".$request->id."'");
 						echo "plus";
 					}
 					catch (PDOException $e)
@@ -165,7 +165,7 @@ if($request->request == "rate")
 				{
 					try
 					{
-						$sqlcon->query("UPDATE `".PREFIX."_comments` SET `minus` = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , `difference` = `difference` - 1 WHERE `id` = '".$request->id."'");
+						$sqlcon->query("UPDATE ".PREFIX."_comments SET minus = '".implode(";",array($req['plus'],$_SERVER['REMOTE_ADDR']))."' , difference = difference - 1 WHERE id = '".$request->id."'");
 						echo "minus";
 					}
 					catch (PDOException $e)
@@ -174,11 +174,11 @@ if($request->request == "rate")
 						die();
 					}
 				}
-				else echo "ERROR#1";
+				else echo "ERROR: Błędny 'request: type'";
 			}
 			else
 			{
-				echo "ERROR: Już oceniłeś ten komentarz.";
+				echo "ERROR: Już oceniłeś ten diss";
 			}
 		}
 		else
@@ -213,7 +213,7 @@ if($request->request == "show")
 	{
 		$arr = array();
 
-		foreach ($sqlcon->query("SELECT a.id, a.difference, a.date, b.login, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply IS NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.reply IS NULL AND a.note = "  . $request->id) as $req)
+		foreach ($sqlcon->query("SELECT a.id, a.difference, a.date, a.author AS authorID, b.login, b.range AS authorRange, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply IS NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.reply IS NULL AND a.note = "  . $request->id) as $req)
 		{
 			$arr[] = $req;
 		}
@@ -243,8 +243,10 @@ if($request->request == "best")
 	try
 	{
 		$arr = array();
+		
+		$top = isset($request->top) ? $request->top : 1; // For future implementation
 
-		foreach ($sqlcon->query("SELECT TOP 1 a.id, a.difference, a.date, b.login, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE difference > 0 ORDER BY difference DESC") as $req)
+		foreach ($sqlcon->query("SELECT TOP $top a.id, a.difference, a.date, a.author AS authorID, b.login, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.note = "  . $request->id . " AND difference > 0 ORDER BY difference DESC") as $req)
 		{
 			$arr[] = $req;
 		}
@@ -261,7 +263,134 @@ if($request->request == "best")
 /*
  * What you have to send in data:
  *
- * $request = 'show';
+ * $request = 'best';
+ * $id -> note id for which you request BEST comment(s)
+ * 
+ * $top -> How many top comments you request, default value = 1;
+ *
+ * What I send back:
+ *
+ * JSON encoded data
+ */
+
+/**********************************************************
+ * 
+ * COMMENTS REPLY
+ * 
+ **********************************************************/
+
+if($request->request == "addReply")
+{
+	$uploadOk = true;
+
+	if($request->commentText == "")
+	{
+		echo "ERROR: Pole tekst nie może być puste\n";
+		$uploadOk = false;
+	}
+
+	if ($uploadOk)
+	{
+		try
+		{
+			$sqlcon->query("INSERT INTO ".PREFIX."_comments(text, author, date, note, author_ip, reply) VALUES ('".htmlentities($request->commentText)."', '".$_SESSION['id']."', '".date('Y-m-d H:i:s')."', '".$request->id."', '".$_SERVER['REMOTE_ADDR']."', '".$request->idComment."')");
+			$l_id = $sqlcon->lastInsertId();
+
+			echo "OK: $l_id";
+		}
+		catch (PDOException $e)
+		{
+			print "Error!: " . $e->getMessage() . "<br/>";
+			die();
+		}
+	}
+}
+
+/*
+ * What you have to send in data:
+ *
+ * $request = 'addReply';
+ * $id; (note ID)
+ * $idComment; (comment ID)
+ *
+ * What I send back:
+ *
+ * 'OK: ID' if was successful & ID inserted item
+ * 'ERROR:' if was not
+ * 		+ error description
+ */
+
+if($request->request == "addAnonReply")
+{
+	$uploadOk = true;
+
+	if($request->commentText == "")
+	{
+		echo "ERROR: Pole tekst nie może być puste\n";
+		$uploadOk = false;
+	}
+	if($resp == null || !$resp->success)
+	{
+		echo "ERROR: Nieprawidłowy token";
+		$uploadOk = false;
+	}
+
+	if ($uploadOk)
+	{
+		try
+		{
+			$sqlcon->query("INSERT INTO ".PREFIX."_comments(text, author, date, note, author_ip, reply) VALUES ('".htmlentities($request->commentText)."', '1337', '".date('Y-m-d H:i:s')."', '".$request->id."', '".$_SERVER['REMOTE_ADDR']."', '".$request->idComment."')");
+			$l_id = $sqlcon->lastInsertId();
+
+			echo "OK: $l_id";
+		}
+		catch (PDOException $e)
+		{
+			print "Error!: " . $e->getMessage() . "<br/>";
+			die();
+		}
+	}
+}
+
+/*
+ * What you have to send in data:
+ *
+ * $request = 'addAnonReply';
+ * $id; (note ID)
+ * $idComment; (comment ID)
+ *
+ * What I send back:
+ *
+ * 'OK: ID' if was successful & ID inserted item
+ * 'ERROR:' if was not
+ * 		+ error description
+ */
+
+if($request->request == "showReply")
+{
+	try
+	{
+		$arr = array();
+
+		foreach ($sqlcon->query("SELECT a.id, a.difference, a.date, a.author AS authorID, b.login, b.range AS authorRange, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply IS NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.reply = "  . $request->id) as $req)
+		{
+			$arr[] = $req;
+		}
+
+		echo $json_response = json_encode($arr);
+	}
+	catch (PDOException $e)
+	{
+		print "Error!: " . $e->getMessage() . "<br/>";
+		die();
+	}
+}
+
+/*
+ * What you have to send in data:
+ *
+ * $request = 'showReply';
+ * $id -> comments id for which you request replies
  *
  * What I send back:
  *
