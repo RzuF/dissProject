@@ -229,7 +229,7 @@ if($request->request == "show")
 {
 	try
 	{
-		$req = $sqlcon->query("SELECT a.title, a.difference, a.date, a.author AS authorID, b.login, b.range AS authorRange, (SELECT GROUP_CONCAT(t.name SEPARATOR ', ') FROM ".PREFIX."_tags t JOIN ".PREFIX."_tagmap m ON t.id = m.tagId WHERE m.noteId = a.id GROUP BY m.NoteId) AS tags, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments  FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id)->fetch(PDO::FETCH_ASSOC);
+		$req = $sqlcon->query("SELECT a.title, a.difference, a.date, a.author AS authorID, b.login, b.ranga AS authorRange, (SELECT GROUP_CONCAT(t.name SEPARATOR ', ') FROM ".PREFIX."_tags t JOIN ".PREFIX."_tagmap m ON t.id = m.tagId WHERE m.noteId = a.id GROUP BY m.NoteId) AS tags, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments  FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id)->fetch(PDO::FETCH_ASSOC);
 
 		$arr = array();
 

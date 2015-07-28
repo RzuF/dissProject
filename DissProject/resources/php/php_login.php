@@ -26,7 +26,7 @@ if($request->request == "login")
 {
 	try
 	{
-		if($req = $sqlcon->query("SELECT a.password, a.md5rem, a.state, a.id, b.id AS banId, b.time AS timeBan, b.date AS dateBan, d.login AS author, b.author AS banAuthorID, b.description AS banDescription FROM (".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id) LEFT OUTER JOIN ".PREFIX."_users d ON b.author = d.id WHERE login = '".$request->login."'")->fetch(PDO::FETCH_ASSOC))
+		if($req = $sqlcon->query("SELECT a.password, a.md5rem, a.state, a.id, b.id AS banId, b.time AS timeBan, b.date AS dateBan, d.login AS author, b.author AS banAuthorID, b.description AS banDescription FROM (".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id) LEFT OUTER JOIN ".PREFIX."_users d ON b.author = d.id WHERE a.login = '".$request->login."'")->fetch(PDO::FETCH_ASSOC))
 		{
 
 			//if($req['password'] == md5($request->password)) // Using md5; probably in future md5+sha1
