@@ -140,7 +140,7 @@ if($request->request == "rate")
 {
 	try
 	{
-		if($req = $sqlcon->query("SELECT plus, minus FROM ".PREFIX."_comments WHERE id = '".$request->id."'")->fetch())
+		if($req = $sqlcon->query("SELECT plus, minus FROM ".PREFIX."_comments WHERE id = '".$request->id."'")->fetch(PDO::FETCH_ASSOC))
 		{
 			$userAdded = FALSE;
 			foreach(explode(";", $req['plus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;

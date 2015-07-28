@@ -46,7 +46,7 @@ if($request->request == "add")
 
 	try
 	{
-		if($req = $sqlcon->query("SELECT id FROM ".PREFIX."_notes WHERE text = '".$request->dissText."'")->fetch())
+		if($req = $sqlcon->query("SELECT id FROM ".PREFIX."_notes WHERE text = '".$request->dissText."'")->fetch(PDO::FETCH_ASSOC))
 		{
 			echo "ERROR: Taki diss juz istnieje";
 			$uploadOk = false;
@@ -61,7 +61,7 @@ if($request->request == "add")
 
 	try
 	{
-		if($req = $sqlcon->query("SELECT last_action FROM ".PREFIX."_users WHERE id = ".$_SESSION['id'])->fetch());
+		if($req = $sqlcon->query("SELECT last_action FROM ".PREFIX."_users WHERE id = ".$_SESSION['id'])->fetch(PDO::FETCH_ASSOC));
 		{
 			$format = 'Y-m-d H:i:s';
 			$date = DateTime::createFromFormat($format, $req['last_action']);
@@ -229,7 +229,7 @@ if($request->request == "show")
 {
 	try
 	{
-		$req = $sqlcon->query("SELECT a.title, a.difference, a.date, a.author AS authorID, b.login, b.range AS authorRange, (SELECT GROUP_CONCAT(t.name SEPARATOR ', ') FROM ".PREFIX."_tags t JOIN ".PREFIX."_tagmap m ON t.id = m.tagId WHERE m.noteId = a.id GROUP BY m.NoteId) AS tags, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments  FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id)->fetch();
+		$req = $sqlcon->query("SELECT a.title, a.difference, a.date, a.author AS authorID, b.login, b.range AS authorRange, (SELECT GROUP_CONCAT(t.name SEPARATOR ', ') FROM ".PREFIX."_tags t JOIN ".PREFIX."_tagmap m ON t.id = m.tagId WHERE m.noteId = a.id GROUP BY m.NoteId) AS tags, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments  FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.id = "  . $request->id)->fetch(PDO::FETCH_ASSOC);
 
 		$arr = array();
 
@@ -258,7 +258,7 @@ if($request->request == "rate")
 {
 	try
 	{
-		if($req = $sqlcon->query("SELECT plus, minus FROM ".PREFIX."_notes WHERE id = '".$request->id."'")->fetch())
+		if($req = $sqlcon->query("SELECT plus, minus FROM ".PREFIX."_notes WHERE id = '".$request->id."'")->fetch(PDO::FETCH_ASSOC))
 		{
 			$userAdded = FALSE;
 			foreach(explode(";", $req['plus']) as $i) if($i == $_SERVER['REMOTE_ADDR']) $userAdded = TRUE;

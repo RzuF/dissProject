@@ -26,7 +26,7 @@ if($request->request == "login")
 {
 	try
 	{
-		if($req = $sqlcon->query("SELECT a.password, a.md5rem, a.state, a.id, b.id AS banId, b.time AS timeBan, b.date AS dateBan, d.login AS author, b.author AS banAuthorID, b.description AS banDescription FROM (".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id) LEFT OUTER JOIN ".PREFIX."_users d ON b.author = d.id WHERE login = '".$request->login."'")->fetch())
+		if($req = $sqlcon->query("SELECT a.password, a.md5rem, a.state, a.id, b.id AS banId, b.time AS timeBan, b.date AS dateBan, d.login AS author, b.author AS banAuthorID, b.description AS banDescription FROM (".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id) LEFT OUTER JOIN ".PREFIX."_users d ON b.author = d.id WHERE login = '".$request->login."'")->fetch(PDO::FETCH_ASSOC))
 		{
 
 			//if($req['password'] == md5($request->password)) // Using md5; probably in future md5+sha1
@@ -92,7 +92,7 @@ if($request->request == "logout")
 	$_SESSION['logged'] = 0;
 	try
 	{
-		if($req = $sqlcon->query("SELECT md5rem FROM ".PREFIX."_users WHERE md5rem LIKE '%".$_COOKIE['logged']."%'")->fetch())
+		if($req = $sqlcon->query("SELECT md5rem FROM ".PREFIX."_users WHERE md5rem LIKE '%".$_COOKIE['logged']."%'")->fetch(PDO::FETCH_ASSOC))
 		{
 			$md5 = str_replace(";;", ';', str_replace($_COOKIE['logged'], '', $req['md5rem']));
 			$sqlcon->query("UPDATE ".PREFIX."_users SET md5rem = '$md5' WHERE id = '".$_SESSION['id']."'");
@@ -126,7 +126,7 @@ if($request->request == "active")
 {
 	try
 	{
-		if($req = $sqlcon->query("SELECT state FROM ".PREFIX."_users WHERE aid = '".$request->active."'")->fetch())
+		if($req = $sqlcon->query("SELECT state FROM ".PREFIX."_users WHERE aid = '".$request->active."'")->fetch(PDO::FETCH_ASSOC))
 			{
 				if($req['state'] == 1)
 				{
@@ -170,7 +170,7 @@ if($request->request == "resend")
 {
 	try
 	{
-		$req = $sqlcon->query("SELECT aid, email FROM ".PREFIX."_users WHERE login = '".$_SESSION['login']."'")->fetch();
+		$req = $sqlcon->query("SELECT aid, email FROM ".PREFIX."_users WHERE login = '".$_SESSION['login']."'")->fetch(PDO::FETCH_ASSOC);
 
 		$tresc =
 		'<html><head><title>Aktywacja konta</title></head>
@@ -225,7 +225,7 @@ if($request->request == "register")
 			echo "ERROR: Hasło/Login nie mogą być puste";
 		//elseif($resp == null || !$resp->success)
 		//	echo "ERROR: Nieprawidłowy token";
-		elseif($req = $sqlcon->query("SELECT login FROM ".PREFIX."_users WHERE login = '".$request->login."'")->fetch())
+		elseif($req = $sqlcon->query("SELECT login FROM ".PREFIX."_users WHERE login = '".$request->login."'")->fetch(PDO::FETCH_ASSOC))
 			echo "ERROR: Login jest już zajęty";
 		else{
 
@@ -303,7 +303,7 @@ if($request->request == "userInfo")
 {
 	try
 	{
-		$req = $sqlcon->query("SELECT a.login, a.name, a.age, a.city, a.description, a.image, a.date AS dateUserJoin, a.sex, b.time, b.id AS banID, b.date AS dateBan, d.login AS author, b.author AS banAuthorID FROM (".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id) LEFT OUTER JOIN ".PREFIX."_users d ON b.author = d.id WHERE a.id = ".$request->id)->fetch();
+		$req = $sqlcon->query("SELECT a.login, a.name, a.age, a.city, a.description, a.image, a.date AS dateUserJoin, a.sex, b.time, b.id AS banID, b.date AS dateBan, d.login AS author, b.author AS banAuthorID FROM (".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id) LEFT OUTER JOIN ".PREFIX."_users d ON b.author = d.id WHERE a.id = ".$request->id)->fetch(PDO::FETCH_ASSOC);
 
 		$arr = array();
 
@@ -334,7 +334,7 @@ if($request->request == "changeData")
 		{
 			try
 			{
-				if($req = $sqlcon->query("SELECT password FROM ".PREFIX."_users WHERE id = ".$request->id)->fetch())
+				if($req = $sqlcon->query("SELECT password FROM ".PREFIX."_users WHERE id = ".$request->id)->fetch(PDO::FETCH_ASSOC))
 				{
 					if($request->password == $req['password'])
 					{
@@ -414,7 +414,7 @@ if($request->request == "giveBan")
 					VALUES ('".date('Y-m-d H:i:s')."', '".$dateNow->format('Y-m-d H:i:s')."', '".$request->description."', '".$_SESSION['id']."', '".$request->id."', '".$request->category."'");
 			$l_id = $sqlcon->lastInsertId();
 
-			$req = $sqlcon->query("SELECT b.time FROM ".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id WHERE a.id = ".$request->id)->fetch();
+			$req = $sqlcon->query("SELECT b.time FROM ".PREFIX."_users a LEFT OUTER JOIN ".PREFIX."_bans b ON a.ban = b.id WHERE a.id = ".$request->id)->fetch(PDO::FETCH_ASSOC);
 
 			/*if(DateTime::createFromFormat('Y-m-d H:i:s', $req['time']) < $dateNow) echo "true";
 			else "false";*/
