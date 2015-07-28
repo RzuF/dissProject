@@ -6,15 +6,43 @@ function wrap($fontSize, $angle, $fontFace, $string, $width){
 	$ret = "";
 
 	$arr = explode(' ', $string);
+	
+	$lastReturn = false;
 
-	foreach ( $arr as $word ){
+	foreach ($arr as $word)
+	{
 
 		$testString = $ret.' '.$word;
 		$testBox = imagettfbbox($fontSize, $angle, $fontFace, $testString);
-		if ( $testBox[2] > $width ){
-			$ret.=($ret==""?"":"\n").$word;
-		} else {
-			$ret.=($ret==""?"":' ').$word;
+		if ($testBox[2] > $width)
+		{
+			if($lastReturn)
+			{
+				$multipler = 1;
+				
+				do
+				{
+					$wordArray = str_split($word, strlen($word)/(2 * $multipler) + 1);
+					
+					$multipler++;
+					
+					$testStringIn = $ret . implode("\n", $wordArray);
+					
+					$testBoxIn = imagettfbbox($fontSize, $angle, $fontFace, $testStringIn);
+				}
+				while ($testBoxIn[2] > $width);
+				
+				$ret .= implode("\n", $wordArray);
+			}
+			else $ret .= ($ret == "" ? "" : "\n").$word;
+			
+			$lastReturn = true;
+		}
+		
+		else 
+		{
+			$ret .= ($ret == "" ? "" : ' ').$word;
+			$lastReturn = false;
 		}
 	}
 
