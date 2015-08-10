@@ -213,7 +213,7 @@ if($request->request == "show")
 	{
 		$arr = array();
 
-		foreach ($sqlcon->query("SELECT a.id, a.difference, a.date, a.author AS authorID, b.login, b.range AS authorRange, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply IS NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.reply IS NULL AND a.note = "  . $request->id) as $req)
+		foreach ($sqlcon->query("SELECT a.id, a.difference, a.date, a.author AS authorID, b.login, b.ranga AS authorRange, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply IS NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.reply IS NULL AND a.note = "  . $request->id) as $req)
 		{
 			$arr[] = $req;
 		}
@@ -246,7 +246,7 @@ if($request->request == "best")
 		
 		$top = isset($request->top) ? $request->top : 1; // For future implementation
 
-		foreach ($sqlcon->query("SELECT TOP $top a.id, a.difference, a.date, a.author AS authorID, b.login, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.note = "  . $request->id . " AND difference > 0 ORDER BY difference DESC") as $req)
+		foreach ($sqlcon->query("SELECT a.id, a.difference, a.date, a.author AS authorID, b.login, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply IS NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.note = "  . $request->id . " AND difference > 0 ORDER BY difference DESC LIMIT $top") as $req)
 		{
 			$arr[] = $req;
 		}
@@ -372,7 +372,7 @@ if($request->request == "showReply")
 	{
 		$arr = array();
 
-		foreach ($sqlcon->query("SELECT a.id, a.difference, a.date, a.author AS authorID, b.login, b.range AS authorRange, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply IS NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.reply = "  . $request->id) as $req)
+		foreach ($sqlcon->query("SELECT a.id, a.difference, a.date, a.author AS authorID, b.login, b.ranga AS authorRange, a.text, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.reply IS NOT NULL AND c.reply = a.id) AS commentsReply FROM ".PREFIX."_comments a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.reply = "  . $request->id) as $req)
 		{
 			$arr[] = $req;
 		}
