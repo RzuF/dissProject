@@ -19,7 +19,7 @@ if($request->request == "main")
 	{
 		$arr = array();
 
-		foreach ($sqlcon->query("SELECT a.id, a.title, a.difference, a.date, a.author AS authorID, b.range AS authorRange, b.login, a.tags, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.state = 1 ORDER BY a.date DESC") as $req)
+		foreach ($sqlcon->query("SELECT a.id, a.title, a.difference, a.date, a.author AS authorID, b.ranga AS authorRange, b.login, a.tags, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.state = 1 ORDER BY a.date DESC") as $req)
 		{
 			$arr[] = $req;
 		}
@@ -49,7 +49,7 @@ if($request->request == "wait")
 	{
 		$arr = array();
 
-		foreach ($sqlcon->query("SELECT a.id, a.title, a.difference, a.date, a.author AS authorID, b.range AS authorRange, b.login, a.tags, a.state, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.state = 0 OR a.state = 3 ORDER BY a.date DESC") as $req)
+		foreach ($sqlcon->query("SELECT a.id, a.title, a.difference, a.date, a.author AS authorID, b.ranga AS authorRange, b.login, a.tags, a.state, (SELECT COUNT(*) FROM ".PREFIX."_comments c WHERE c.note = a.id) AS comments FROM ".PREFIX."_notes a LEFT JOIN ".PREFIX."_users b ON a.author = b.id WHERE a.state = 0 OR a.state = 3 ORDER BY a.date DESC") as $req)
 		{
 			$arr[] = $req;
 		}
